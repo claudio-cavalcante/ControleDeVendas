@@ -2,15 +2,15 @@ package br.ufg.inf.venda;
 
 import java.util.List;
 
-import br.ufg.inf.pagamento.FormaDePagamento;
+import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pessoa.Funcionario;
 
 public class Venda {
 	private List<ItemVenda> itensVenda;
 	private Funcionario funcionario;
-	private FormaDePagamento formaDePagamento;
+	private IFormaDePagamento formaDePagamento;
 	
-	public Venda(Funcionario funcionario, List<ItemVenda> itensVenda, FormaDePagamento formaDePagamento) {
+	public Venda(Funcionario funcionario, List<ItemVenda> itensVenda, IFormaDePagamento formaDePagamento) {
 		super();
 		this.itensVenda = itensVenda;
 		this.funcionario = funcionario;
@@ -25,7 +25,7 @@ public class Venda {
 		return funcionario;
 	}
 
-	public FormaDePagamento getFormaDePagamento() {
+	public IFormaDePagamento getFormaDePagamento() {
 		return formaDePagamento;
 	}
 	
