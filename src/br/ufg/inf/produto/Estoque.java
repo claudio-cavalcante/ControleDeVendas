@@ -14,49 +14,23 @@ import java.util.Map;
 public class Estoque {
 
 
-    // Criei 2 maps pois os mesmos so recebem 2 objetos com parametros
 
-    Map<Funcionario, Object> produtosEmEstoque = new HashMap<Funcionario, Object>();
-    Map<Produto, Integer> produtosEmEstoque2 = new HashMap<Produto, Integer>();
-
+    Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
     public void adicionar(Funcionario funcionario,Produto produto,int qtd){
 
-        try {
-
-        produtosEmEstoque2.put(produto,qtd );
-        produtosEmEstoque.put(funcionario, produtosEmEstoque2);
-
-        } catch(Exception e){e.printStackTrace();}
+        produtosEmEstoque.put(produto,qtd );
 
     }
-
-    // para fins de consulta de adicionar produto e remover produtos
-    public void MostrarEstoque(){
-
-        try {
-
-        produtosEmEstoque2.forEach((k,v)->System.out.println("Item : " + k.getNome() + " Quantidade : " + v));
-
-        } catch(Exception e){e.printStackTrace();}
-
-    }
-
 
 
     public void remover(Produto produto){
 
-        try {
+        int qtd = 1;
 
-            produtosEmEstoque2.remove(produto);
-
-        } catch(Exception e){e.printStackTrace();}
+        produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto)-qtd));
 
     }
-
-
-
-
 
 
 }
