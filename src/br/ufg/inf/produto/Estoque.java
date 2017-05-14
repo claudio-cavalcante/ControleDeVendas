@@ -4,10 +4,9 @@ import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import kotlin.internal.InlineOnly;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Created by vinicius on 13/05/17.
@@ -15,37 +14,47 @@ import java.util.Map;
 
 public class Estoque {
 
-    EstoqueHistorico estoqueHistorico = new EstoqueHistorico();
+    List<Operacao> historicooperacao = new ArrayList<>();
 
-    Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
     public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
 
-            if (produtosEmEstoque.containsKey(produto)) {
-                int qtdAnterior = produtosEmEstoque.get(produto);
-                produtosEmEstoque.replace(produto, produtosEmEstoque.get(produto), (produtosEmEstoque.get(produto) + qtd));
-            } else {
-                produtosEmEstoque.put(produto, qtd);
-            }
+        if(funcionario instanceof Gerente){
 
-            estoqueHistorico.adicionar(produtosEmEstoque);
+
+        }
+
+        DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate agora = LocalDate.now();
+
+        Operacao op = new Operacao(1, produto, qtd, agora);
+        historicooperacao.add(op);
+
     }
 
-    public Map<Produto, Integer> estoqueProdutos(){
 
-        return produtosEmEstoque;
+    public List<Operacao> estoqueProdutos(){
+
+        return historicooperacao;
     }
-
 
 
     public void remover(Produto produto, int qtd){
 
-        if(produtosEmEstoque.containsKey(produto)) {
-            produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto) - qtd));
+        for(Operacao operacaos: historicooperacao){
+
+            if(operacaos.getProduto().equals(produto)){
+
+                if(operacaos.getQtd_produto()>qtd){
+
+                    operacaos.setQtd_produto(operacaos.getQtd_produto()-qtd);
+                }
+                else
+                    System.out.println("Não existe produto em quantidade suficiente em estoque!");
+
+            }
+            else
+                System.out.println("Não existe produto no estoque");
         }
-        else
-            System.out.println("Não existe produto no estoque");
     }
-
-
 }
