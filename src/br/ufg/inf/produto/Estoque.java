@@ -17,19 +17,27 @@ public class Estoque {
 
     Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
-	public void adicionar(Funcionario funcionario,Produto produto,int qtd){
+    public void adicionar(Funcionario funcionario,Produto produto,int qtd){
 
-        produtosEmEstoque.put(produto,qtd );
+        if(produtosEmEstoque.containsKey(produto)){
+            int qtdAnterior = produtosEmEstoque.get(produto);
+            produtosEmEstoque.replace(produto,produtosEmEstoque.get(produto),(produtosEmEstoque.get(produto)+qtd) );
+        }
+       else{
+            produtosEmEstoque.put(produto,qtd );
+        }
+
 
     }
 
+  
+    public void remover(Produto produto, int qtd){
 
-    public void remover(Produto produto){
-
-        int qtd = 1;
-
-        produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto)-qtd));
-
+        if(produtosEmEstoque.containsKey(produto)) {
+            produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto) - qtd));
+        }
+        else
+            System.out.println("Não existe produto no estoque");
     }
 
 
