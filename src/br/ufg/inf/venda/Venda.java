@@ -33,8 +33,8 @@ public class Venda {
 		this.funcionario = funcionario;
 	}
 	
-	public IProcessamentoDoPagamento realizarPagamento(){
-		return formaDePagamento.realizarPagamento(getValorTotal(), getValorTotal());
+	public IProcessamentoDoPagamento realizarPagamento(double valorPago){
+		return formaDePagamento.realizarPagamento(getValorTotal(), valorPago);
 	}
 
 	public double getValorTotal(){

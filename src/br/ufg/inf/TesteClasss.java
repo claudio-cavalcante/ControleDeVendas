@@ -26,9 +26,10 @@ public class TesteClasss {
 		itensVenda.add(itemVenda);
 		
 		Venda venda = new Venda(itensVenda, new FormaDePagamentoEmDinheiro());					
-		IProcessamentoDoPagamento processamento = venda.realizarPagamento();
+		IProcessamentoDoPagamento processamento = venda.realizarPagamento(5000);
+				
 		if(processamento.pagamentoRealizadoComSucesso()){
-			System.out.println("Venda concluída" + (processamento.houveTroco() ? " com " + processamento.valorDoTroco() + "de troco" : "" ));
+			System.out.println("Venda concluída" + (processamento.houveTroco() ? " com " + processamento.valorDoTroco() + " de troco" : "" ));
 			caixa.registrarVenda(venda);
 		} else{
 			System.out.println(processamento.mensagem());
