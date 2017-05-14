@@ -47,9 +47,17 @@ public class Estoque {
 
     public void remover(Produto produto, int qtd){
 
+        DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate agora = LocalDate.now();
+
+
         if(produtosEmEstoque.containsKey(produto)) {
             if (produtosEmEstoque.get(produto) > qtd) {
                 produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto) - qtd));
+
+                Operacao op = new Operacao(0, produto, (produtosEmEstoque.get(produto) - qtd), agora);
+                historicooperacao.add(op);
+
             } else
                 System.out.println("Não existe produto em quantidade suficiente em estoque!");
 
@@ -57,15 +65,5 @@ public class Estoque {
         else
             System.out.println("Não existe produto no estoque");
 
-        for(Operacao operacaos: historicooperacao){
-
-            if(operacaos.getProduto().equals(produto)){
-
-                if(operacaos.getQtd_produto()>qtd){
-
-                    operacaos.setQtd_produto(operacaos.getQtd_produto()-qtd);
-                }
-            }
-        }
     }
 }
