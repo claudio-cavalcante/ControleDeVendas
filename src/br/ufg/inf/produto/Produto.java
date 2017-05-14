@@ -2,11 +2,11 @@ package br.ufg.inf.produto;
 
 public class Produto {
 
-    int codigo = 0;
-    String descricao = "";
-    float preco = 0;
+    private int codigo;
+    private String descricao;
+    private float preco;
 
-    
+
     public Produto() {
     }
 
