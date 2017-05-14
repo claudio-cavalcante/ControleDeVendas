@@ -15,16 +15,11 @@ import java.util.Map;
 
 public class Estoque {
 
-
+    EstoqueHistorico estoqueHistorico = new EstoqueHistorico();
 
     Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
     public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
-
-        if (funcionario instanceof Funcionario) {
-            System.out.println("Você não pode fazer isso manu");
-        } else {
-
 
             if (produtosEmEstoque.containsKey(produto)) {
                 int qtdAnterior = produtosEmEstoque.get(produto);
@@ -33,7 +28,7 @@ public class Estoque {
                 produtosEmEstoque.put(produto, qtd);
             }
 
-        }
+            estoqueHistorico.adicionar(produtosEmEstoque);
     }
 
     public Map<Produto, Integer> estoqueProdutos(){
