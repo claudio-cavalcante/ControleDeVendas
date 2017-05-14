@@ -17,7 +17,7 @@ public class Estoque {
 
     Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
-    public void adicionar(Funcionario funcionario,Produto produto,int qtd){
+	public void adicionar(Funcionario funcionario,Produto produto,int qtd){
 
         produtosEmEstoque.put(produto,qtd );
 
