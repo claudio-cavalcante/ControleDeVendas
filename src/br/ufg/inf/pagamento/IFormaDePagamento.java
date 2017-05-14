@@ -1,6 +1,6 @@
 package br.ufg.inf.pagamento;
 
-public interface FormaDePagamento {
+public interface IFormaDePagamento {
 	
 	public IProcessamentoDoPagamento realizarPagamento(double valorDaVenda, double valorPago);
 }
