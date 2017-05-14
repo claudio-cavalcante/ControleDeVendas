@@ -2,6 +2,7 @@ package br.ufg.inf.venda;
 
 import java.util.List;
 
+import br.ufg.inf.pagamento.FormaDePagamento;
 import br.ufg.inf.pessoa.Funcionario;
 
 public class Venda {

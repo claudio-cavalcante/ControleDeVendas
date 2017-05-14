@@ -1,4 +1,4 @@
-package br.ufg.inf.venda;
+package br.ufg.inf.pagamento;
 
 public interface IProcessamentoDoPagamento {
 	public boolean pagamentoRealizadoComSucesso();
