@@ -1,6 +1,7 @@
 package br.ufg.inf.relatorio;
 
 import br.ufg.inf.produto.Estoque;
+import br.ufg.inf.produto.EstoqueHistorico;
 import br.ufg.inf.produto.Produto;
 
 import java.util.*;
@@ -9,15 +10,17 @@ public class RelatorioDeEstoque implements Relatorio{
 
 	Estoque estoque = new Estoque();
 
+	EstoqueHistorico estoqueHistorico = new EstoqueHistorico();
 
-    public void estoqueAtual() {
+    public Estoque estoqueAtual() {
 
-
+        return estoque;
     }
 
 
-    public void estoqueDoDia(){
+    public EstoqueHistorico estoqueDoDia(){
 
+        return estoqueHistorico;
     }
 
 
