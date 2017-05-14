@@ -18,5 +18,16 @@ public class Caixa {
 	public void registrarVenda(Venda venda){
 		vendas.add(venda);
 	}
-	
+
+	public List<Venda> getVendas() {
+		return vendas;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public String getIdentificador() {
+		return identificador;
+	}
 }
