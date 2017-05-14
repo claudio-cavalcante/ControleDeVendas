@@ -1,7 +1,7 @@
 package br.ufg.inf.relatorio;
 
 import br.ufg.inf.produto.Estoque;
-import br.ufg.inf.produto.EstoqueHistorico;
+import br.ufg.inf.produto.Operacao;
 import br.ufg.inf.produto.Produto;
 
 import java.util.*;
@@ -10,17 +10,31 @@ public class RelatorioDeEstoque implements Relatorio{
 
 	Estoque estoque = new Estoque();
 
-	EstoqueHistorico estoqueHistorico = new EstoqueHistorico();
+    public List<Produto> estoqueAtual() {
 
-    public Estoque estoqueAtual() {
+            List<Produto> listaproduto = new ArrayList<>();
 
-        return estoque;
+            for(Operacao operacao: estoque.estoqueProdutos()) {
+
+                listaproduto.add(operacao.getProduto());
+
+            }
+
+        return listaproduto;
     }
 
 
-    public EstoqueHistorico estoqueDoDia(){
+    public List<Produto> estoqueDoDia(){
 
-        return estoqueHistorico;
+        List<Produto> listaproduto = new ArrayList<>();
+
+        for(Operacao operacao: estoque.estoqueProdutos()) {
+
+            listaproduto.add(operacao.getProduto());
+
+        }
+
+        return listaproduto;
     }
 
 
@@ -28,16 +42,16 @@ public class RelatorioDeEstoque implements Relatorio{
 	public String emitir() {
 		String relatorio = "";
 
-        Set<Map.Entry<Produto, Integer>> set = estoque.estoqueProdutos().entrySet();
+        for(Operacao operacao: estoque.estoqueProdutos()) {
 
-        for (Map.Entry<Produto, Integer> produto : set) {
+            relatorio += String.format("Código do produto: "+operacao.getProduto().getCodigo()+"\n" +
+                    "Descrição do Produto: "+operacao.getProduto().getDescricao()+"\n" +
+                    "Preço: "+operacao.getProduto().getPreco()+"\n"+
+                    "Quantidade: "+operacao.getQtd_produto() );
 
-            relatorio += String.format("Código do produto: "+produto.getKey().getCodigo()+"\n" +
-                    "Descrição do Produto: "+produto.getKey().getDescricao()+"\n" +
-                    "Preço: "+produto.getKey().getPreco()+"\n"+
-                    "Quantidade: "+produto.getValue() );
 
         }
+
   		return relatorio;
 	}
 
