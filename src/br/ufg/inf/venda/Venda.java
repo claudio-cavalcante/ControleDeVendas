@@ -3,6 +3,7 @@ package br.ufg.inf.venda;
 import java.util.List;
 
 import br.ufg.inf.pagamento.IFormaDePagamento;
+import br.ufg.inf.pagamento.IProcessamentoDoPagamento;
 import br.ufg.inf.pessoa.Funcionario;
 
 public class Venda {
@@ -30,6 +31,10 @@ public class Venda {
 	
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
+	}
+	
+	public IProcessamentoDoPagamento realizarPagamento(){
+		return formaDePagamento.realizarPagamento(getValorTotal(), getValorTotal());
 	}
 
 	public double getValorTotal(){

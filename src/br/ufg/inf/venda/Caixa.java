@@ -10,9 +10,10 @@ public class Caixa {
 	private Funcionario funcionario;
 	private String identificador;
 	
-	public Caixa(String identificador){
+	public Caixa(String identificador, Funcionario funcionario){
 		this.identificador = identificador;
 		this.vendas = new ArrayList<Venda>();
+		this.funcionario = funcionario;
 	}
 	
 	public void registrarVenda(Venda venda){
