@@ -16,30 +16,46 @@ public class Estoque {
 
     List<Operacao> historicooperacao = new ArrayList<>();
 
+    Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
     public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
 
-        if(funcionario instanceof Gerente){
-
-
+        if (produtosEmEstoque.containsKey(produto)) {
+            int qtdAnterior = produtosEmEstoque.get(produto);
+            produtosEmEstoque.replace(produto, produtosEmEstoque.get(produto), (produtosEmEstoque.get(produto) + qtd));
+        } else {
+            produtosEmEstoque.put(produto, qtd);
         }
 
-        DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate agora = LocalDate.now();
 
-        Operacao op = new Operacao(1, produto, qtd, agora);
-        historicooperacao.add(op);
+        // PARA FINS DE LOG
+        // if(funcionario instanceof Gerente){
 
+            DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate agora = LocalDate.now();
+
+            Operacao op = new Operacao(1, produto, qtd, agora);
+            historicooperacao.add(op);
+
+        //}
     }
 
+    public Map<Produto, Integer> estoqueProdutos(){
 
-    public List<Operacao> estoqueProdutos(){
-
-        return historicooperacao;
+        return produtosEmEstoque;
     }
-
 
     public void remover(Produto produto, int qtd){
+
+        if(produtosEmEstoque.containsKey(produto)) {
+            if (produtosEmEstoque.get(produto) > qtd) {
+                produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto) - qtd));
+            } else
+                System.out.println("Não existe produto em quantidade suficiente em estoque!");
+
+        }
+        else
+            System.out.println("Não existe produto no estoque");
 
         for(Operacao operacaos: historicooperacao){
 
@@ -49,12 +65,7 @@ public class Estoque {
 
                     operacaos.setQtd_produto(operacaos.getQtd_produto()-qtd);
                 }
-                else
-                    System.out.println("Não existe produto em quantidade suficiente em estoque!");
-
             }
-            else
-                System.out.println("Não existe produto no estoque");
         }
     }
 }
