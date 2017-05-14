@@ -1,7 +1,15 @@
 package br.ufg.inf.produto;
 
 public class Produto {
+	private double preco;
+	private String descricao;
+	
+	public Produto(double preco, String descricao){
+		this.preco = preco;
+		this.descricao = descricao;
+	}
 
+<<<<<<< HEAD
     int codigo = 0;
     String descricao = "";
     float preco = 0;
@@ -39,4 +47,15 @@ public class Produto {
         this.preco = preco;
     }
 
+=======
+	public double getPreco() {
+		return preco;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	
+>>>>>>> 97282d372e85999b18e3b6e3bebc6ff4b611964d
 }
