@@ -5,16 +5,21 @@ import java.util.List;
 
 import br.ufg.inf.venda.Caixa;
 
-public class RelatorioDeVendas implements Relatorio{
+public class RelatorioDeVendas implements Relatorio {
 	private List<Caixa> caixas;
-	
-	public RelatorioDeVendas(Caixa... caixas){
+
+	public RelatorioDeVendas(Caixa... caixas) {
 		this.caixas = Arrays.asList(caixas);
 	}
 
 	@Override
 	public String emitir() {
-		// TODO Auto-generated method stub
-		return null;
+		String relatorio = "";
+		for (Caixa caixa : caixas) {
+			relatorio += String.format("Caixa: %s\nValor total: %s\nVendedor: %s\n", caixa.getIdentificador(),
+					caixa.getValorTotal(), caixa.getFuncionario().getNome());			
+		}
+		
+		return relatorio;
 	}
 }

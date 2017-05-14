@@ -16,6 +16,7 @@ public class Caixa {
 	}
 	
 	public void registrarVenda(Venda venda){
+		venda.setFuncionario(this.funcionario);
 		vendas.add(venda);
 	}
 
@@ -29,5 +30,14 @@ public class Caixa {
 
 	public String getIdentificador() {
 		return identificador;
+	}
+	
+	public double getValorTotal(){
+		double valorTotal =0;
+		for(Venda venda : this.vendas){
+			valorTotal += venda.getValorTotal();
+		}
+		
+		return valorTotal;
 	}
 }
