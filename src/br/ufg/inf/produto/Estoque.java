@@ -40,6 +40,13 @@ public class Estoque {
         //}
     }
 
+
+    public  List<Operacao> estoqueProdutosHistorico(){
+
+        return historicooperacao;
+    }
+
+
     public Map<Produto, Integer> estoqueProdutos(){
 
         return produtosEmEstoque;
