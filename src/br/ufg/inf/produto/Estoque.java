@@ -14,9 +14,17 @@ import java.util.*;
 
 public class Estoque {
 
-    List<Operacao> historicooperacao = new ArrayList<>();
+   private static List<Operacao> historicooperacao = new ArrayList<>();
 
-    Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
+   private static Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
+
+    private static Estoque estoque = new Estoque();
+
+
+    public static Estoque Instancia(){
+        return estoque;
+    }
+
 
     public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
 
@@ -62,7 +70,7 @@ public class Estoque {
             if (produtosEmEstoque.get(produto) > qtd) {
                 produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto) - qtd));
 
-                Operacao op = new Operacao(0, produto, (produtosEmEstoque.get(produto) - qtd), agora);
+                Operacao op = new Operacao(0, produto, (produtosEmEstoque.get(produto)), agora);
                 historicooperacao.add(op);
 
             } else
@@ -73,4 +81,25 @@ public class Estoque {
             System.out.println("Não existe produto no estoque");
 
     }
+
+
+    public String emitir() {
+
+        String relatorio = "";
+
+        Set<Map.Entry<Produto, Integer>> set = Estoque.Instancia().estoqueProdutos().entrySet();
+
+        for (Map.Entry<Produto, Integer> produto : set) {
+
+            relatorio += String.format("Código do produto: "+produto.getKey().getCodigo()+"\n" +
+                    "Descrição do Produto: "+produto.getKey().getDescricao()+"\n" +
+                    "Preço: "+produto.getKey().getPreco()+"\n"+
+                    "Quantidade: "+produto.getValue() );
+
+        }
+        return relatorio;
+    }
+
+
+
 }
