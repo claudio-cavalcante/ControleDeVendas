@@ -1,9 +1,11 @@
 package br.ufg.inf.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pessoa.Funcionario;
@@ -15,14 +17,20 @@ import br.ufg.inf.venda.Venda;
 
 public class MenuPrincipal {
 	private List<Funcionario> funcionarios;
-	
+
 	public void execute() {
 		login();
+		funcionarios = new ArrayList<Funcionario>();
 		funcionarios.add(new Gerente("Gerente"));
+		exibirMenuPrincipal();
+	}
+
+	private void exibirMenuPrincipal() {
 		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
 		switch (funcao) {
 		case SAIR:
 			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
+			System.exit(0);
 			break;
 		case ADICIONAR_PRODUTO_ESTOQUE:
 			adicionarProdutoNoEstoque();
@@ -36,17 +44,54 @@ public class MenuPrincipal {
 		case EMITIR_RELATORIO_ESTOQUE:
 			break;
 		}
-	}
-
-	private void adicionarProdutoNoEstoque() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Favor informar os dados do produto:");
-		String codigo = sc.next();
 		
-		
-		estoque.adicionar(funcionarios.get(0), produto, qtd);
+		exibirMenuPrincipal();
 	}
 	
+	private void adicionarProdutoNoEstoque() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println(MensagensSistemaDeVendas.FAVOR_INFORMAR_DADOS_PRODUTO);
+		System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO);
+		boolean codigoValido = false;
+		String codigo;
+		do {
+			codigo = sc.next();
+			codigoValido = StringUtils.isNumeric(codigo);
+			if (!codigoValido) {
+				System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO_INVALIDO);
+			}
+		} while (!codigoValido);
+
+		System.out.printf("%s: ", MensagensSistemaDeVendas.DESCRICAO);
+		String descricao = sc.next();
+
+		System.out.printf("%s: ", MensagensSistemaDeVendas.PRECO);
+		boolean precoValido;
+		String preco;
+		do {
+			preco = sc.next();
+			precoValido = NumberUtils.isParsable(preco);
+			if (!precoValido) {
+				System.out.printf("%s: ", MensagensSistemaDeVendas.PRECO_INVALIDO);
+			}
+		} while (!precoValido);
+		
+		System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
+		boolean qtdValida;
+		String qtd;
+		do {
+			qtd = sc.next();
+			qtdValida = NumberUtils.isParsable(qtd);
+			if (!qtdValida) {
+				System.out.printf("%s: ", MensagensSistemaDeVendas.PRECO_INVALIDO);
+			}
+		} while (!qtdValida);
+				
+		Produto produto = new Produto(Integer.parseInt(codigo), descricao, Float.parseFloat(preco));
+		Estoque.Instancia().adicionar(funcionarios.get(0), produto, Integer.parseInt(qtd));
+		System.out.println(MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE);
+	}
+
 	private EnumFuncoesDoSistema obtenhaFuncaoDesejada() {
 		String opcaoSelecionada = "";
 		Scanner sc = new Scanner(System.in);
@@ -69,7 +114,7 @@ public class MenuPrincipal {
 		return EnumFuncoesDoSistema.getFuncao(Integer.parseInt(opcaoSelecionada));
 	}
 
-	private Funcionario login() {
+	private void login() {
 		System.out.println(MensagensSistemaDeVendas.BEM_VINDO);
 		Scanner sc = new Scanner(System.in);
 		boolean loginValido = false;
@@ -83,8 +128,6 @@ public class MenuPrincipal {
 				System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
 			}
 		} while (!loginValido);
-		
-		
 	}
 
 	private boolean loginValido(String usuario, String senha) {
