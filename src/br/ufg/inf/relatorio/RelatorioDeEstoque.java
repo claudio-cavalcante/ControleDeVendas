@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class RelatorioDeEstoque implements Relatorio{
-	
+
 
     public List<Produto> estoqueAtual() {
 
@@ -26,9 +26,9 @@ public class RelatorioDeEstoque implements Relatorio{
     }
 
 
-    public List<Produto> estoqueDoDia(){
+    public Map<Produto, Integer> estoqueInicioDia(){
 
-        List<Produto> listaproduto = new ArrayList<>();
+        Map<Produto, Integer> listaproduto = new HashMap<Produto, Integer>();
 
         DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate agora = LocalDate.now();
@@ -36,10 +36,27 @@ public class RelatorioDeEstoque implements Relatorio{
         // retorno para uma nova lista somente os do dia
         Estoque.Instancia().estoqueProdutosHistorico().stream()
                 .filter(c -> c.getDataOperacao() != agora )
-                .forEach(c -> listaproduto.add(c.getProduto()));
+                .forEach(c -> listaproduto.put(c.getProduto(),c.getQtd_produto()));
 
         return listaproduto;
     }
+
+
+    public Map<Produto, Integer>  estoqueFinalDia(){
+
+        Map<Produto, Integer> listaproduto = new HashMap<Produto, Integer>();
+
+        DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate agora = LocalDate.now();
+        // Verifico se o dia do registro e o dia de hoje, se for e estoque do dia
+        // retorno para uma nova lista somente os do dia
+        Estoque.Instancia().estoqueProdutosHistorico().stream()
+                .filter(c -> c.getDataOperacao().format(formatador).toString() == agora.format(formatador).toString())
+                .forEach(c -> listaproduto.put(c.getProduto(),c.getQtd_produto()));
+
+        return listaproduto;
+    }
+
 
 
     @Override
@@ -54,7 +71,7 @@ public class RelatorioDeEstoque implements Relatorio{
             relatorio += String.format("Código do produto: "+produto.getKey().getCodigo()+"\n" +
                     "Descrição do Produto: "+produto.getKey().getDescricao()+"\n" +
                     "Preço: "+produto.getKey().getPreco()+"\n"+
-                    "Quantidade: "+produto.getValue() );
+                    "Quantidade: "+produto.getValue()+"\n\n" );
 
         }
         return relatorio;
