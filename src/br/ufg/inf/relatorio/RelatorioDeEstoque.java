@@ -34,8 +34,9 @@ public class RelatorioDeEstoque implements Relatorio{
         LocalDate agora = LocalDate.now();
         // Verifico se o dia do registro e o dia de hoje, se for e estoque do dia
         // retorno para uma nova lista somente os do dia
+
         Estoque.Instancia().estoqueProdutosHistorico().stream()
-                .filter(c -> c.getDataOperacao() != agora )
+                .filter(c -> c.getDataOperacao().toString().toString().equals(agora.toString().toString()) == false  )
                 .forEach(c -> listaproduto.put(c.getProduto(),c.getQtd_produto()));
 
         return listaproduto;
@@ -48,10 +49,11 @@ public class RelatorioDeEstoque implements Relatorio{
 
         DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate agora = LocalDate.now();
+
         // Verifico se o dia do registro e o dia de hoje, se for e estoque do dia
         // retorno para uma nova lista somente os do dia
         Estoque.Instancia().estoqueProdutosHistorico().stream()
-                .filter(c -> c.getDataOperacao().format(formatador).toString() == agora.format(formatador).toString())
+                .filter(c -> c.getDataOperacao().toString().toString().equals(agora.toString().toString()))
                 .forEach(c -> listaproduto.put(c.getProduto(),c.getQtd_produto()));
 
         return listaproduto;
@@ -72,7 +74,6 @@ public class RelatorioDeEstoque implements Relatorio{
                     "Descrição do Produto: "+produto.getKey().getDescricao()+"\n" +
                     "Preço: "+produto.getKey().getPreco()+"\n"+
                     "Quantidade: "+produto.getValue()+"\n\n" );
-
         }
         return relatorio;
 	}
