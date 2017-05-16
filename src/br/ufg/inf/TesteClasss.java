@@ -22,21 +22,46 @@ public class TesteClasss {
 		Caixa caixa = new Caixa("1", new Funcionario("Joao"));
 		RelatorioDeVendas r = new RelatorioDeVendas(caixa);
 
-		Funcionario funcionario = new Funcionario("Fulano1");
-		Produto produto = new Produto(1, "Computador", 2000);
-		Funcionario gerente = new Funcionario("Fulano2");
-		Produto produto2 = new Produto(1, "Bolacha", 2);
-
 		Estoque estoque = new Estoque();
-
-		estoque.adicionar(funcionario, produto, 20);
-		estoque.adicionar(funcionario, produto2, 60);
-
 		RelatorioDeEstoque re = new RelatorioDeEstoque();
 
-		estoque.estoqueProdutos().forEach(c -> System.out.println(c.getProduto().getDescricao()));
 
-		System.out.println(re.emitir());
+		Funcionario funcionario = new Funcionario("Fulano1");
+		Produto produto = new Produto(1, "Computador", 2000);
+		Funcionario funcionario2 = new Funcionario("Fulano2");
+		Produto produto2 = new Produto(2, "Bolacha", 2);
+		Funcionario funcionario3 = new Funcionario("Fulano3");
+		Produto produto3 = new Produto(3, "Biscoito", 8);
+
+		estoque.adicionar(funcionario, produto, 20);
+		estoque.adicionar(funcionario2, produto2, 60);
+		estoque.adicionar(funcionario3, produto3, 10);
+
+
+		//estoque.estoqueProdutos().forEach(c -> imprimir(c.getProduto()));
+
+//		estoque.estoqueProdutos().forEach((k,v) ->  System.out.println(v));
+
+		estoque.remover( produto2, 2);
+
+	//	estoque.estoqueProdutos().forEach((k,v) ->  System.out.println(v));
+
+
+		//System.out.println(estoque.emitir());
+
+
+		System.out.println("Antes do Dia");
+
+		re.estoqueInicioDia().forEach((k,v) -> imprimir(k,v));
+
+
+
+		System.out.println("Final do Dia");
+
+		re.estoqueFinalDia().forEach((k,v) -> imprimir(k,v));
+
+
+
 /*
 		List<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
 		ItemVenda itemVenda = new ItemVenda(produto, 2);
@@ -59,5 +84,14 @@ public class TesteClasss {
 		
 */
 	}
+
+	public static void imprimir(Produto produto, int v){
+
+		System.out.println("Codigo: "+produto.getCodigo());
+		System.out.println("Descricao: "+produto.getDescricao());
+		System.out.println("Preço: "+produto.getPreco());
+		System.out.println("Quantidade: "+v+"\n");
+	}
+
 
 }
