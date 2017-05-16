@@ -9,14 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class RelatorioDeEstoque implements Relatorio{
-
-	Estoque estoque = new Estoque();
+	
 
     public List<Produto> estoqueAtual() {
 
         List<Produto> listaproduto = new ArrayList<>();
 
-        Set<Map.Entry<Produto, Integer>> set = estoque.estoqueProdutos().entrySet();
+        Set<Map.Entry<Produto, Integer>> set = Estoque.Instancia().estoqueProdutos().entrySet();
 
         for (Map.Entry<Produto, Integer> produto : set) {
                 listaproduto.add(produto.getKey());
@@ -35,7 +34,7 @@ public class RelatorioDeEstoque implements Relatorio{
         LocalDate agora = LocalDate.now();
         // Verifico se o dia do registro e o dia de hoje, se for e estoque do dia
         // retorno para uma nova lista somente os do dia
-        estoque.estoqueProdutosHistorico().stream()
+        Estoque.Instancia().estoqueProdutosHistorico().stream()
                 .filter(c -> c.getDataOperacao() != agora )
                 .forEach(c -> listaproduto.add(c.getProduto()));
 
@@ -48,7 +47,7 @@ public class RelatorioDeEstoque implements Relatorio{
 
 		String relatorio = "";
 
-        Set<Map.Entry<Produto, Integer>> set = estoque.estoqueProdutos().entrySet();
+        Set<Map.Entry<Produto, Integer>> set = Estoque.Instancia().estoqueProdutos().entrySet();
 
         for (Map.Entry<Produto, Integer> produto : set) {
 

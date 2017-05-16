@@ -17,6 +17,15 @@ public class Estoque {
     List<Operacao> historicooperacao = new ArrayList<>();
 
     Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
+    
+    private static Estoque estoque = new Estoque();
+    
+    private Estoque(){    	
+    }
+    
+    public static Estoque Instancia(){
+    	return estoque;
+    }
 
     public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
 
