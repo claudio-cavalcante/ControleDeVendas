@@ -25,27 +25,25 @@ public class Estoque {
         return estoque;
     }
 
-
     public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
 
-        if (produtosEmEstoque.containsKey(produto)) {
-            int qtdAnterior = produtosEmEstoque.get(produto);
-            produtosEmEstoque.replace(produto, produtosEmEstoque.get(produto), (produtosEmEstoque.get(produto) + qtd));
-        } else {
-            produtosEmEstoque.put(produto, qtd);
-        }
+        if(funcionario instanceof Gerente){
 
+            if (produtosEmEstoque.containsKey(produto)) {
+                int qtdAnterior = produtosEmEstoque.get(produto);
+                produtosEmEstoque.replace(produto, produtosEmEstoque.get(produto), (produtosEmEstoque.get(produto) + qtd));
+            } else {
+                produtosEmEstoque.put(produto, qtd);
+            }
 
-        // PARA FINS DE LOG
-        // if(funcionario instanceof Gerente){
-
-            DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            // PARA FINS DE LOG
             LocalDate agora = LocalDate.now();
 
             Operacao op = new Operacao(1, produto, qtd, agora);
             historicooperacao.add(op);
-
-        //}
+        }
+        else
+            System.out.println("Somente gerente está autorizado para adicionar produto no estoque!");
     }
 
 
@@ -62,9 +60,7 @@ public class Estoque {
 
     public void remover(Produto produto, int qtd){
 
-        DateTimeFormatter formatador =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate agora = LocalDate.now();
-
 
         if(produtosEmEstoque.containsKey(produto)) {
             if (produtosEmEstoque.get(produto) > qtd) {
@@ -81,25 +77,5 @@ public class Estoque {
             System.out.println("Não existe produto no estoque");
 
     }
-
-
-    public String emitir() {
-
-        String relatorio = "";
-
-        Set<Map.Entry<Produto, Integer>> set = Estoque.Instancia().estoqueProdutos().entrySet();
-
-        for (Map.Entry<Produto, Integer> produto : set) {
-
-            relatorio += String.format("Código do produto: "+produto.getKey().getCodigo()+"\n" +
-                    "Descrição do Produto: "+produto.getKey().getDescricao()+"\n" +
-                    "Preço: "+produto.getKey().getPreco()+"\n"+
-                    "Quantidade: "+produto.getValue() );
-
-        }
-        return relatorio;
-    }
-
-
 
 }
