@@ -28,9 +28,9 @@ public class TesteClasss {
 
 		Funcionario funcionario = new Funcionario("Fulano1");
 		Produto produto = new Produto(1, "Computador", 2000);
-		Funcionario funcionario2 = new Funcionario("Fulano2");
+		Funcionario funcionario2 = new Gerente("Fulano2");
 		Produto produto2 = new Produto(2, "Bolacha", 2);
-		Funcionario funcionario3 = new Funcionario("Fulano3");
+		Funcionario funcionario3 = new Gerente("Fulano3");
 		Produto produto3 = new Produto(3, "Biscoito", 8);
 
 		estoque.adicionar(funcionario, produto, 20);
