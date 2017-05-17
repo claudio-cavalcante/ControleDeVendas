@@ -1,9 +1,9 @@
 package br.ufg.inf.pessoa;
 
-public class Gerente extends Funcionario{
+public class Gerente extends Funcionario {
 
-	public Gerente(String nome) {
-		super(nome);
+	public Gerente(int matricula, String nome) {
+		super(matricula, nome);
 	}
 
 }
