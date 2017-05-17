@@ -11,6 +11,7 @@ public interface MensagensSistemaDeVendas {
 	public static final String EMITIR_RELATORIO_ESTOQUE = "Emitir relatório de estoque";
 	public static final String EMITIR_RELATORIO_VENDA = "Emitir relatório de venda";
 	public static final String FAVOR_INFORMAR_DADOS_PRODUTO = "Favor informar os dados do produto:";
+	public static final String LOGIN = "Login";
 	public static final String LOGOFF = "Logoff";
 	public static final String OBRIGADO_POR_UTILIZAR = "Obrigado por utilizar o Sistema de Vendas!";	
 	public static final String PRECO = "Preço";

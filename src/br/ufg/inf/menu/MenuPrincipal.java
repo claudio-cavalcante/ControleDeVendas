@@ -26,33 +26,11 @@ public class MenuPrincipal {
 		funcionarios.add(new Funcionario(2, "Cláudio"));
 		funcionarios.add(new Funcionario(3, "Danillo"));
 		funcionarios.add(new Funcionario(4, "Vinícius"));
-		login();
-		exibirMenuPrincipal();
+		exibaTelaInicial();		
 	}
 
-	private void exibirMenuPrincipal() {
-		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
-		switch (funcao) {
-		case SAIR:
-			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
-			System.exit(0);
-			break;
-		case ADICIONAR_PRODUTO_ESTOQUE:
-			adicionarProdutoNoEstoque();
-			break;
-		case REALIZAR_VENDA:
-			break;
-		case CONSULTAR_PRECO:
-			break;
-		case EMITIR_RELATORIO_VENDA:
-			break;
-		case EMITIR_RELATORIO_ESTOQUE:
-			break;
-		case LOGOFF:
-			execute();
-		}
-
-		exibirMenuPrincipal();
+	private Venda adicionarProdutosNaVenda(Venda venda, List<Produto> produtos) {
+		return null;
 	}
 
 	private void adicionarProdutoNoEstoque() {
@@ -99,6 +77,62 @@ public class MenuPrincipal {
 		System.out.println(MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE);
 	}
 
+	private void consultarPreco() {
+		
+	}
+	
+	private void exibirMenuPrincipal() {
+		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
+		switch (funcao) {
+		case SAIR:
+			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
+			System.exit(0);
+			break;
+		case ADICIONAR_PRODUTO_ESTOQUE:
+			adicionarProdutoNoEstoque();
+			break;
+		case REALIZAR_VENDA:
+			break;
+		case CONSULTAR_PRECO:
+			break;
+		case EMITIR_RELATORIO_VENDA:
+			break;
+		case EMITIR_RELATORIO_ESTOQUE:
+			break;
+		case LOGOFF:
+			execute();
+		}
+
+		exibirMenuPrincipal();
+	}
+
+	private void exibaTelaInicial() {
+		System.out.println(MensagensSistemaDeVendas.BEM_VINDO);
+		String opcaoSelecionada = "";
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
+			System.out.printf("%d - %s\n", 0, MensagensSistemaDeVendas.LOGIN);
+			System.out.printf("%d - %s\n", 1, MensagensSistemaDeVendas.CONSULTAR_PRECO);
+			opcaoSelecionada = sc.nextLine();
+		} while (!opcaoSelecionada.equals("0") && !opcaoSelecionada.equals("1"));
+		
+		if (opcaoSelecionada.equals("0")) {
+			login();
+			exibirMenuPrincipal();
+		} else if (opcaoSelecionada.equals("1")) {
+			consultarPreco();
+		}		
+	}
+	
+	private boolean finalizarVenda(Venda venda, IFormaDePagamento formaDePagamento) {
+		return true;
+	}
+	
+	private boolean funcionarioLogadoEhGerente() {
+		return funcionarioLogado.getClass().getName() == Gerente.class.getName();
+	}
+
 	private EnumFuncoesDoSistema obtenhaFuncaoDesejada() {
 		String opcaoSelecionada = "";
 		Scanner sc = new Scanner(System.in);
@@ -113,11 +147,9 @@ public class MenuPrincipal {
 		} while (!EnumFuncoesDoSistema.funcaoEhValida(opcaoSelecionada));
 
 		return EnumFuncoesDoSistema.getFuncao(Integer.parseInt(opcaoSelecionada));
-
 	}
 
-	private void login() {
-		System.out.println(MensagensSistemaDeVendas.BEM_VINDO);
+	private void login() {		
 		Scanner sc = new Scanner(System.in);
 		boolean loginValido = false;
 		String usuarioInformado;
@@ -154,19 +186,7 @@ public class MenuPrincipal {
 		return null;
 	}
 
-	private Venda adicionarProdutosNaVenda(Venda venda, List<Produto> produtos) {
-		return null;
-	}
-
-	private boolean funcionarioLogadoEhGerente() {
-		return funcionarioLogado.getClass().getName() == Gerente.class.getName();
-	}
-
 	private IFormaDePagamento selecionarMetodoDePagamento() {
 		return null;
-	}
-
-	private boolean finalizarVenda(Venda venda, IFormaDePagamento formaDePagamento) {
-		return true;
 	}
 }
