@@ -19,8 +19,7 @@ public class Menu {
 	public void exibaOpcoes() {
 		System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
 		for (int i = 0; i < opcoesMenu.size(); i++) {
-			if (Sessao.FuncionarioLogado == null || Sessao.FuncionarioLogado instanceof Gerente ||(!(Sessao.FuncionarioLogado instanceof Gerente)
-							&& opcoesMenu.get(i).autorizadoParaFuncionario())) {
+			if (menuAutorizado(opcoesMenu.get(i))) {
 
 				System.out.printf("%d - %s\n", i, opcoesMenu.get(i).getNome());
 			}
@@ -34,7 +33,7 @@ public class Menu {
 	}
 
 	private void selecionarOpcao(int opcao) {
-		while (opcao < 0 || opcao > opcoesMenu.size() - 1) {
+		while (opcao < 0 || opcao > opcoesMenu.size() - 1 || !menuAutorizado(opcoesMenu.get(opcao))) {
 			exibaOpcoes();
 		}
 
@@ -42,5 +41,10 @@ public class Menu {
 		if (exibirMenuNovamente) {
 			exibaOpcoes();
 		}
+	}
+	
+	private boolean menuAutorizado(IOpcaoMenu opcaoMenu){
+		return Sessao.FuncionarioLogado == null || Sessao.FuncionarioLogado instanceof Gerente ||(!(Sessao.FuncionarioLogado instanceof Gerente)
+				&& opcaoMenu.autorizadoParaFuncionario());
 	}
 }
