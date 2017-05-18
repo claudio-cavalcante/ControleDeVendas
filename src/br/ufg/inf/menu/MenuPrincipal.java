@@ -22,7 +22,7 @@ public class MenuPrincipal {
 
 	public void execute() {
 		populeDados();
-		exibaTelaInicial();		
+		exibaTelaInicial();
 	}
 
 	private Venda adicionarProdutosNaVenda(Venda venda, List<Produto> produtos) {
@@ -88,15 +88,15 @@ public class MenuPrincipal {
 					System.out.println(MensagensSistemaDeVendas.PRODUTO_NAO_ENCONTRADO);
 				}
 			}
-		} while(produtoBuscado == null);
-		
+		} while (produtoBuscado == null);
+
 		System.out.printf("%s: R$ %.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
 	}
-	
+
 	private boolean ehValorNumerico(String valor) {
 		return !valor.trim().isEmpty() && StringUtils.isNumeric(valor.trim());
 	}
-	
+
 	private void exibirMenuPrincipal() {
 		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
 		switch (funcao) {
@@ -129,24 +129,27 @@ public class MenuPrincipal {
 		Scanner sc = new Scanner(System.in);
 		do {
 			System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
-			System.out.printf("%d - %s\n", 0, MensagensSistemaDeVendas.LOGIN);
-			System.out.printf("%d - %s\n", 1, MensagensSistemaDeVendas.CONSULTAR_PRECO);
+			System.out.printf("%d - %s\n", 0, MensagensSistemaDeVendas.SAIR);
+			System.out.printf("%d - %s\n", 1, MensagensSistemaDeVendas.LOGIN);
+			System.out.printf("%d - %s\n", 2, MensagensSistemaDeVendas.CONSULTAR_PRECO);
 			opcaoSelecionada = sc.nextLine();
-		} while (!opcaoSelecionada.equals("0") && !opcaoSelecionada.equals("1"));
-		
+		} while (!opcaoSelecionada.equals("0") && !opcaoSelecionada.equals("1") && !opcaoSelecionada.equals("2"));
+
 		if (opcaoSelecionada.equals("0")) {
+			System.exit(0);
+		} else if (opcaoSelecionada.equals("1")) {
 			login();
 			exibirMenuPrincipal();
-		} else if (opcaoSelecionada.equals("1")) {
+		} else if (opcaoSelecionada.equals("3")) {
 			consultarPreco();
 			exibaTelaInicial();
-		}		
+		}
 	}
-	
+
 	private boolean finalizarVenda(Venda venda, IFormaDePagamento formaDePagamento) {
 		return true;
 	}
-	
+
 	private boolean funcionarioLogadoEhGerente() {
 		return funcionarioLogado.getClass().getName() == Gerente.class.getName();
 	}
@@ -167,7 +170,7 @@ public class MenuPrincipal {
 		return EnumFuncoesDoSistema.getFuncao(Integer.parseInt(opcaoSelecionada));
 	}
 
-	private void login() {		
+	private void login() {
 		Scanner sc = new Scanner(System.in);
 		boolean loginValido = false;
 		String usuarioInformado;
@@ -210,7 +213,7 @@ public class MenuPrincipal {
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Ovos", 12), 10);
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Farinha", 2), 100);
 	}
-	
+
 	private Caixa selecionarCaixa(String identificador) {
 		return null;
 	}
