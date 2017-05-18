@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
+import br.ufg.inf.pagamento.FormaDePagamentoEmDinheiro;
 import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
@@ -92,7 +93,7 @@ public class MenuPrincipal {
 		} while (produtoBuscado == null);
 
 		System.out.printf("%s: %s.\n", MensagensSistemaDeVendas.DESCRICAO, produtoBuscado.getDescricao());
-		System.out.printf("%s: R$ %.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
+		System.out.printf("%s: R$%.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
 	}
 
 	private boolean ehValorNumerico(String valor) {
@@ -222,14 +223,17 @@ public class MenuPrincipal {
 		List<ItemVenda> itens = new ArrayList<ItemVenda>();
 		System.out.println(MensagensSistemaDeVendas.INICIANDO_VENDA);
 		boolean continuarVenda = true;
+		float valorTotal;
 		do {
 			System.out.println(MensagensSistemaDeVendas.PEDIDO_VENDA);
 			System.out.println("----------------------------------");
+			valorTotal = 0;
 			for (ItemVenda item : itens) {
 				System.out.printf(
 						"Código: %d - Descrição: %s - Preço unitário: R$%.2f - Quantidade: %.2f - Preço total: R$%.2f.\n",
 						item.getProduto().getCodigo(), item.getProduto().getDescricao(), item.getProduto().getPreco(),
 						item.getQuantidade(), item.getValorTotal());
+				valorTotal += item.getValorTotal();
 			}
 			System.out.println("-----------------------------------");
 
@@ -238,7 +242,11 @@ public class MenuPrincipal {
 			System.out.printf("1 - %s\n", MensagensSistemaDeVendas.ADICIONAR_PRODUTO);
 			opcao = sc.nextLine();
 			if (opcao.equals("0")) {
-				continuarVenda = true;
+				if (itens.size() == 0) {
+					System.out.println(MensagensSistemaDeVendas.NENHUM_PRODUTO);
+				} else {
+					continuarVenda = false;
+				}
 			} else if (opcao.equals("1")) {
 				boolean codigoValido;
 				String codigo;
@@ -282,9 +290,31 @@ public class MenuPrincipal {
 				}
 			}
 		} while (continuarVenda);
+		System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.VALOR_TOTAL_VENDA, valorTotal);
 
-		Venda venda = new Venda(itens, new FormaDePagamentoEmCartao());
-		venda.realizarPagamento(999999999999f);
+		String opcaoPagamento;
+		do {
+			System.out.println(MensagensSistemaDeVendas.FORMA_PAGAMENTO);
+			System.out.printf("0 - %s\n", MensagensSistemaDeVendas.DINHEIRO);
+			System.out.printf("1 - %s\n", MensagensSistemaDeVendas.CARTAO);
+			opcaoPagamento = sc.nextLine();
+		} while (!opcaoPagamento.equals("0") && !opcaoPagamento.equals("1"));
+
+		IFormaDePagamento formaDePagamento = null;
+		if (opcaoPagamento.equals("0")) {
+			formaDePagamento = new FormaDePagamentoEmDinheiro();
+		} else if (opcaoPagamento.equals("1")) {
+			formaDePagamento = new FormaDePagamentoEmCartao();
+		}
+
+		String valorPago;
+		do {
+			System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_VALOR_PAGO);
+			valorPago = sc.next();
+		} while (!NumberUtils.isParsable(valorPago));
+
+		Venda venda = new Venda(itens, formaDePagamento);
+		venda.realizarPagamento(Double.parseDouble(valorPago));
 		System.out.println(MensagensSistemaDeVendas.VENDA_FINALIZADA);
 	}
 
