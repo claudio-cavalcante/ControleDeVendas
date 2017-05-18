@@ -14,6 +14,7 @@ import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
 import br.ufg.inf.pagamento.FormaDePagamentoEmDinheiro;
 import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pagamento.IProcessamentoDoPagamento;
+import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
 import br.ufg.inf.relatorio.Relatorio;
@@ -31,8 +32,8 @@ public class RealizarVendaOpcaoMenu implements IOpcaoMenu {
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		Relatorio relatorio = new RelatorioDeVendas();
-		System.out.println(relatorio.emitir());
+		selecionarCaixa();
+		realizarVenda();
 		return () -> true;
 	}
 	
@@ -43,8 +44,10 @@ public class RealizarVendaOpcaoMenu implements IOpcaoMenu {
 	
 	private void selecionarCaixa() {
 		
+		Funcionario funcionario = Sessao.FuncionarioLogado;
+		
 		if (DbContext.Caixas.size() == 0) {
-			Caixa primeiroCaixa = new Caixa("1", null);
+			Caixa primeiroCaixa = new Caixa("1", funcionario);
 			DbContext.Caixas.add(primeiroCaixa);
 			Sessao.caixaSelecionado = primeiroCaixa;
 		} else {
@@ -71,7 +74,7 @@ public class RealizarVendaOpcaoMenu implements IOpcaoMenu {
 					}
 				} while (!caixaValido);
 			} else if (opcao.equals("1")) {
-				Caixa novoCaixa = new Caixa(Integer.toString(DbContext.Caixas.size()), null);
+				Caixa novoCaixa = new Caixa(Integer.toString(DbContext.Caixas.size()), funcionario);
 				DbContext.Caixas.add(novoCaixa);
 				Sessao.caixaSelecionado = novoCaixa;
 			}
@@ -176,6 +179,7 @@ public class RealizarVendaOpcaoMenu implements IOpcaoMenu {
 			}
 
 			Venda venda = new Venda(itens, formaDePagamento);
+			
 			IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
 			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
 			if (pagamentoRealizadoComSucesso) {

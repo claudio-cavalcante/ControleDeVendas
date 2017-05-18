@@ -67,7 +67,7 @@ public class AdicionarProdutoEstoqueOpcaoMenu  implements IOpcaoMenu {
 		} while (!qtdValida);
 
 		Produto produto = new Produto(Integer.parseInt(codigo), descricao, Float.parseFloat(preco));
-		Estoque.Instancia().adicionar(null, produto, Integer.parseInt(qtd));
+		Estoque.Instancia().adicionar(produto, Integer.parseInt(qtd));
 		System.out.println(MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE);
 	}
 }

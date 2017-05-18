@@ -20,7 +20,7 @@ import br.ufg.inf.produto.*;
 public class TesteClasss {
 	public static void main(String args[]){
 		Caixa caixa = new Caixa("1", new Funcionario(4,"Joao"));
-		RelatorioDeVendas r = new RelatorioDeVendas(caixa);
+		RelatorioDeVendas r = new RelatorioDeVendas();
 
 		Estoque estoque = new Estoque();
 		RelatorioDeEstoque re = new RelatorioDeEstoque();
@@ -33,11 +33,11 @@ public class TesteClasss {
 		Funcionario funcionario3 = new Gerente(3,"Fulano3");
 		Produto produto3 = new Produto(3, "Biscoito", 8);
 
-		estoque.adicionar(funcionario, produto, 20);
-		estoque.adicionar(funcionario2, produto2, 60);
-		estoque.adicionar(funcionario3, produto3, 10);
-		estoque.adicionar(funcionario3, produto3, 8);
-		estoque.adicionar(funcionario3, produto3, 5);
+		estoque.adicionar( produto, 20);
+		estoque.adicionar( produto2, 60);
+		estoque.adicionar( produto3, 10);
+		estoque.adicionar( produto3, 8);
+		estoque.adicionar( produto3, 5);
 
 		//estoque.estoqueProdutos().forEach(c -> imprimir(c.getProduto()));
 

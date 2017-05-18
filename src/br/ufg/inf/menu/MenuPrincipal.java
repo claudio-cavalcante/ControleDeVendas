@@ -77,7 +77,7 @@ public class MenuPrincipal {
 		} while (!qtdValida);
 
 		Produto produto = new Produto(Integer.parseInt(codigo), descricao, Float.parseFloat(preco));
-		Estoque.Instancia().adicionar(funcionarioLogado, produto, Integer.parseInt(qtd));
+		Estoque.Instancia().adicionar(produto, Integer.parseInt(qtd));
 		System.out.println(MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE);
 	}
 
@@ -112,7 +112,7 @@ public class MenuPrincipal {
 	}
 
 	private void emitirRelatorioVenda() {
-		Relatorio relatorio = new RelatorioDeVendas(caixas);
+		Relatorio relatorio = new RelatorioDeVendas();
 		System.out.println(relatorio.emitir());
 	}
 
@@ -233,9 +233,9 @@ public class MenuPrincipal {
 		funcionarios.add(new Funcionario(3, "Danillo"));
 		funcionarios.add(new Funcionario(4, "Vinícius"));
 		caixas = new ArrayList<Caixa>();
-		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(1, "Leite", 5), 10);
-		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Ovos", 12), 10);
-		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Farinha", 2), 100);
+		Estoque.Instancia().adicionar(new Produto(1, "Leite", 5), 10);
+		Estoque.Instancia().adicionar(new Produto(2, "Ovos", 12), 10);
+		Estoque.Instancia().adicionar(new Produto(2, "Farinha", 2), 100);
 	}
 
 	private void realizarVenda() {

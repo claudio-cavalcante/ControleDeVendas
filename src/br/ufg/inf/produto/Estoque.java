@@ -14,9 +14,7 @@ public class Estoque {
 		return estoque;
 	}
 
-	public void adicionar(Funcionario funcionario, Produto produto, int quantidade) {
-
-		if (funcionario instanceof Gerente) {			
+	public void adicionar(Produto produto, int quantidade) {					
 
 			if (produtosEmEstoque.containsKey(produto)) {
 				int qtdAnterior = produtosEmEstoque.get(produto);
@@ -27,9 +25,7 @@ public class Estoque {
 			}		
 
 
-			LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.ADICIONAR, produto, quantidade);
-		} else
-			System.out.println("Somente gerente está autorizado para adicionar produto no estoque!");
+			LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.ADICIONAR, produto, quantidade);		
 	}
 
 	public void remover(Produto produto, int quantidade) {
