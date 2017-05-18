@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufg.inf.pessoa.Funcionario;
+import br.ufg.inf.produto.Estoque;
 
 public class Caixa {
 	private List<Venda> vendas;
@@ -18,8 +19,10 @@ public class Caixa {
 	
 	public void registrarVenda(Venda venda){
 		venda.setFuncionario(this.funcionario);
+		removerDoEstoque(venda.getItensVenda());
+		
 		vendas.add(venda);
-	}
+	}	
 
 	public List<Venda> getVendas() {
 		return vendas;
@@ -40,5 +43,10 @@ public class Caixa {
 		}
 		
 		return valorTotal;
+	}
+	
+	private void removerDoEstoque(List<ItemVenda> itensVenda) {
+		for(ItemVenda itemVenda : itensVenda){
+		}		
 	}
 }
