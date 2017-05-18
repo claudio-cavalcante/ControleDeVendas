@@ -1,6 +1,7 @@
 package br.ufg.inf.menu;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import br.ufg.inf.pessoa.Funcionario;
@@ -20,7 +21,7 @@ public enum EnumFuncoesDoSistema {
 	}
 	
 	public static Map<EnumFuncoesDoSistema, String> obtenhaFuncoes(Funcionario funcionario) {
-		Map<EnumFuncoesDoSistema, String> funcoes = new HashMap<EnumFuncoesDoSistema, String>();
+		Map<EnumFuncoesDoSistema, String> funcoes = new LinkedHashMap<EnumFuncoesDoSistema, String>();
 		funcoes.put(REALIZAR_VENDA, MensagensSistemaDeVendas.REALIZAR_VENDA);
 		funcoes.put(CONSULTAR_PRECO, MensagensSistemaDeVendas.CONSULTAR_PRECO);
 		if (funcionario.getClass().getName() == Gerente.class.getName()) {

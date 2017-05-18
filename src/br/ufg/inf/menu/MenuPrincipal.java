@@ -21,38 +21,12 @@ public class MenuPrincipal {
 	private Funcionario funcionarioLogado;
 
 	public void execute() {
-		funcionarios = new ArrayList<Funcionario>();
-		funcionarios.add(new Gerente(1, "Gerente"));
-		funcionarios.add(new Funcionario(2, "Cláudio"));
-		funcionarios.add(new Funcionario(3, "Danillo"));
-		funcionarios.add(new Funcionario(4, "Vinícius"));
-		login();
-		exibirMenuPrincipal();
+		populeDados();
+		exibaTelaInicial();		
 	}
 
-	private void exibirMenuPrincipal() {
-		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
-		switch (funcao) {
-		case SAIR:
-			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
-			System.exit(0);
-			break;
-		case ADICIONAR_PRODUTO_ESTOQUE:
-			adicionarProdutoNoEstoque();
-			break;
-		case REALIZAR_VENDA:
-			break;
-		case CONSULTAR_PRECO:
-			break;
-		case EMITIR_RELATORIO_VENDA:
-			break;
-		case EMITIR_RELATORIO_ESTOQUE:
-			break;
-		case LOGOFF:
-			execute();
-		}
-
-		exibirMenuPrincipal();
+	private Venda adicionarProdutosNaVenda(Venda venda, List<Produto> produtos) {
+		return null;
 	}
 
 	private void adicionarProdutoNoEstoque() {
@@ -99,6 +73,84 @@ public class MenuPrincipal {
 		System.out.println(MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE);
 	}
 
+	private void consultarPreco() {
+		String codigoProduto;
+		Produto produtoBuscado = null;
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_CODIGO_PRODUTO);
+			codigoProduto = sc.next();
+			if (codigoProduto.trim().equals("") || !ehValorNumerico(codigoProduto)) {
+				System.out.println(MensagensSistemaDeVendas.CODIGO_INVALIDO);
+			} else {
+				produtoBuscado = Estoque.Instancia().obtenhaProduto(Integer.parseInt(codigoProduto));
+				if (produtoBuscado == null) {
+					System.out.println(MensagensSistemaDeVendas.PRODUTO_NAO_ENCONTRADO);
+				}
+			}
+		} while(produtoBuscado == null);
+		
+		System.out.printf("%s: R$ %.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
+	}
+	
+	private boolean ehValorNumerico(String valor) {
+		return !valor.trim().isEmpty() && StringUtils.isNumeric(valor.trim());
+	}
+	
+	private void exibirMenuPrincipal() {
+		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
+		switch (funcao) {
+		case SAIR:
+			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
+			System.exit(0);
+			break;
+		case ADICIONAR_PRODUTO_ESTOQUE:
+			adicionarProdutoNoEstoque();
+			break;
+		case REALIZAR_VENDA:
+			break;
+		case CONSULTAR_PRECO:
+			consultarPreco();
+			break;
+		case EMITIR_RELATORIO_VENDA:
+			break;
+		case EMITIR_RELATORIO_ESTOQUE:
+			break;
+		case LOGOFF:
+			execute();
+		}
+
+		exibirMenuPrincipal();
+	}
+
+	private void exibaTelaInicial() {
+		System.out.println(MensagensSistemaDeVendas.BEM_VINDO);
+		String opcaoSelecionada = "";
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
+			System.out.printf("%d - %s\n", 0, MensagensSistemaDeVendas.LOGIN);
+			System.out.printf("%d - %s\n", 1, MensagensSistemaDeVendas.CONSULTAR_PRECO);
+			opcaoSelecionada = sc.nextLine();
+		} while (!opcaoSelecionada.equals("0") && !opcaoSelecionada.equals("1"));
+		
+		if (opcaoSelecionada.equals("0")) {
+			login();
+			exibirMenuPrincipal();
+		} else if (opcaoSelecionada.equals("1")) {
+			consultarPreco();
+			exibaTelaInicial();
+		}		
+	}
+	
+	private boolean finalizarVenda(Venda venda, IFormaDePagamento formaDePagamento) {
+		return true;
+	}
+	
+	private boolean funcionarioLogadoEhGerente() {
+		return funcionarioLogado.getClass().getName() == Gerente.class.getName();
+	}
+
 	private EnumFuncoesDoSistema obtenhaFuncaoDesejada() {
 		String opcaoSelecionada = "";
 		Scanner sc = new Scanner(System.in);
@@ -113,11 +165,9 @@ public class MenuPrincipal {
 		} while (!EnumFuncoesDoSistema.funcaoEhValida(opcaoSelecionada));
 
 		return EnumFuncoesDoSistema.getFuncao(Integer.parseInt(opcaoSelecionada));
-
 	}
 
-	private void login() {
-		System.out.println(MensagensSistemaDeVendas.BEM_VINDO);
+	private void login() {		
 		Scanner sc = new Scanner(System.in);
 		boolean loginValido = false;
 		String usuarioInformado;
@@ -140,7 +190,7 @@ public class MenuPrincipal {
 	}
 
 	private boolean loginValido(String usuario, String senha) {
-		if (usuario.trim().isEmpty() || !StringUtils.isNumeric(usuario)) {
+		if (!ehValorNumerico(usuario)) {
 			return false;
 		} else {
 			return Integer.parseInt(usuario) == 1 && senha.equals("123")
@@ -150,23 +200,22 @@ public class MenuPrincipal {
 		}
 	}
 
+	private void populeDados() {
+		funcionarios = new ArrayList<Funcionario>();
+		funcionarios.add(new Gerente(1, "Gerente"));
+		funcionarios.add(new Funcionario(2, "Cláudio"));
+		funcionarios.add(new Funcionario(3, "Danillo"));
+		funcionarios.add(new Funcionario(4, "Vinícius"));
+		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(1, "Leite", 5), 10);
+		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Ovos", 12), 10);
+		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Farinha", 2), 100);
+	}
+	
 	private Caixa selecionarCaixa(String identificador) {
 		return null;
 	}
 
-	private Venda adicionarProdutosNaVenda(Venda venda, List<Produto> produtos) {
-		return null;
-	}
-
-	private boolean funcionarioLogadoEhGerente() {
-		return funcionarioLogado.getClass().getName() == Gerente.class.getName();
-	}
-
 	private IFormaDePagamento selecionarMetodoDePagamento() {
 		return null;
-	}
-
-	private boolean finalizarVenda(Venda venda, IFormaDePagamento formaDePagamento) {
-		return true;
 	}
 }
