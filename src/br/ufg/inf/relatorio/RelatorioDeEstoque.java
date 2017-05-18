@@ -40,7 +40,7 @@ public class RelatorioDeEstoque implements Relatorio {
 					"Código do produto: %s\nDescrição do Produto: %s\nPreço: %.2f\nQuantidade: %d\n\n",
 					produto.getCodigo(), produto.getDescricao(), produto.getPreco(), quantidade);
 		}
-		
+
 		return relatorio;
 	}
 }
