@@ -5,7 +5,7 @@ import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.relatorio.Relatorio;
 import br.ufg.inf.relatorio.RelatorioDeEstoque;
 
-public class EmitirRelatorioEstoqueOpcaoMenu implements IOpcaoMenu {
+public class OpcaoMenuEmitirRelatorioEstoque implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {

@@ -9,7 +9,7 @@ import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
 
-public class AdicionarProdutoEstoqueOpcaoMenu  implements IOpcaoMenu {
+public class OpcaoMenuAdicionarProdutoEstoque  implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {

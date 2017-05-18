@@ -23,7 +23,7 @@ import br.ufg.inf.venda.Caixa;
 import br.ufg.inf.venda.ItemVenda;
 import br.ufg.inf.venda.Venda;
 
-public class RealizarVendaOpcaoMenu implements IOpcaoMenu {
+public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {

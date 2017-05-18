@@ -8,7 +8,7 @@ import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
 
-public class ConsultarPrecoOpcaoMenu implements IOpcaoMenu {
+public class OpcaoMenuConsultarPreco implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {

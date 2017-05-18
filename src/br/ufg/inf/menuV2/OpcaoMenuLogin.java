@@ -12,7 +12,7 @@ import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 
-public class LoginMenu implements IOpcaoMenu {
+public class OpcaoMenuLogin implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
@@ -29,13 +29,13 @@ public class LoginMenu implements IOpcaoMenu {
 			}
 
 			Menu menuPrincipal = new Menu(
-					new SairOpcaoMenu(),
-					new AdicionarProdutoEstoqueOpcaoMenu(),
-					new RealizarVendaOpcaoMenu(),
-					new ConsultarPrecoOpcaoMenu(),
-					new EmitirRelatorioVendaOpcaoMenu(),
-					new EmitirRelatorioEstoqueOpcaoMenu(),
-					new LogoffOpcaoMenu());
+					new OpcaoMenuSair(),
+					new OpcaoMenuAdicionarProdutoEstoque(),
+					new OpcaoMenuRealizarVenda(),
+					new OpcaoMenuConsultarPreco(),
+					new OpcaoMenuEmitirRelatorioVenda(),
+					new OpcaoMenuEmitirRelatorioEstoque(),
+					new OpcaoMenuLogoff());
 			
 			menuPrincipal.exibaOpcoes();
 

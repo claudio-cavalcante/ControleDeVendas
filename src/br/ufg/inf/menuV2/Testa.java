@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Testa {
 
 	public static void main(String[] args) {
-		Menu telaInicial = new Menu( new SairOpcaoMenu(),new LoginMenu());
+		Menu telaInicial = new Menu( new OpcaoMenuSair(),new OpcaoMenuLogin());
 		telaInicial.exibaOpcoes();
 		
 	

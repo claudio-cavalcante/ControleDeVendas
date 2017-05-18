@@ -3,20 +3,16 @@ import java.util.function.Supplier;
 
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 
-public class SairOpcaoMenu implements IOpcaoMenu {
+public class OpcaoMenuLogoff implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.SAIR;
+		return MensagensSistemaDeVendas.LOGOFF;
 	}
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		return () -> {
-			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
-			System.exit(0);
-			return true;
-		};
+		return () -> true;
 	}
 	
 	@Override
