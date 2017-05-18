@@ -12,8 +12,7 @@ public class LogoffOpcaoMenu implements IOpcaoMenu {
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> true;
 	}
 	
 	@Override
