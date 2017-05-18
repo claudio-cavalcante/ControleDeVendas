@@ -51,12 +51,16 @@ public class LoginMenu implements IOpcaoMenu {
 	private void login() {
 		Scanner sc = new Scanner(System.in);
 		boolean loginValido = false;
+		
 		String usuarioInformado;
-		System.out.printf(MensagensSistemaDeVendas.USUARIO + ": ");
+		System.out.printf(MensagensSistemaDeVendas.USUARIO + ": ");		
 		usuarioInformado = sc.next();
-		System.out.printf(MensagensSistemaDeVendas.SENHA + ": ");
+		
+		System.out.printf(MensagensSistemaDeVendas.SENHA + ": ");		
 		String senha = sc.next();
+		
 		loginValido = loginValido(usuarioInformado, senha);
+		
 		if (!loginValido) {
 			System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
 			return;
