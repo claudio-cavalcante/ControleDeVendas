@@ -8,6 +8,10 @@ import br.ufg.inf.venda.Caixa;
 public class RelatorioDeVendas implements Relatorio {
 	private List<Caixa> caixas;
 
+	public RelatorioDeVendas(List<Caixa> caixas) {
+		this.caixas = caixas;
+	}
+
 	public RelatorioDeVendas(Caixa... caixas) {
 		this.caixas = Arrays.asList(caixas);
 	}

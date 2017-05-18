@@ -13,11 +13,13 @@ public interface MensagensSistemaDeVendas {
 	public static final String DINHEIRO = "Dinheiro";
 	public static final String EMITIR_RELATORIO_ESTOQUE = "Emitir relatório de estoque";
 	public static final String EMITIR_RELATORIO_VENDA = "Emitir relatório de venda";
+	public static final String ESCOLHER_CAIXA = "Escolher caixa";
 	public static final String INFORME_CODIGO_PRODUTO = "Informe o código do produto desejado";
 	public static final String INFORME_VALOR_PAGO = "Informe o valor pago";
 	public static final String FAVOR_INFORMAR_DADOS_PRODUTO = "Favor informar os dados do produto:";
 	public static final String FORMA_PAGAMENTO = "Favor informar a forma de pagamento";
 	public static final String FINALIZAR_VENDA = "Finalizar venda";
+	public static final String INICIAR_NOVO_CAIXA = "Iniciar novo caixa";
 	public static final String INICIANDO_VENDA = "Iniciando venda...";
 	public static final String LOGIN = "Login";
 	public static final String LOGOFF = "Logoff";
@@ -34,6 +36,7 @@ public interface MensagensSistemaDeVendas {
 	public static final String REALIZAR_VENDA = "Realizar venda";
 	public static final String SAIR = "Sair";
 	public static final String SELECIONE_UMA_FUNCAO = "Por favor, selecione a função desejada:";
+	public static final String SELECIONE_CAIXA = "Selecione o caixa desejado:";
 	public static final String SENHA = "Senha";
 	public static final String TROCO = "Troco";
 	public static final String USUARIO = "Usuário";

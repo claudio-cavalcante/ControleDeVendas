@@ -15,6 +15,9 @@ import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
+import br.ufg.inf.relatorio.Relatorio;
+import br.ufg.inf.relatorio.RelatorioDeEstoque;
+import br.ufg.inf.relatorio.RelatorioDeVendas;
 import br.ufg.inf.venda.Caixa;
 import br.ufg.inf.venda.ItemVenda;
 import br.ufg.inf.venda.Venda;
@@ -22,6 +25,8 @@ import br.ufg.inf.venda.Venda;
 public class MenuPrincipal {
 	private List<Funcionario> funcionarios;
 	private Funcionario funcionarioLogado;
+	private List<Caixa> caixas;
+	private Caixa caixaSelecionado;
 
 	public void execute() {
 		populeDados();
@@ -101,6 +106,16 @@ public class MenuPrincipal {
 		return !valor.trim().isEmpty() && StringUtils.isNumeric(valor.trim());
 	}
 
+	private void emitirRelatorioEstoque() {
+		Relatorio relatorio = new RelatorioDeEstoque();
+		System.out.println(relatorio.emitir());
+	}
+
+	private void emitirRelatorioVenda() {
+		Relatorio relatorio = new RelatorioDeVendas(caixas);
+		System.out.println(relatorio.emitir());
+	}
+
 	private void exibirMenuPrincipal() {
 		EnumFuncoesDoSistema funcao = obtenhaFuncaoDesejada();
 		switch (funcao) {
@@ -112,14 +127,17 @@ public class MenuPrincipal {
 			adicionarProdutoNoEstoque();
 			break;
 		case REALIZAR_VENDA:
+			selecionarCaixa();
 			realizarVenda();
 			break;
 		case CONSULTAR_PRECO:
 			consultarPreco();
 			break;
 		case EMITIR_RELATORIO_VENDA:
+			emitirRelatorioVenda();
 			break;
 		case EMITIR_RELATORIO_ESTOQUE:
+			emitirRelatorioEstoque();
 			break;
 		case LOGOFF:
 			execute();
@@ -169,10 +187,7 @@ public class MenuPrincipal {
 		do {
 			System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
 			Map<EnumFuncoesDoSistema, String> funcoes = EnumFuncoesDoSistema.obtenhaFuncoes(funcionarioLogado);
-			for (Map.Entry<EnumFuncoesDoSistema, String> entry : funcoes.entrySet()) {
-				System.out.printf("%d - %s\n", entry.getKey().ordinal(), entry.getValue());
-			}
-
+			funcoes.entrySet().forEach(x -> System.out.printf("%d - %s\n", x.getKey().ordinal(), x.getValue()));
 			opcaoSelecionada = sc.next();
 		} while (!EnumFuncoesDoSistema.funcaoEhValida(opcaoSelecionada));
 
@@ -217,6 +232,7 @@ public class MenuPrincipal {
 		funcionarios.add(new Funcionario(2, "Cláudio"));
 		funcionarios.add(new Funcionario(3, "Danillo"));
 		funcionarios.add(new Funcionario(4, "Vinícius"));
+		caixas = new ArrayList<Caixa>();
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(1, "Leite", 5), 10);
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Ovos", 12), 10);
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Farinha", 2), 100);
@@ -326,6 +342,8 @@ public class MenuPrincipal {
 				if (processamento.houveTroco()) {
 					System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.TROCO, processamento.valorDoTroco());
 				}
+
+				caixaSelecionado.registrarVenda(venda);
 			} else {
 				System.out.println(processamento.mensagem());
 			}
@@ -333,8 +351,40 @@ public class MenuPrincipal {
 		System.out.printf("%s\n\n", MensagensSistemaDeVendas.VENDA_FINALIZADA);
 	}
 
-	private Caixa selecionarCaixa(String identificador) {
-		return null;
+	private void selecionarCaixa() {
+		if (caixas.size() == 0) {
+			Caixa primeiroCaixa = new Caixa("1", funcionarioLogado);
+			caixas.add(primeiroCaixa);
+			caixaSelecionado = primeiroCaixa;
+		} else {
+			String opcao;
+			Scanner sc = new Scanner(System.in);
+			do {
+				System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
+				System.out.printf("0 - %s\n", MensagensSistemaDeVendas.ESCOLHER_CAIXA);
+				System.out.printf("1 - %s\n", MensagensSistemaDeVendas.INICIAR_NOVO_CAIXA);
+				opcao = sc.nextLine();
+			} while (!opcao.equals("0") && !opcao.equals("1"));
+
+			if (opcao.equals("0")) {
+				String caixaSelecionado;
+				boolean caixaValido = false;
+				do {
+					System.out.println(MensagensSistemaDeVendas.SELECIONE_CAIXA);
+					caixas.forEach(x -> System.out.printf("Caixa: %s\n", x.getIdentificador()));
+					caixaSelecionado = sc.nextLine();
+					for (Caixa caixa : caixas) {
+						if (caixa.getIdentificador().equals(caixaSelecionado)) {
+							caixaValido = true;
+						}
+					}
+				} while (!caixaValido);
+			} else if (opcao.equals("1")) {
+				Caixa novoCaixa = new Caixa(Integer.toString(caixas.size()), funcionarioLogado);
+				caixas.add(novoCaixa);
+				caixaSelecionado = novoCaixa;
+			}
+		}
 	}
 
 	private IFormaDePagamento selecionarMetodoDePagamento() {
