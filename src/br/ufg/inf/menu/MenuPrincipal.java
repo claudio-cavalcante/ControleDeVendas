@@ -21,11 +21,7 @@ public class MenuPrincipal {
 	private Funcionario funcionarioLogado;
 
 	public void execute() {
-		funcionarios = new ArrayList<Funcionario>();
-		funcionarios.add(new Gerente(1, "Gerente"));
-		funcionarios.add(new Funcionario(2, "Cláudio"));
-		funcionarios.add(new Funcionario(3, "Danillo"));
-		funcionarios.add(new Funcionario(4, "Vinícius"));
+		populeDados();
 		exibaTelaInicial();		
 	}
 
@@ -78,7 +74,27 @@ public class MenuPrincipal {
 	}
 
 	private void consultarPreco() {
+		String codigoProduto;
+		Produto produtoBuscado = null;
+		Scanner sc = new Scanner(System.in);
+		do {
+			System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_CODIGO_PRODUTO);
+			codigoProduto = sc.next();
+			if (codigoProduto.trim().equals("") || !ehValorNumerico(codigoProduto)) {
+				System.out.println(MensagensSistemaDeVendas.CODIGO_INVALIDO);
+			} else {
+				produtoBuscado = Estoque.Instancia().obtenhaProduto(Integer.parseInt(codigoProduto));
+				if (produtoBuscado == null) {
+					System.out.println(MensagensSistemaDeVendas.PRODUTO_NAO_ENCONTRADO);
+				}
+			}
+		} while(produtoBuscado == null);
 		
+		System.out.printf("%s: R$ %.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
+	}
+	
+	private boolean ehValorNumerico(String valor) {
+		return !valor.trim().isEmpty() && StringUtils.isNumeric(valor.trim());
 	}
 	
 	private void exibirMenuPrincipal() {
@@ -122,6 +138,7 @@ public class MenuPrincipal {
 			exibirMenuPrincipal();
 		} else if (opcaoSelecionada.equals("1")) {
 			consultarPreco();
+			exibaTelaInicial();
 		}		
 	}
 	
@@ -172,7 +189,7 @@ public class MenuPrincipal {
 	}
 
 	private boolean loginValido(String usuario, String senha) {
-		if (usuario.trim().isEmpty() || !StringUtils.isNumeric(usuario)) {
+		if (!ehValorNumerico(usuario)) {
 			return false;
 		} else {
 			return Integer.parseInt(usuario) == 1 && senha.equals("123")
@@ -182,6 +199,17 @@ public class MenuPrincipal {
 		}
 	}
 
+	private void populeDados() {
+		funcionarios = new ArrayList<Funcionario>();
+		funcionarios.add(new Gerente(1, "Gerente"));
+		funcionarios.add(new Funcionario(2, "Cláudio"));
+		funcionarios.add(new Funcionario(3, "Danillo"));
+		funcionarios.add(new Funcionario(4, "Vinícius"));
+		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(1, "Leite", 5), 10);
+		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Ovos", 12), 10);
+		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Farinha", 2), 100);
+	}
+	
 	private Caixa selecionarCaixa(String identificador) {
 		return null;
 	}
