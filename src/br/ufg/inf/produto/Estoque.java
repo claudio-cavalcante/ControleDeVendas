@@ -16,14 +16,16 @@ public class Estoque {
 
 	public void adicionar(Funcionario funcionario, Produto produto, int quantidade) {
 
-		if (funcionario instanceof Gerente) {
+		if (funcionario instanceof Gerente) {			
 
 			if (produtosEmEstoque.containsKey(produto)) {
 				int qtdAnterior = produtosEmEstoque.get(produto);
 				produtosEmEstoque.put(produto, qtdAnterior + quantidade);
 			} else {
+				
 				produtosEmEstoque.put(produto, quantidade);
-			}
+			}		
+
 
 			LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.ADICIONAR, produto, quantidade);
 		} else
@@ -38,7 +40,7 @@ public class Estoque {
 			if (quantidadeAtual >= quantidade) {
 				produtosEmEstoque.put(produto, quantidadeAtual - quantidade);
 
-				LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.REMOVER, produto, quantidade);
+				LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.REMOVER, produto, -quantidade);
 
 			} else
 				System.out.println("Não existe produto em quantidade suficiente em estoque!");

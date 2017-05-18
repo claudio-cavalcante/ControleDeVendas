@@ -10,6 +10,7 @@ public class LogEstoque {
 	private static LogEstoque log = new LogEstoque();
 
 	private LogEstoque() {
+		operacoes = new ArrayList<Operacao>();
 	}
 
 	public static LogEstoque getInstancia() {

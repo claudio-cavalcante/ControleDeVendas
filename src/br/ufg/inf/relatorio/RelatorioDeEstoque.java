@@ -8,6 +8,7 @@ import br.ufg.inf.produto.Produto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class RelatorioDeEstoque implements Relatorio {
 
@@ -44,28 +45,35 @@ public class RelatorioDeEstoque implements Relatorio {
 
 		return relatorio;
 	}
-	
+
 	public Map<Produto, Integer> estoqueInicioDoDia() {
-		Map<Produto, Integer> listaProduto = new HashMap<Produto, Integer>();
+		Map<Produto, Integer> estoqueDoInicioDoDia = new HashMap<Produto, Integer>();
 
 		LocalDate agora = LocalDate.now();
+		Set<Map.Entry<Produto, Integer>> estoqueAtual = Estoque.Instancia().estoqueProdutos().entrySet();
 
-		LogEstoque.getInstancia().getOperacoes().stream()
-				.filter(c -> c.getDataOperacao().compareTo(agora) == -1)
-				.forEach(c -> listaProduto.put(c.getProduto(), c.getQtd_produto()));
+		for (Map.Entry<Produto, Integer> estoque : estoqueAtual) {
+			int quantidadeAtual = estoque.getValue().intValue();
 
-		return listaProduto;
+			estoqueDoInicioDoDia.put(estoque.getKey(), quantidadeAtual);
+
+			for (Operacao operacao : LogEstoque.getInstancia().getOperacoes()) {
+				if (operacao.getDataOperacao().compareTo(agora) != 0) {
+					continue;
+				}
+
+				if (operacao.getProduto().equals(estoque.getKey())) {
+					quantidadeAtual = quantidadeAtual - operacao.getQtd_produto();
+					
+					estoqueDoInicioDoDia.put(estoque.getKey(), quantidadeAtual);
+				}
+			}
+		}
+
+		return estoqueDoInicioDoDia;
 	}
-	
+
 	public Map<Produto, Integer> estoqueFinalDoDia() {
-		Map<Produto, Integer> listaProduto = new HashMap<Produto, Integer>();
-
-		LocalDate agora = LocalDate.now();
-
-		LogEstoque.getInstancia().getOperacoes().stream()
-				.filter(c -> c.getDataOperacao().compareTo(agora) <= 0)
-				.forEach(c -> listaProduto.put(c.getProduto(), c.getQtd_produto()));
-
-		return listaProduto;
+		return Estoque.Instancia().estoqueProdutos();
 	}
 }

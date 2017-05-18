@@ -19,24 +19,25 @@ import br.ufg.inf.produto.*;
  */
 public class TesteClasss {
 	public static void main(String args[]){
-		Caixa caixa = new Caixa("1", new Funcionario("Joao"));
+		Caixa caixa = new Caixa("1", new Funcionario(4,"Joao"));
 		RelatorioDeVendas r = new RelatorioDeVendas(caixa);
 
 		Estoque estoque = new Estoque();
 		RelatorioDeEstoque re = new RelatorioDeEstoque();
 
 
-		Funcionario funcionario = new Funcionario("Fulano1");
+		Funcionario funcionario = new Funcionario(1,"Fulano1");
 		Produto produto = new Produto(1, "Computador", 2000);
-		Funcionario funcionario2 = new Gerente("Fulano2");
+		Funcionario funcionario2 = new Gerente(2,"Fulano2");
 		Produto produto2 = new Produto(2, "Bolacha", 2);
-		Funcionario funcionario3 = new Gerente("Fulano3");
+		Funcionario funcionario3 = new Gerente(3,"Fulano3");
 		Produto produto3 = new Produto(3, "Biscoito", 8);
 
 		estoque.adicionar(funcionario, produto, 20);
 		estoque.adicionar(funcionario2, produto2, 60);
 		estoque.adicionar(funcionario3, produto3, 10);
-
+		estoque.adicionar(funcionario3, produto3, 8);
+		estoque.adicionar(funcionario3, produto3, 5);
 
 		//estoque.estoqueProdutos().forEach(c -> imprimir(c.getProduto()));
 
@@ -52,13 +53,13 @@ public class TesteClasss {
 
 		System.out.println("Antes do Dia");
 
-		re.estoqueInicioDia().forEach((k,v) -> imprimir(k,v));
+		re.estoqueInicioDoDia().forEach((k,v) -> imprimir(k,v));
 
 
 
 		System.out.println("Final do Dia");
 
-		re.estoqueFinalDia().forEach((k,v) -> imprimir(k,v));
+		re.estoqueFinalDoDia().forEach((k,v) -> imprimir(k,v));
 
 
 
