@@ -5,9 +5,9 @@ import br.ufg.inf.produto.Produto;
 public class ItemVenda {
 	private Produto produto;
 	
-	private int quantidade;
+	private float quantidade;
 	
-	public ItemVenda(Produto produto, int quantidade){
+	public ItemVenda(Produto produto, float quantidade){
 		this.produto = produto;
 		this.quantidade = quantidade;
 	}
@@ -16,7 +16,7 @@ public class ItemVenda {
 		return produto;
 	}
 
-	public int getQuantidade() {
+	public float getQuantidade() {
 		return quantidade;
 	}
 	

@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
 import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
 import br.ufg.inf.venda.Caixa;
+import br.ufg.inf.venda.ItemVenda;
 import br.ufg.inf.venda.Venda;
 
 public class MenuPrincipal {
@@ -64,12 +65,12 @@ public class MenuPrincipal {
 			qtd = sc.next();
 			qtdValida = NumberUtils.isParsable(qtd);
 			if (!qtdValida) {
-				System.out.printf("%s: ", MensagensSistemaDeVendas.PRECO_INVALIDO);
+				System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
 			}
 		} while (!qtdValida);
 
 		Produto produto = new Produto(Integer.parseInt(codigo), descricao, Float.parseFloat(preco));
-		Estoque.Instancia().adicionar(funcionarios.get(0), produto, Integer.parseInt(qtd));
+		Estoque.Instancia().adicionar(funcionarioLogado, produto, Integer.parseInt(qtd));
 		System.out.println(MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE);
 	}
 
@@ -90,6 +91,7 @@ public class MenuPrincipal {
 			}
 		} while (produtoBuscado == null);
 
+		System.out.printf("%s: %s.\n", MensagensSistemaDeVendas.DESCRICAO, produtoBuscado.getDescricao());
 		System.out.printf("%s: R$ %.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
 	}
 
@@ -108,6 +110,7 @@ public class MenuPrincipal {
 			adicionarProdutoNoEstoque();
 			break;
 		case REALIZAR_VENDA:
+			realizarVenda();
 			break;
 		case CONSULTAR_PRECO:
 			consultarPreco();
@@ -140,7 +143,7 @@ public class MenuPrincipal {
 		} else if (opcaoSelecionada.equals("1")) {
 			login();
 			exibirMenuPrincipal();
-		} else if (opcaoSelecionada.equals("3")) {
+		} else if (opcaoSelecionada.equals("2")) {
 			consultarPreco();
 			exibaTelaInicial();
 		}
@@ -212,6 +215,77 @@ public class MenuPrincipal {
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(1, "Leite", 5), 10);
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Ovos", 12), 10);
 		Estoque.Instancia().adicionar(funcionarios.get(0), new Produto(2, "Farinha", 2), 100);
+	}
+
+	private void realizarVenda() {
+		Scanner sc = new Scanner(System.in);
+		List<ItemVenda> itens = new ArrayList<ItemVenda>();
+		System.out.println(MensagensSistemaDeVendas.INICIANDO_VENDA);
+		boolean continuarVenda = true;
+		do {
+			System.out.println(MensagensSistemaDeVendas.PEDIDO_VENDA);
+			System.out.println("----------------------------------");
+			for (ItemVenda item : itens) {
+				System.out.printf(
+						"Código: %d - Descrição: %s - Preço unitário: R$%.2f - Quantidade: %.2f - Preço total: R$%.2f.\n",
+						item.getProduto().getCodigo(), item.getProduto().getDescricao(), item.getProduto().getPreco(),
+						item.getQuantidade(), item.getValorTotal());
+			}
+			System.out.println("-----------------------------------");
+
+			String opcao = "";
+			System.out.printf("0 - %s\n", MensagensSistemaDeVendas.FINALIZAR_VENDA);
+			System.out.printf("1 - %s\n", MensagensSistemaDeVendas.ADICIONAR_PRODUTO);
+			opcao = sc.nextLine();
+			if (opcao.equals("0")) {
+				continuarVenda = true;
+			} else if (opcao.equals("1")) {
+				boolean codigoValido;
+				String codigo;
+				Produto produto = null;
+				do {
+					System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO);
+					codigo = sc.next();
+					codigoValido = StringUtils.isNumeric(codigo);
+					if (!codigoValido) {
+						System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO_INVALIDO);
+					} else {
+						produto = Estoque.Instancia().obtenhaProduto(Integer.parseInt(codigo));
+						if (produto == null) {
+							System.out.println(MensagensSistemaDeVendas.PRODUTO_NAO_ENCONTRADO);
+							codigoValido = false;
+						} else {
+							for (ItemVenda item : itens) {
+								if (item.getProduto().getCodigo() == Integer.parseInt(codigo)) {
+									System.out.println(MensagensSistemaDeVendas.PRODUTO_JA_ADICIONADO);
+									codigoValido = false;
+								}
+							}
+						}
+					}
+				} while (!codigoValido);
+
+				System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
+				boolean quantidadeValida;
+				String quantidade;
+				do {
+					quantidade = sc.next();
+					quantidadeValida = NumberUtils.isParsable(quantidade);
+					if (!quantidadeValida) {
+						System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
+					}
+				} while (!quantidadeValida);
+
+				if (produto != null) {
+					ItemVenda itemDeVenda = new ItemVenda(produto, Float.parseFloat(quantidade));
+					itens.add(itemDeVenda);
+				}
+			}
+		} while (continuarVenda);
+
+		Venda venda = new Venda(itens, new FormaDePagamentoEmCartao());
+		venda.realizarPagamento(999999999999f);
+		System.out.println(MensagensSistemaDeVendas.VENDA_FINALIZADA);
 	}
 
 	private Caixa selecionarCaixa(String identificador) {
