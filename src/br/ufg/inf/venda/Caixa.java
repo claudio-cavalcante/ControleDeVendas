@@ -47,6 +47,7 @@ public class Caixa {
 	
 	private void removerDoEstoque(List<ItemVenda> itensVenda) {
 		for(ItemVenda itemVenda : itensVenda){
+			Estoque.Instancia().remover(itemVenda.getProduto(), (int)itemVenda.getQuantidade());
 		}		
 	}
 }
