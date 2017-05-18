@@ -35,6 +35,7 @@ public interface MensagensSistemaDeVendas {
 	public static final String SAIR = "Sair";
 	public static final String SELECIONE_UMA_FUNCAO = "Por favor, selecione a função desejada:";
 	public static final String SENHA = "Senha";
+	public static final String TROCO = "Troco";
 	public static final String USUARIO = "Usuário";
 	public static final String VALOR_PRODUTO = "Valor do produto";
 	public static final String VALOR_TOTAL_VENDA = "Valor total da venda";

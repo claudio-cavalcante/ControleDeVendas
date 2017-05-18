@@ -10,6 +10,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
 import br.ufg.inf.pagamento.FormaDePagamentoEmDinheiro;
 import br.ufg.inf.pagamento.IFormaDePagamento;
+import br.ufg.inf.pagamento.IProcessamentoDoPagamento;
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import br.ufg.inf.produto.Estoque;
@@ -301,21 +302,29 @@ public class MenuPrincipal {
 		} while (!opcaoPagamento.equals("0") && !opcaoPagamento.equals("1"));
 
 		IFormaDePagamento formaDePagamento = null;
+		String valorPago = "0";
 		if (opcaoPagamento.equals("0")) {
 			formaDePagamento = new FormaDePagamentoEmDinheiro();
+			do {
+				System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_VALOR_PAGO);
+				valorPago = sc.next();
+			} while (!NumberUtils.isParsable(valorPago));
 		} else if (opcaoPagamento.equals("1")) {
 			formaDePagamento = new FormaDePagamentoEmCartao();
+			valorPago = Double.toString(valorTotal);
 		}
 
-		String valorPago;
-		do {
-			System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_VALOR_PAGO);
-			valorPago = sc.next();
-		} while (!NumberUtils.isParsable(valorPago));
-
 		Venda venda = new Venda(itens, formaDePagamento);
-		venda.realizarPagamento(Double.parseDouble(valorPago));
-		System.out.println(MensagensSistemaDeVendas.VENDA_FINALIZADA);
+		IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
+		if (processamento.pagamentoRealizadoComSucesso()) {
+			if (processamento.houveTroco()) {
+				System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.TROCO, processamento.valorDoTroco());
+			}
+		} else {
+			System.out.println(processamento.mensagem());
+		}
+
+		System.out.printf("%s\n\n", MensagensSistemaDeVendas.VENDA_FINALIZADA);
 	}
 
 	private Caixa selecionarCaixa(String identificador) {
