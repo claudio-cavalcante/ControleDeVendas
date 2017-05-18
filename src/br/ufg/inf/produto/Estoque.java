@@ -52,4 +52,13 @@ public class Estoque {
 		return produtosEmEstoque;
 	}
 
+	public Produto obtenhaProduto(int codigo) {
+		for (Map.Entry<Produto, Integer> produto : produtosEmEstoque.entrySet()) {
+			if (produto.getKey().getCodigo() == codigo) {
+				return produto.getKey();
+			}
+		}
+
+		return null;
+	}
 }
