@@ -1,6 +1,7 @@
 package br.ufg.inf.relatorio;
 
 import br.ufg.inf.produto.Estoque;
+import br.ufg.inf.produto.LogEstoque;
 import br.ufg.inf.produto.Operacao;
 import br.ufg.inf.produto.Produto;
 
@@ -42,5 +43,29 @@ public class RelatorioDeEstoque implements Relatorio {
 		}
 
 		return relatorio;
+	}
+	
+	public Map<Produto, Integer> estoqueInicioDoDia() {
+		Map<Produto, Integer> listaProduto = new HashMap<Produto, Integer>();
+
+		LocalDate agora = LocalDate.now();
+
+		LogEstoque.getInstancia().getOperacoes().stream()
+				.filter(c -> c.getDataOperacao().compareTo(agora) == -1)
+				.forEach(c -> listaProduto.put(c.getProduto(), c.getQtd_produto()));
+
+		return listaProduto;
+	}
+	
+	public Map<Produto, Integer> estoqueFinalDoDia() {
+		Map<Produto, Integer> listaProduto = new HashMap<Produto, Integer>();
+
+		LocalDate agora = LocalDate.now();
+
+		LogEstoque.getInstancia().getOperacoes().stream()
+				.filter(c -> c.getDataOperacao().compareTo(agora) <= 0)
+				.forEach(c -> listaProduto.put(c.getProduto(), c.getQtd_produto()));
+
+		return listaProduto;
 	}
 }

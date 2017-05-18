@@ -20,28 +20,8 @@ public class LogEstoque {
 		Operacao operacao = new Operacao(tipoDeOperacao, produto, quantidade, LocalDate.now());
 		operacoes.add(operacao);
 	}
-
-	public Map<Produto, Integer> estoqueInicioDoDia() {
-		Map<Produto, Integer> listaProduto = new HashMap<Produto, Integer>();
-
-		LocalDate agora = LocalDate.now();
-
-		operacoes.stream()
-				.filter(c -> c.getDataOperacao().compareTo(agora) == -1)
-				.forEach(c -> listaProduto.put(c.getProduto(), c.getQtd_produto()));
-
-		return listaProduto;
-	}
 	
-	public Map<Produto, Integer> estoqueFinalDoDia() {
-		Map<Produto, Integer> listaProduto = new HashMap<Produto, Integer>();
-
-		LocalDate agora = LocalDate.now();
-
-		operacoes.stream()
-				.filter(c -> c.getDataOperacao().compareTo(agora) <= 0)
-				.forEach(c -> listaProduto.put(c.getProduto(), c.getQtd_produto()));
-
-		return listaProduto;
+	public List<Operacao> getOperacoes(){
+		return operacoes;
 	}
 }
