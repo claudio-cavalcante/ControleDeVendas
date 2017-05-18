@@ -110,6 +110,7 @@ public class MenuPrincipal {
 		case REALIZAR_VENDA:
 			break;
 		case CONSULTAR_PRECO:
+			consultarPreco();
 			break;
 		case EMITIR_RELATORIO_VENDA:
 			break;
