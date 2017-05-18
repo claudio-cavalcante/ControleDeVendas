@@ -39,5 +39,16 @@ public class Produto {
     public void setPreco(float preco) {
         this.preco = preco;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	boolean flag = false;
+    	if(obj instanceof Produto){
+    		Produto produto = (Produto)obj;
+    		flag = produto.getCodigo() == this.getCodigo();
+    	}    	
+    	
+    	return flag;
+    }
 
 }

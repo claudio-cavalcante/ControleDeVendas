@@ -2,80 +2,54 @@ package br.ufg.inf.produto;
 
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
-import kotlin.internal.InlineOnly;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-/**
- * Created by vinicius on 13/05/17.
- */
 
 public class Estoque {
 
-   private static List<Operacao> historicooperacao = new ArrayList<>();
+	private static Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
 
-   private static Map<Produto, Integer> produtosEmEstoque = new HashMap<Produto, Integer>();
+	private static Estoque estoque = new Estoque();
 
-    private static Estoque estoque = new Estoque();
+	public static Estoque Instancia() {
+		return estoque;
+	}
 
+	public void adicionar(Funcionario funcionario, Produto produto, int quantidade) {
 
-    public static Estoque Instancia(){
-        return estoque;
-    }
+		if (funcionario instanceof Gerente) {
 
-    public void adicionar(Funcionario funcionario,Produto produto,int qtd) {
+			if (produtosEmEstoque.containsKey(produto)) {
+				int qtdAnterior = produtosEmEstoque.get(produto);
+				produtosEmEstoque.put(produto, qtdAnterior + quantidade);
+			} else {
+				produtosEmEstoque.put(produto, quantidade);
+			}
 
-        if(funcionario instanceof Gerente){
+			LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.ADICIONAR, produto, quantidade);
+		} else
+			System.out.println("Somente gerente está autorizado para adicionar produto no estoque!");
+	}
 
-            if (produtosEmEstoque.containsKey(produto)) {
-                int qtdAnterior = produtosEmEstoque.get(produto);
-                produtosEmEstoque.replace(produto, produtosEmEstoque.get(produto), (produtosEmEstoque.get(produto) + qtd));
-            } else {
-                produtosEmEstoque.put(produto, qtd);
-            }
+	public void remover(Produto produto, int quantidade) {
 
-            // PARA FINS DE LOG
-            LocalDate agora = LocalDate.now();
+		if (produtosEmEstoque.containsKey(produto)) {
+			int quantidadeAtual = produtosEmEstoque.get(produto);
 
-            Operacao op = new Operacao(1, produto, qtd, agora);
-            historicooperacao.add(op);
-        }
-        else
-            System.out.println("Somente gerente estÃ¡ autorizado para adicionar produto no estoque!");
-    }
+			if (quantidadeAtual >= quantidade) {
+				produtosEmEstoque.put(produto, quantidadeAtual - quantidade);
 
+				LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.REMOVER, produto, quantidade);
 
-    public  List<Operacao> estoqueProdutosHistorico(){
+			} else
+				System.out.println("Não existe produto em quantidade suficiente em estoque!");
 
-        return historicooperacao;
-    }
+		} else {
+			System.out.println("Não existe produto no estoque");
+		}
+	}
 
-
-    public Map<Produto, Integer> estoqueProdutos(){
-
-        return produtosEmEstoque;
-    }
-
-    public void remover(Produto produto, int qtd){
-
-        LocalDate agora = LocalDate.now();
-
-        if(produtosEmEstoque.containsKey(produto)) {
-            if (produtosEmEstoque.get(produto) > qtd) {
-                produtosEmEstoque.put(produto, (produtosEmEstoque.get(produto) - qtd));
-
-                Operacao op = new Operacao(0, produto, (produtosEmEstoque.get(produto)), agora);
-                historicooperacao.add(op);
-
-            } else
-                System.out.println("NÃ£o existe produto em quantidade suficiente em estoque!");
-
-        }
-        else
-            System.out.println("NÃ£o existe produto no estoque");
-
-    }
+	public Map<Produto, Integer> estoqueProdutos() {
+		return produtosEmEstoque;
+	}
 
 }
