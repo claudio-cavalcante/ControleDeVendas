@@ -144,7 +144,11 @@ public class MenuPrincipal {
 			System.exit(0);
 		} else if (opcaoSelecionada.equals("1")) {
 			login();
-			exibirMenuPrincipal();
+			if (funcionarioLogado == null) {
+				exibaTelaInicial();
+			} else {
+				exibirMenuPrincipal();
+			}
 		} else if (opcaoSelecionada.equals("2")) {
 			consultarPreco();
 			exibaTelaInicial();
@@ -179,16 +183,15 @@ public class MenuPrincipal {
 		Scanner sc = new Scanner(System.in);
 		boolean loginValido = false;
 		String usuarioInformado;
-		do {
-			System.out.printf(MensagensSistemaDeVendas.USUARIO + ": ");
-			usuarioInformado = sc.next();
-			System.out.printf(MensagensSistemaDeVendas.SENHA + ": ");
-			String senha = sc.next();
-			loginValido = loginValido(usuarioInformado, senha);
-			if (!loginValido) {
-				System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
-			}
-		} while (!loginValido);
+		System.out.printf(MensagensSistemaDeVendas.USUARIO + ": ");
+		usuarioInformado = sc.next();
+		System.out.printf(MensagensSistemaDeVendas.SENHA + ": ");
+		String senha = sc.next();
+		loginValido = loginValido(usuarioInformado, senha);
+		if (!loginValido) {
+			System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
+			return;
+		}
 
 		for (Funcionario funcionario : funcionarios) {
 			if (funcionario.getMatricula() == Integer.parseInt(usuarioInformado)) {
@@ -293,37 +296,40 @@ public class MenuPrincipal {
 		} while (continuarVenda);
 		System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.VALOR_TOTAL_VENDA, valorTotal);
 
-		String opcaoPagamento;
+		boolean pagamentoRealizadoComSucesso = false;
 		do {
-			System.out.println(MensagensSistemaDeVendas.FORMA_PAGAMENTO);
-			System.out.printf("0 - %s\n", MensagensSistemaDeVendas.DINHEIRO);
-			System.out.printf("1 - %s\n", MensagensSistemaDeVendas.CARTAO);
-			opcaoPagamento = sc.nextLine();
-		} while (!opcaoPagamento.equals("0") && !opcaoPagamento.equals("1"));
-
-		IFormaDePagamento formaDePagamento = null;
-		String valorPago = "0";
-		if (opcaoPagamento.equals("0")) {
-			formaDePagamento = new FormaDePagamentoEmDinheiro();
+			String opcaoPagamento = "";
 			do {
-				System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_VALOR_PAGO);
-				valorPago = sc.next();
-			} while (!NumberUtils.isParsable(valorPago));
-		} else if (opcaoPagamento.equals("1")) {
-			formaDePagamento = new FormaDePagamentoEmCartao();
-			valorPago = Double.toString(valorTotal);
-		}
+				System.out.println(MensagensSistemaDeVendas.FORMA_PAGAMENTO);
+				System.out.printf("0 - %s\n", MensagensSistemaDeVendas.DINHEIRO);
+				System.out.printf("1 - %s\n", MensagensSistemaDeVendas.CARTAO);
+				opcaoPagamento = sc.nextLine();
+			} while (!opcaoPagamento.equals("0") && !opcaoPagamento.equals("1"));
 
-		Venda venda = new Venda(itens, formaDePagamento);
-		IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
-		if (processamento.pagamentoRealizadoComSucesso()) {
-			if (processamento.houveTroco()) {
-				System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.TROCO, processamento.valorDoTroco());
+			IFormaDePagamento formaDePagamento = null;
+			String valorPago = "0";
+			if (opcaoPagamento.equals("0")) {
+				formaDePagamento = new FormaDePagamentoEmDinheiro();
+				do {
+					System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_VALOR_PAGO);
+					valorPago = sc.next();
+				} while (!NumberUtils.isParsable(valorPago));
+			} else if (opcaoPagamento.equals("1")) {
+				formaDePagamento = new FormaDePagamentoEmCartao();
+				valorPago = Double.toString(valorTotal);
 			}
-		} else {
-			System.out.println(processamento.mensagem());
-		}
 
+			Venda venda = new Venda(itens, formaDePagamento);
+			IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
+			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
+			if (pagamentoRealizadoComSucesso) {
+				if (processamento.houveTroco()) {
+					System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.TROCO, processamento.valorDoTroco());
+				}
+			} else {
+				System.out.println(processamento.mensagem());
+			}
+		} while (!pagamentoRealizadoComSucesso);
 		System.out.printf("%s\n\n", MensagensSistemaDeVendas.VENDA_FINALIZADA);
 	}
 
