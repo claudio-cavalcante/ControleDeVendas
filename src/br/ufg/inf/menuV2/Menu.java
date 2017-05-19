@@ -42,26 +42,23 @@ public class Menu {
 			exibaOpcoes();
 		}
 	}
-	
-	private boolean menuAutorizado(IOpcaoMenu opcaoMenu){
-		if(Sessao.funcionarioLogado == null){
+
+	private boolean menuAutorizado(IOpcaoMenu opcaoMenu) {
+		if (Sessao.funcionarioLogado == null) {
 			return true;
 		}
-		
-		for(EnumPapel papel : opcaoMenu.papeisAutorizados()){
-			if(papel == EnumPapel.FUNCIONARIO){
+
+		for (EnumPapel papel : opcaoMenu.papeisAutorizados()) {
+			switch (papel) {
+			case FUNCIONARIO:
 				return true;
-			}
-		}
-		
-		if(Sessao.funcionarioLogado instanceof Gerente){
-			for(EnumPapel papel : opcaoMenu.papeisAutorizados()){
-				if(papel == EnumPapel.GERENTE){
+			case GERENTE:
+				if (Sessao.funcionarioLogado instanceof Gerente) {
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 }
