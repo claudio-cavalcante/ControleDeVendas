@@ -40,7 +40,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 
 	@Override
 	public EnumPapel[] papeisAutorizados() {
-		return new EnumPapel[]{ EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
+		return new EnumPapel[] { EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
 
 	private void selecionarCaixa() {
@@ -86,24 +86,26 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		List<ItemVenda> itens = new ArrayList<ItemVenda>();
 		System.out.println(MensagensSistemaDeVendas.INICIANDO_VENDA);
 		boolean continuarVenda = true;
-		float valorTotal;
+		float valorTotal = 0;
 		do {
-			System.out.println(MensagensSistemaDeVendas.PEDIDO_VENDA);
-			System.out.println("----------------------------------");
-			valorTotal = 0;
-			for (ItemVenda item : itens) {
-				System.out.printf(
-						"Código: %d - Descrição: %s - Preço unitário: R$%.2f - Quantidade: %.2f - Preço total: R$%.2f.\n",
-						item.getProduto().getCodigo(), item.getProduto().getDescricao(), item.getProduto().getPreco(),
-						item.getQuantidade(), item.getValorTotal());
-				valorTotal += item.getValorTotal();
-			}
-			System.out.println("----------------------------------");
+			if (itens.size() > 0) {
+				System.out.printf("\n%s\n", MensagensSistemaDeVendas.PEDIDO_VENDA);
+				System.out.println("----------------------------------");
+				valorTotal = 0;
+				for (ItemVenda item : itens) {
+					System.out.printf(
+							"Código: %d - Descrição: %s - Preço unitário: R$%.2f - Quantidade: %.2f - Preço total: R$%.2f.\n",
+							item.getProduto().getCodigo(), item.getProduto().getDescricao(),
+							item.getProduto().getPreco(), item.getQuantidade(), item.getValorTotal());
+					valorTotal += item.getValorTotal();
+				}
 
-			String opcao = "";
+				System.out.println("----------------------------------");
+			}
+			
 			System.out.printf("0 - %s\n", MensagensSistemaDeVendas.FINALIZAR_VENDA);
 			System.out.printf("1 - %s\n", MensagensSistemaDeVendas.ADICIONAR_PRODUTO);
-			opcao = sc.nextLine();
+			String opcao = sc.nextLine();
 			if (opcao.equals("0")) {
 				if (itens.size() == 0) {
 					System.out.println(MensagensSistemaDeVendas.NENHUM_PRODUTO);
@@ -142,7 +144,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				do {
 					System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
 					do {
-						quantidade = sc.next();
+						quantidade = sc.next();	
 						quantidadeValida = NumberUtils.isParsable(quantidade);
 						if (!quantidadeValida) {
 							System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
@@ -155,8 +157,9 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 						System.out.printf("%s: %.2f.\n", MensagensSistemaDeVendas.QUANTIDADE_INDISPONIVEL,
 								quantidadeDisponivel);
 					}
-				} while (!quantidadeEstaDisponivel);
-
+				} while (!quantidadeEstaDisponivel);				
+				sc.nextLine();
+				
 				if (produto != null) {
 					ItemVenda itemDeVenda = new ItemVenda(produto, Float.parseFloat(quantidade));
 					itens.add(itemDeVenda);
