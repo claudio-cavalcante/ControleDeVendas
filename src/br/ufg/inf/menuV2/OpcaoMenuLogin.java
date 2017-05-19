@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.ufg.inf.db.DbContext;
 import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.pessoa.Funcionario;
@@ -65,32 +66,15 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 			System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
 			return;
 		}
-
-		for (Funcionario funcionario : getFuncionarios()) {
-			if (funcionario.getMatricula() == Integer.parseInt(usuarioInformado)) {
-				Sessao.FuncionarioLogado = funcionario;
-			}
-		}
-	}
-
-	private List<Funcionario> getFuncionarios() {
-		List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-		funcionarios.add(new Gerente(1, "Gerente"));
-		funcionarios.add(new Funcionario(2, "Cláudio"));
-		funcionarios.add(new Funcionario(3, "Danillo"));
-		funcionarios.add(new Funcionario(4, "Vinícius"));
-
-		return funcionarios;
-	}
+		
+		Sessao.FuncionarioLogado = DbContext.funcionarios().get(Integer.parseInt(usuarioInformado));	
+	}	
 
 	private boolean loginValido(String usuario, String senha) {
 		if (!ehValorNumerico(usuario)) {
-			return false;
+			return false; 
 		} else {
-			return Integer.parseInt(usuario) == 1 && senha.equals("123")
-					|| Integer.parseInt(usuario) == 2 && senha.equals("234")
-					|| Integer.parseInt(usuario) == 3 && senha.equals("345")
-					|| Integer.parseInt(usuario) == 4 && senha.equals("456");
+			return DbContext.senhaValida(Integer.parseInt(usuario), senha);			
 		}
 	}
 
