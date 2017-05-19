@@ -44,8 +44,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		return new EnumPapel[] { EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
 
-	private void selecionarCaixa() {
-		Funcionario funcionario = Sessao.getFuncionarioLogado();
+	private void selecionarCaixa() {		
 
 		Scanner sc = new Scanner(System.in);
 		String caixaSelecionado1;
@@ -53,14 +52,15 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 
 		do {
 			System.out.println(MensagensSistemaDeVendas.SELECIONE_CAIXA);
-			DbContext.caixas().entrySet()
+			DbContext.getInstancia().caixas().entrySet()
 					.forEach(x -> System.out.printf("Caixa: %s\n", x.getValue().getIdentificador()));
 			caixaSelecionado1 = sc.nextLine();
-			for (Entry<Integer, Caixa> caixa : DbContext.caixas().entrySet()) {
+			for (Entry<Integer, Caixa> caixa : DbContext.getInstancia().caixas().entrySet()) {
 				if (caixa.getValue().getIdentificador().equals(caixaSelecionado1)) {
 					caixaValido = true;
 					Caixa caixaSelecionado = caixa.getValue();
 					Sessao.setCaixaSelecionado(caixaSelecionado);
+					break;
 				}
 			}
 		} while (!caixaValido);

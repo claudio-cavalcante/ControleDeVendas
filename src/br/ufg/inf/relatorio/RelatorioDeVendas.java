@@ -18,9 +18,9 @@ public class RelatorioDeVendas implements Relatorio {
 		}
 		
 		String relatorio = "";
-		for (Entry<Integer, Caixa> entrySetCaixa : DbContext.caixas().entrySet()) {
+		for (Entry<Integer, Caixa> entrySetCaixa : DbContext.getInstancia().caixas().entrySet()) {
 			Caixa caixa = entrySetCaixa.getValue();
-			
+			 
 			relatorio += String.format("Caixa: %s\nValor total: R$%.2f\nVendedor: %s\n", caixa.getIdentificador(),
 					caixa.getValorTotal(), caixa.getFuncionario().getNome());			
 		}
