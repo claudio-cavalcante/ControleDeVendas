@@ -23,7 +23,6 @@ public class Menu {
 
 				System.out.printf("%d - %s\n", i, opcoesMenu.get(i).getNome());
 			}
-
 		}
 
 		Scanner sc = new Scanner(System.in);
@@ -42,9 +41,9 @@ public class Menu {
 			exibaOpcoes();
 		}
 	}
-	
-	private boolean menuAutorizado(IOpcaoMenu opcaoMenu){
-		return Sessao.FuncionarioLogado == null || Sessao.FuncionarioLogado instanceof Gerente ||(!(Sessao.FuncionarioLogado instanceof Gerente)
-				&& opcaoMenu.autorizadoParaFuncionario());
+
+	private boolean menuAutorizado(IOpcaoMenu opcaoMenu) {
+		return Sessao.funcionarioLogado == null || Sessao.funcionarioLogado instanceof Gerente
+				|| (!(Sessao.funcionarioLogado instanceof Gerente) && opcaoMenu.autorizadoParaFuncionario());
 	}
 }

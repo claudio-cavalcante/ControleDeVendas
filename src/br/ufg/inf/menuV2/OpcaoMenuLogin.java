@@ -24,7 +24,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 		return () -> {
 			login();
 
-			if (Sessao.FuncionarioLogado == null) {
+			if (Sessao.funcionarioLogado == null) {
 				return true;
 			}
 
@@ -68,7 +68,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 
 		for (Funcionario funcionario : getFuncionarios()) {
 			if (funcionario.getMatricula() == Integer.parseInt(usuarioInformado)) {
-				Sessao.FuncionarioLogado = funcionario;
+				Sessao.funcionarioLogado = funcionario;
 			}
 		}
 	}

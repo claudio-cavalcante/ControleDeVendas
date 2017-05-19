@@ -3,6 +3,8 @@ package br.ufg.inf.menuV2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import br.ufg.inf.db.Sessao;
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import br.ufg.inf.produto.Estoque;
@@ -11,9 +13,7 @@ import br.ufg.inf.venda.Caixa;
 
 public class Testa {
 	private static List<Funcionario> funcionarios;
-	private static Funcionario funcionarioLogado;
 	private static List<Caixa> caixas;
-	private static Caixa caixaSelecionado;
 	
 	public static void main(String[] args) {
 		populeDados();
