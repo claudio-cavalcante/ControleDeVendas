@@ -8,6 +8,7 @@ import br.ufg.inf.db.DbContext;
 import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.venda.Caixa;
+import br.ufg.inf.venda.Venda;
 
 public class RelatorioDeVendas implements Relatorio {
 
@@ -16,16 +17,24 @@ public class RelatorioDeVendas implements Relatorio {
 		if (Sessao.getCaixaSelecionado() == null) {
 			return MensagensSistemaDeVendas.NENHUM_CAIXA_UTILIZADO;
 		}
-		
+
 		String relatorio = MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
 		relatorio += MensagensSistemaDeVendas.RELATORIO_VENDAS + "\n";
 		for (Entry<Integer, Caixa> entrySetCaixa : DbContext.getInstancia().caixas().entrySet()) {
 			Caixa caixa = entrySetCaixa.getValue();
-			 
-			relatorio += String.format("Caixa: %s\nValor total: R$%.2f\nVendedor: %s\n", caixa.getIdentificador(),
-					caixa.getValorTotal(), caixa.getFuncionario().getNome());			
+			if (caixa.getVendas() == null
+					|| caixa.getVendas().size() == 0) {
+				break;
+			}
+			
+			relatorio += "\nCaixa: " + caixa.getIdentificador() + ".\n";
+			for (Venda venda : caixa.getVendas()) {
+				relatorio += String.format("Funcionário: %s\nValor total: R$%.2f\n\n", venda.getFuncionario().getNome(),
+						venda.getValorTotal());
+			}
 		}
 		
+		relatorio += MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
 		return relatorio;
 	}
 }
