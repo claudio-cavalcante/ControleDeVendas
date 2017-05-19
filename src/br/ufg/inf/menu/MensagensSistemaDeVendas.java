@@ -23,6 +23,7 @@ public interface MensagensSistemaDeVendas {
 	public static final String INICIANDO_VENDA = "Iniciando venda...";
 	public static final String LOGIN = "Login";
 	public static final String LOGOFF = "Logoff";
+	public static final String MARCARDOR_RELATORIO = "***************************************";
 	public static final String NENHUM_CAIXA_UTILIZADO = "Nenhum caixa foi utilizado!";
 	public static final String NENHUM_PRODUTO = "Nenhum produto foi adicionado, favor incluir algum produto no pedido.";
 	public static final String OBRIGADO_POR_UTILIZAR = "Obrigado por utilizar o Sistema de Vendas!";
@@ -36,6 +37,7 @@ public interface MensagensSistemaDeVendas {
 	public static final String QUANTIDADE_INDISPONIVEL = "Quantidade desejada indisponível. Disponível no estoque:";
 	public static final String QUANTIDADE_INVALIDA = "Quantidade inválida, informe no formato inteiro ou decimal.";
 	public static final String REALIZAR_VENDA = "Realizar venda";
+	public static final String RELATORIO_ESTOQUE = "Relatório de estoque";
 	public static final String SAIR = "Sair";
 	public static final String SELECIONE_UMA_FUNCAO = "Por favor, selecione a função desejada:";
 	public static final String SELECIONE_CAIXA = "Selecione o caixa desejado:";
