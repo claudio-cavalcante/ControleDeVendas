@@ -20,7 +20,7 @@ public class OpcaoMenuEmitirRelatorioVenda implements IOpcaoMenu {
 	}
 	
 	@Override
-	public boolean autorizadoParaFuncionario() {
-		return false;
+	public EnumPapel[] papeisAutorizados() {
+		return new EnumPapel[]{ EnumPapel.GERENTE };
 	}
 }

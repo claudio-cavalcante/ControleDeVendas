@@ -44,7 +44,24 @@ public class Menu {
 	}
 	
 	private boolean menuAutorizado(IOpcaoMenu opcaoMenu){
-		return Sessao.FuncionarioLogado == null || Sessao.FuncionarioLogado instanceof Gerente ||(!(Sessao.FuncionarioLogado instanceof Gerente)
-				&& opcaoMenu.autorizadoParaFuncionario());
+		if(Sessao.FuncionarioLogado == null){
+			return true;
+		}
+		
+		for(EnumPapel papel : opcaoMenu.papeisAutorizados()){
+			if(papel == EnumPapel.FUNCIONARIO){
+				return true;
+			}
+		}
+		
+		if(Sessao.FuncionarioLogado instanceof Gerente){
+			for(EnumPapel papel : opcaoMenu.papeisAutorizados()){
+				if(papel == EnumPapel.GERENTE){
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 }

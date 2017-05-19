@@ -16,8 +16,8 @@ public class OpcaoMenuLogoff implements IOpcaoMenu {
 	}
 	
 	@Override
-	public boolean autorizadoParaFuncionario() {
-		return true;
+	public EnumPapel[] papeisAutorizados() {
+		return new EnumPapel[]{ EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
 
 }

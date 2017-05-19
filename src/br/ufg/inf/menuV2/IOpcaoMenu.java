@@ -4,5 +4,5 @@ import java.util.function.Supplier;
 public interface IOpcaoMenu {
 	String getNome();
 	Supplier<Boolean> getAcao();
-	boolean autorizadoParaFuncionario();
+	EnumPapel[] papeisAutorizados();
 }

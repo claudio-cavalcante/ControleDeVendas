@@ -23,8 +23,8 @@ public class OpcaoMenuAdicionarProdutoEstoque  implements IOpcaoMenu {
 	}
 	
 	@Override
-	public boolean autorizadoParaFuncionario() {
-		return false;
+	public EnumPapel[] papeisAutorizados() {
+		return new EnumPapel[]{ EnumPapel.GERENTE };
 	}
 
 	private void adicionarProdutoNoEstoque() {
