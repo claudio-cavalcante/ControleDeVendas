@@ -11,9 +11,13 @@ public class Caixa {
 	private Funcionario funcionario;
 	private String identificador;
 	
-	public Caixa(String identificador, Funcionario funcionario){
+	public Caixa(String identificador){
 		this.identificador = identificador;
 		this.vendas = new ArrayList<Venda>();
+	}
+	
+	public Caixa(String identificador, Funcionario funcionario){
+		this(identificador);
 		this.funcionario = funcionario;
 	}
 	
@@ -30,6 +34,10 @@ public class Caixa {
 
 	public Funcionario getFuncionario() {
 		return funcionario;
+	}
+	
+	public void setFuncionario(Funcionario funcionario){
+		this.funcionario = funcionario;
 	}
 
 	public String getIdentificador() {

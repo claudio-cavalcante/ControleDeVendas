@@ -2,6 +2,7 @@ package br.ufg.inf.menuV2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
@@ -44,41 +45,25 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 	}
 
 	private void selecionarCaixa() {
-		Funcionario funcionario = Sessao.funcionarioLogado;
+		Funcionario funcionario = Sessao.getFuncionarioLogado();
 
-		if (DbContext.Caixas.size() == 0) {
-			Caixa primeiroCaixa = new Caixa("1", funcionario);
-			DbContext.Caixas.add(primeiroCaixa);
-			Sessao.caixaSelecionado = primeiroCaixa;
-		} else {
-			String opcao;
-			Scanner sc = new Scanner(System.in);
-			do {
-				System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
-				System.out.printf("0 - %s\n", MensagensSistemaDeVendas.ESCOLHER_CAIXA);
-				System.out.printf("1 - %s\n", MensagensSistemaDeVendas.INICIAR_NOVO_CAIXA);
-				opcao = sc.nextLine();
-			} while (!opcao.equals("0") && !opcao.equals("1"));
+		Scanner sc = new Scanner(System.in);
+		String caixaSelecionado1;
+		boolean caixaValido = false;
 
-			if (opcao.equals("0")) {
-				String caixaSelecionado1;
-				boolean caixaValido = false;
-				do {
-					System.out.println(MensagensSistemaDeVendas.SELECIONE_CAIXA);
-					DbContext.Caixas.forEach(x -> System.out.printf("Caixa: %s\n", x.getIdentificador()));
-					caixaSelecionado1 = sc.nextLine();
-					for (Caixa caixa : DbContext.Caixas) {
-						if (caixa.getIdentificador().equals(caixaSelecionado1)) {
-							caixaValido = true;
-						}
-					}
-				} while (!caixaValido);
-			} else if (opcao.equals("1")) {
-				Caixa novoCaixa = new Caixa(Integer.toString(DbContext.Caixas.size()), funcionario);
-				DbContext.Caixas.add(novoCaixa);
-				Sessao.caixaSelecionado = novoCaixa;
+		do {
+			System.out.println(MensagensSistemaDeVendas.SELECIONE_CAIXA);
+			DbContext.caixas().entrySet()
+					.forEach(x -> System.out.printf("Caixa: %s\n", x.getValue().getIdentificador()));
+			caixaSelecionado1 = sc.nextLine();
+			for (Entry<Integer, Caixa> caixa : DbContext.caixas().entrySet()) {
+				if (caixa.getValue().getIdentificador().equals(caixaSelecionado1)) {
+					caixaValido = true;
+					Caixa caixaSelecionado = caixa.getValue();
+					Sessao.setCaixaSelecionado(caixaSelecionado);
+				}
 			}
-		}
+		} while (!caixaValido);
 	}
 
 	private void realizarVenda() {
@@ -200,7 +185,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.TROCO, processamento.valorDoTroco());
 				}
 
-				Sessao.caixaSelecionado.registrarVenda(venda);
+				Sessao.getCaixaSelecionado().registrarVenda(venda);
 			} else {
 				System.out.println(processamento.mensagem());
 			}

@@ -21,7 +21,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 		return () -> {
 			login();
 
-			if (Sessao.funcionarioLogado == null) {
+			if (Sessao.getFuncionarioLogado() == null) {
 				return true;
 			}
 
@@ -63,7 +63,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 			return;
 		}
 		
-		Sessao.funcionarioLogado = DbContext.funcionarios().get(Integer.parseInt(usuarioInformado));	
+		Sessao.setFuncionarioLogado(DbContext.funcionarios().get(Integer.parseInt(usuarioInformado)));	
 	}	
 
 	private boolean loginValido(String usuario, String senha) {

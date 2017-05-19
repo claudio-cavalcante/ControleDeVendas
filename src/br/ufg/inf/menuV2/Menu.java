@@ -44,7 +44,7 @@ public class Menu {
 	}
 
 	private boolean menuAutorizado(IOpcaoMenu opcaoMenu) {
-		if (Sessao.funcionarioLogado == null) {
+		if (Sessao.getFuncionarioLogado() == null) {
 			return true;
 		}
 
@@ -53,7 +53,7 @@ public class Menu {
 			case FUNCIONARIO:
 				return true;
 			case GERENTE:
-				if (Sessao.funcionarioLogado instanceof Gerente) {
+				if (Sessao.getFuncionarioLogado() instanceof Gerente) {
 					return true;
 				}
 			}
