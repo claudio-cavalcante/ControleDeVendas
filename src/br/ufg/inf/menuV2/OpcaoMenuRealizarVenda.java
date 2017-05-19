@@ -44,7 +44,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 	
 	private void selecionarCaixa() {
 		
-		Funcionario funcionario = Sessao.FuncionarioLogado;
+		Funcionario funcionario = Sessao.funcionarioLogado;
 		
 		if (DbContext.Caixas.size() == 0) {
 			Caixa primeiroCaixa = new Caixa("1", funcionario);
