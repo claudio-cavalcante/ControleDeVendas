@@ -1,4 +1,5 @@
 package br.ufg.inf.menuV2;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -36,16 +37,15 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		realizarVenda();
 		return () -> true;
 	}
-	
+
 	@Override
 	public EnumPapel[] papeisAutorizados() {
 		return new EnumPapel[]{ EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
-	
+
 	private void selecionarCaixa() {
-		
 		Funcionario funcionario = Sessao.funcionarioLogado;
-		
+
 		if (DbContext.Caixas.size() == 0) {
 			Caixa primeiroCaixa = new Caixa("1", funcionario);
 			DbContext.Caixas.add(primeiroCaixa);
@@ -80,7 +80,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			}
 		}
 	}
-	
+
 	private void realizarVenda() {
 		Scanner sc = new Scanner(System.in);
 		List<ItemVenda> itens = new ArrayList<ItemVenda>();
@@ -98,7 +98,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 						item.getQuantidade(), item.getValorTotal());
 				valorTotal += item.getValorTotal();
 			}
-			System.out.println("-----------------------------------");
+			System.out.println("----------------------------------");
 
 			String opcao = "";
 			System.out.printf("0 - %s\n", MensagensSistemaDeVendas.FINALIZAR_VENDA);
@@ -136,16 +136,26 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					}
 				} while (!codigoValido);
 
-				System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
 				boolean quantidadeValida;
+				boolean quantidadeEstaDisponivel;
 				String quantidade;
 				do {
-					quantidade = sc.next();
-					quantidadeValida = NumberUtils.isParsable(quantidade);
-					if (!quantidadeValida) {
-						System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
+					System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
+					do {
+						quantidade = sc.next();
+						quantidadeValida = NumberUtils.isParsable(quantidade);
+						if (!quantidadeValida) {
+							System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
+						}
+					} while (!quantidadeValida);
+
+					float quantidadeDisponivel = Estoque.Instancia().getQuantidadeEmEstoque(Integer.parseInt(codigo));
+					quantidadeEstaDisponivel = quantidadeDisponivel >= Float.parseFloat(quantidade);
+					if (!quantidadeEstaDisponivel) {
+						System.out.printf("%s: %.2f.\n", MensagensSistemaDeVendas.QUANTIDADE_INDISPONIVEL,
+								quantidadeDisponivel);
 					}
-				} while (!quantidadeValida);
+				} while (!quantidadeEstaDisponivel);
 
 				if (produto != null) {
 					ItemVenda itemDeVenda = new ItemVenda(produto, Float.parseFloat(quantidade));
@@ -179,7 +189,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			}
 
 			Venda venda = new Venda(itens, formaDePagamento);
-			
+
 			IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
 			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
 			if (pagamentoRealizadoComSucesso) {
@@ -194,6 +204,5 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		} while (!pagamentoRealizadoComSucesso);
 		System.out.printf("%s\n\n", MensagensSistemaDeVendas.VENDA_FINALIZADA);
 	}
-
 
 }

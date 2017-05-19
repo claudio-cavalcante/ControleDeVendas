@@ -6,13 +6,13 @@ public class Operacao {
 
 	private EnumTipoDeOperacao tipooperacao;
 	private Produto produto;
-	private int qtd_produto;
+	private float qtd_produto;
 	private LocalDate dataOperacao;
 
-    public Operacao(EnumTipoDeOperacao tipooperacao, Produto produto, int qtd_produto, LocalDate dataOperacao) {
+    public Operacao(EnumTipoDeOperacao tipooperacao, Produto produto, float qtdProduto, LocalDate dataOperacao) {
         this.tipooperacao = tipooperacao;
         this.produto = produto;
-        this.qtd_produto = qtd_produto;
+        this.qtd_produto = qtdProduto;
         this.dataOperacao = dataOperacao;
     }
 
@@ -24,7 +24,7 @@ public class Operacao {
         return produto;
     }
 
-    public int getQtd_produto() {
+    public float getQtdProduto() {
         return qtd_produto;
     }
 

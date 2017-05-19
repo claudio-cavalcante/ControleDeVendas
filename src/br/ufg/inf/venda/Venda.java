@@ -10,7 +10,7 @@ public class Venda {
 	private List<ItemVenda> itensVenda;
 	private Funcionario funcionario;
 	private IFormaDePagamento formaDePagamento;
-	
+
 	public Venda(List<ItemVenda> itensVenda, IFormaDePagamento formaDePagamento) {
 		super();
 		this.itensVenda = itensVenda;
@@ -28,23 +28,21 @@ public class Venda {
 	public IFormaDePagamento getFormaDePagamento() {
 		return formaDePagamento;
 	}
-	
+
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
-	
-	public IProcessamentoDoPagamento realizarPagamento(double valorPago){
+
+	public IProcessamentoDoPagamento realizarPagamento(double valorPago) {
 		return formaDePagamento.realizarPagamento(getValorTotal(), valorPago);
 	}
 
-	public double getValorTotal(){
+	public double getValorTotal() {
 		double valorTotal = 0;
-		for(ItemVenda itemVenda : itensVenda){
+		for (ItemVenda itemVenda : itensVenda) {
 			valorTotal += itemVenda.getValorTotal();
 		}
-		
+
 		return valorTotal;
 	}
-	
-	
 }

@@ -4,23 +4,16 @@ import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.LogEstoque;
 import br.ufg.inf.produto.Operacao;
 import br.ufg.inf.produto.Produto;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.Map.Entry;
 
 public class RelatorioDeEstoque implements Relatorio {
 
 	public List<Produto> estoqueAtual() {
-
 		List<Produto> listaproduto = new ArrayList<>();
-
-		Set<Map.Entry<Produto, Integer>> set = Estoque.Instancia().estoqueProdutos().entrySet();
-
-		for (Map.Entry<Produto, Integer> produto : set) {
+		Set<Map.Entry<Produto, Float>> set = Estoque.Instancia().estoqueProdutos().entrySet();
+		for (Map.Entry<Produto, Float> produto : set) {
 			listaproduto.add(produto.getKey());
-
 		}
 
 		return listaproduto;
@@ -28,15 +21,11 @@ public class RelatorioDeEstoque implements Relatorio {
 
 	@Override
 	public String emitir() {
-
 		String relatorio = "";
-
-		Map<Produto, Integer> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
-
-		for (Map.Entry<Produto, Integer> entrySetProduto : produtosEmEstoque.entrySet()) {
-
+		Map<Produto, Float> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
+		for (Map.Entry<Produto, Float> entrySetProduto : produtosEmEstoque.entrySet()) {
 			Produto produto = entrySetProduto.getKey();
-			int quantidade = entrySetProduto.getValue();
+			float quantidade = entrySetProduto.getValue();
 
 			relatorio += String.format(
 					"Código do produto: %s\nDescrição do Produto: %s\nPreço: %.2f\nQuantidade: %d\n\n",
@@ -46,14 +35,14 @@ public class RelatorioDeEstoque implements Relatorio {
 		return relatorio;
 	}
 
-	public Map<Produto, Integer> estoqueInicioDoDia() {
-		Map<Produto, Integer> estoqueDoInicioDoDia = new HashMap<Produto, Integer>();
+	public Map<Produto, Float> estoqueInicioDoDia() {
+		Map<Produto, Float> estoqueDoInicioDoDia = new HashMap<Produto, Float>();
 
 		LocalDate agora = LocalDate.now();
-		Set<Map.Entry<Produto, Integer>> estoqueAtual = Estoque.Instancia().estoqueProdutos().entrySet();
+		Set<Map.Entry<Produto, Float>> estoqueAtual = Estoque.Instancia().estoqueProdutos().entrySet();
 
-		for (Map.Entry<Produto, Integer> estoque : estoqueAtual) {
-			int quantidadeAtual = estoque.getValue().intValue();
+		for (Map.Entry<Produto, Float> estoque : estoqueAtual) {
+			float quantidadeAtual = estoque.getValue().intValue();
 
 			estoqueDoInicioDoDia.put(estoque.getKey(), quantidadeAtual);
 
@@ -63,8 +52,8 @@ public class RelatorioDeEstoque implements Relatorio {
 				}
 
 				if (operacao.getProduto().equals(estoque.getKey())) {
-					quantidadeAtual = quantidadeAtual - operacao.getQtd_produto();
-					
+					quantidadeAtual = quantidadeAtual - operacao.getQtdProduto();
+
 					estoqueDoInicioDoDia.put(estoque.getKey(), quantidadeAtual);
 				}
 			}
@@ -73,7 +62,7 @@ public class RelatorioDeEstoque implements Relatorio {
 		return estoqueDoInicioDoDia;
 	}
 
-	public Map<Produto, Integer> estoqueFinalDoDia() {
+	public Map<Produto, Float> estoqueFinalDoDia() {
 		return Estoque.Instancia().estoqueProdutos();
 	}
 }

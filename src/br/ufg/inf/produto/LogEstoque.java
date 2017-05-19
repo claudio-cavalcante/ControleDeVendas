@@ -17,7 +17,7 @@ public class LogEstoque {
 		return log;
 	}
 
-	public void adicionar(EnumTipoDeOperacao tipoDeOperacao, Produto produto, int quantidade) {
+	public void adicionar(EnumTipoDeOperacao tipoDeOperacao, Produto produto, float quantidade) {
 		Operacao operacao = new Operacao(tipoDeOperacao, produto, quantidade, LocalDate.now());
 		operacoes.add(operacao);
 	}
