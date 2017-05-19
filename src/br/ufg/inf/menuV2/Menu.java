@@ -44,7 +44,7 @@ public class Menu {
 	}
 	
 	private boolean menuAutorizado(IOpcaoMenu opcaoMenu){
-		if(Sessao.FuncionarioLogado == null){
+		if(Sessao.funcionarioLogado == null){
 			return true;
 		}
 		
@@ -54,7 +54,7 @@ public class Menu {
 			}
 		}
 		
-		if(Sessao.FuncionarioLogado instanceof Gerente){
+		if(Sessao.funcionarioLogado instanceof Gerente){
 			for(EnumPapel papel : opcaoMenu.papeisAutorizados()){
 				if(papel == EnumPapel.GERENTE){
 					return true;

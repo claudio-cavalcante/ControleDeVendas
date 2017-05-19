@@ -67,7 +67,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 			return;
 		}
 		
-		Sessao.FuncionarioLogado = DbContext.funcionarios().get(Integer.parseInt(usuarioInformado));	
+		Sessao.funcionarioLogado = DbContext.funcionarios().get(Integer.parseInt(usuarioInformado));	
 	}	
 
 	private boolean loginValido(String usuario, String senha) {
