@@ -10,23 +10,23 @@ public class Caixa {
 	private List<Venda> vendas;
 	private Funcionario funcionario;
 	private String identificador;
-	
-	public Caixa(String identificador){
+
+	public Caixa(String identificador) {
 		this.identificador = identificador;
 		this.vendas = new ArrayList<Venda>();
 	}
-	
-	public Caixa(String identificador, Funcionario funcionario){
+
+	public Caixa(String identificador, Funcionario funcionario) {
 		this(identificador);
 		this.funcionario = funcionario;
 	}
-	
-	public void registrarVenda(Venda venda){
+
+	public void registrarVenda(Venda venda) {
 		venda.setFuncionario(this.funcionario);
 		removerDoEstoque(venda.getItensVenda());
-		
+
 		vendas.add(venda);
-	}	
+	}
 
 	public List<Venda> getVendas() {
 		return vendas;
@@ -35,27 +35,27 @@ public class Caixa {
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
-	
-	public void setFuncionario(Funcionario funcionario){
+
+	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 
 	public String getIdentificador() {
 		return identificador;
 	}
-	
-	public double getValorTotal(){
-		double valorTotal =0;
-		for(Venda venda : this.vendas){
+
+	public double getValorTotal() {
+		double valorTotal = 0;
+		for (Venda venda : this.vendas) {
 			valorTotal += venda.getValorTotal();
 		}
-		
+
 		return valorTotal;
 	}
-	
+
 	private void removerDoEstoque(List<ItemVenda> itensVenda) {
-		for(ItemVenda itemVenda : itensVenda){
-			Estoque.Instancia().remover(itemVenda.getProduto(), (int)itemVenda.getQuantidade());
-		}		
+		for (ItemVenda itemVenda : itensVenda) {
+			Estoque.Instancia().remover(itemVenda.getProduto(), (int) itemVenda.getQuantidade());
+		}
 	}
 }

@@ -37,6 +37,7 @@ public interface MensagensSistemaDeVendas {
 	public static final String QUANTIDADE_INDISPONIVEL = "Quantidade desejada indisponível. Disponível no estoque:";
 	public static final String QUANTIDADE_INVALIDA = "Quantidade inválida, informe no formato inteiro ou decimal.";
 	public static final String REALIZAR_VENDA = "Realizar venda";
+	public static final String RELATORIO_VENDAS = "Relatório de vendas";
 	public static final String RELATORIO_ESTOQUE = "Relatório de estoque";
 	public static final String SAIR = "Sair";
 	public static final String SELECIONE_UMA_FUNCAO = "Por favor, selecione a função desejada:";

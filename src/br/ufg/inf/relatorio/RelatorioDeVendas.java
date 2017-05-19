@@ -17,7 +17,8 @@ public class RelatorioDeVendas implements Relatorio {
 			return MensagensSistemaDeVendas.NENHUM_CAIXA_UTILIZADO;
 		}
 		
-		String relatorio = "";
+		String relatorio = MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
+		relatorio += MensagensSistemaDeVendas.RELATORIO_VENDAS + "\n";
 		for (Entry<Integer, Caixa> entrySetCaixa : DbContext.caixas().entrySet()) {
 			Caixa caixa = entrySetCaixa.getValue();
 			
@@ -25,6 +26,7 @@ public class RelatorioDeVendas implements Relatorio {
 					caixa.getValorTotal(), caixa.getFuncionario().getNome());			
 		}
 		
+		relatorio += MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
 		return relatorio;
 	}
 }
