@@ -36,7 +36,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 			
 			menuPrincipal.exibaOpcoes();
 
-			return false;
+			return true;
 		};
 	}
 	

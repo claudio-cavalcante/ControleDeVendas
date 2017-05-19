@@ -12,7 +12,7 @@ public class OpcaoMenuLogoff implements IOpcaoMenu {
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		return () -> true;
+		return () -> false;
 	}
 	
 	@Override
