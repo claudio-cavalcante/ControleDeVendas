@@ -60,6 +60,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 		
 		if (!loginValido) {
 			System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
+			System.out.println();
 			return;
 		}
 		

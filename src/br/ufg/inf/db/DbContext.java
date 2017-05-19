@@ -53,6 +53,6 @@ public class DbContext {
 		senhas.put(6, "678");
 
 		String senhaArmazenada = senhas.get(codigoFuncionario);
-		return senhaArmazenada.equals(senha);
+		return senhaArmazenada != null && senhaArmazenada.equals(senha);
 	}
 }

@@ -15,7 +15,7 @@ public class OpcaoMenuEmitirRelatorioVenda implements IOpcaoMenu {
 	@Override
 	public Supplier<Boolean> getAcao() {
 		Relatorio relatorio = new RelatorioDeVendas();
-		System.out.println(relatorio.emitir() + "\n\n");
+		System.out.println(relatorio.emitir());
 		return () -> true;
 	}
 	

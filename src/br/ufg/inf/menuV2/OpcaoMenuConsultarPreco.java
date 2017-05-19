@@ -46,7 +46,7 @@ public class OpcaoMenuConsultarPreco implements IOpcaoMenu {
 		} while (produtoBuscado == null);
 
 		System.out.printf("%s: %s.\n", MensagensSistemaDeVendas.DESCRICAO, produtoBuscado.getDescricao());
-		System.out.printf("%s: R$%.2f.\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
+		System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.VALOR_PRODUTO, produtoBuscado.getPreco());
 	}
 	
 	private boolean ehValorNumerico(String valor) {
