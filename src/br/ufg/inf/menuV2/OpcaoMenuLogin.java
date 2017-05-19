@@ -1,7 +1,5 @@
 package br.ufg.inf.menuV2;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
@@ -10,8 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import br.ufg.inf.db.DbContext;
 import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
-import br.ufg.inf.pessoa.Funcionario;
-import br.ufg.inf.pessoa.Gerente;
 
 public class OpcaoMenuLogin implements IOpcaoMenu {
 
@@ -25,7 +21,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 		return () -> {
 			login();
 
-			if (Sessao.FuncionarioLogado == null) {
+			if (Sessao.funcionarioLogado == null) {
 				return true;
 			}
 
