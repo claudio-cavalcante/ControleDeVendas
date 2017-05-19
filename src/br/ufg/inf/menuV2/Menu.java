@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.pessoa.Gerente;
@@ -28,8 +30,11 @@ public class Menu {
 
 		Scanner sc = new Scanner(System.in);
 		String opcaoSelecionada = sc.nextLine();
-
-		selecionarOpcao(Integer.parseInt(opcaoSelecionada));
+		if (StringUtils.isNumeric(opcaoSelecionada)) {
+			selecionarOpcao(Integer.parseInt(opcaoSelecionada));
+		} else {
+			exibaOpcoes();
+		}
 	}
 
 	private void selecionarOpcao(int opcao) {

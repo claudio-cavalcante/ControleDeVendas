@@ -1,5 +1,6 @@
 package br.ufg.inf.relatorio;
 
+import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.LogEstoque;
 import br.ufg.inf.produto.Operacao;
@@ -21,17 +22,19 @@ public class RelatorioDeEstoque implements Relatorio {
 
 	@Override
 	public String emitir() {
-		String relatorio = "";
+		String relatorio = MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
+		relatorio += MensagensSistemaDeVendas.RELATORIO_ESTOQUE + "\n";
 		Map<Produto, Float> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
 		for (Map.Entry<Produto, Float> entrySetProduto : produtosEmEstoque.entrySet()) {
 			Produto produto = entrySetProduto.getKey();
 			float quantidade = entrySetProduto.getValue();
 
 			relatorio += String.format(
-					"Código do produto: %s\nDescrição do Produto: %s\nPreço: %.2f\nQuantidade: %d\n\n",
+					"Código do produto: %s\nDescrição do Produto: %s\nPreço: R$%.2f\nQuantidade: %.2f\n\n",
 					produto.getCodigo(), produto.getDescricao(), produto.getPreco(), quantidade);
 		}
 
+		relatorio += MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
 		return relatorio;
 	}
 
