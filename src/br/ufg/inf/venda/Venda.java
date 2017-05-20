@@ -2,6 +2,8 @@ package br.ufg.inf.venda;
 
 import java.util.List;
 
+import br.ufg.inf.exception.EstoqueInsuficienteException;
+import br.ufg.inf.exception.ProdutoNaoCadastradoException;
 import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pagamento.IProcessamentoDoPagamento;
 import br.ufg.inf.pessoa.Funcionario;
@@ -34,7 +36,7 @@ public class Venda {
 		this.funcionario = funcionario;
 	}
 
-	public IProcessamentoDoPagamento realizarPagamento(double valorPago) {
+	public IProcessamentoDoPagamento realizarPagamento(double valorPago) throws EstoqueInsuficienteException, ProdutoNaoCadastradoException {
 		IProcessamentoDoPagamento processamentoDoPagamento = formaDePagamento.realizarPagamento(getValorTotal(), valorPago);
 		
 		if(processamentoDoPagamento.pagamentoRealizadoComSucesso()){

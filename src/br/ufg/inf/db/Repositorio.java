@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
+import br.ufg.inf.Utilitarios;
+import br.ufg.inf.exception.LoginException;
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import br.ufg.inf.produto.Estoque;
@@ -45,7 +49,7 @@ public class Repositorio {
 		return caixas;
 	}
 
-	public boolean senhaValida(int codigoFuncionario, String senha) {
+	public void efetueLogin(String login, String senha) throws LoginException {
 		Map<Integer, String> senhas = new HashMap<Integer, String>();
 		senhas.put(1, "123");
 		senhas.put(2, "234");
@@ -53,8 +57,14 @@ public class Repositorio {
 		senhas.put(4, "456");
 		senhas.put(5, "567");
 		senhas.put(6, "678");
+		
+		if(!Utilitarios.ehValorNumerico(login)){
+			throw new LoginException();
+		}
 
-		String senhaArmazenada = senhas.get(codigoFuncionario);
-		return senhaArmazenada != null && senhaArmazenada.equals(senha);
-	}
+		String senhaArmazenada = senhas.get(Integer.parseInt(login));
+		if(senhaArmazenada == null || senhaArmazenada.equals(senha)){
+			throw new LoginException();
+		};
+	}	
 }

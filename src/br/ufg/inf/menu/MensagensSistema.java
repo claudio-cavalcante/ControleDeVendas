@@ -51,4 +51,7 @@ public interface MensagensSistema {
 	public static final String VALOR_TOTAL_VENDA = "Valor total da venda";
 	public static final String VENDA_FINALIZADA = "Venda finalizada com sucesso.";
 	public static final String VOLTAR = "Voltar";
+	public static final String QUANTIDADE_INSUFICIENTE = "Não existe produto em quantidade suficiente em estoque!";
+	public static final String PRODUTO_NAO_CADASTRADO = "Não existe produto no estoque";
+	
 }

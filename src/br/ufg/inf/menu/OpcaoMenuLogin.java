@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.ufg.inf.Sessao;
 import br.ufg.inf.db.Repositorio;
+import br.ufg.inf.exception.LoginException;
 import br.ufg.inf.menu.MensagensSistema;
 
 public class OpcaoMenuLogin implements IOpcaoMenu {
@@ -25,58 +26,39 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 				return true;
 			}
 
-			Menu menuPrincipal = new Menu(
-					new OpcaoMenuSair(),
-					new OpcaoMenuManterEstoque(),
-					new OpcaoMenuRealizarVenda(),
-					new OpcaoMenuConsultarPreco(),
-					new OpcaoMenuEmitirRelatorioVenda(),
-					new OpcaoMenuEmitirRelatorioEstoque(),
-					new OpcaoMenuLogoff());
-			
+			Menu menuPrincipal = new Menu(new OpcaoMenuSair(), new OpcaoMenuManterEstoque(),
+					new OpcaoMenuRealizarVenda(), new OpcaoMenuConsultarPreco(), new OpcaoMenuEmitirRelatorioVenda(),
+					new OpcaoMenuEmitirRelatorioEstoque(), new OpcaoMenuLogoff());
+
 			menuPrincipal.exibaOpcoes();
 
 			return true;
 		};
 	}
-	
+
 	@Override
 	public EnumPapel[] papeisAutorizados() {
-		return new EnumPapel[]{ EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
+		return new EnumPapel[] { EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
 
 	private void login() {
 		Scanner sc = new Scanner(System.in);
-		boolean loginValido = false;
-		
+
 		String usuarioInformado;
-		System.out.printf(MensagensSistema.USUARIO + ": ");		
+		System.out.printf("%s: ", MensagensSistema.USUARIO);
 		usuarioInformado = sc.next();
-		
-		System.out.printf(MensagensSistema.SENHA + ": ");		
+
+		System.out.printf("%s: ", MensagensSistema.SENHA);
 		String senha = sc.next();
-		
-		loginValido = loginValido(usuarioInformado, senha);
-		
-		if (!loginValido) {
-			System.out.println(MensagensSistema.DADOS_LOGIN_INVALIDOS);
+
+		try {
+			Repositorio.getInstancia().efetueLogin(usuarioInformado, senha);
+		} catch (LoginException e) {
+			System.out.println(e.getMessage());
 			System.out.println();
 			return;
 		}
-		
-		Sessao.setFuncionarioLogado(Repositorio.getInstancia().funcionarios().get(Integer.parseInt(usuarioInformado)));	
-	}	
 
-	private boolean loginValido(String usuario, String senha) {
-		if (!ehValorNumerico(usuario)) {
-			return false; 
-		} else {
-			return Repositorio.getInstancia().senhaValida(Integer.parseInt(usuario), senha);			
-		}
+		Sessao.setFuncionarioLogado(Repositorio.getInstancia().funcionarios().get(Integer.parseInt(usuarioInformado)));
 	}
-
-	private boolean ehValorNumerico(String valor) {
-		return !valor.trim().isEmpty() && StringUtils.isNumeric(valor.trim());
-	}
-
 }

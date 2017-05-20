@@ -14,7 +14,7 @@ public class ProcessamentoDoPagamentoEmCartao implements IProcessamentoDoPagamen
 	@Override
 	public boolean pagamentoRealizadoComSucesso() {			
 		if(pagamentoRealizadoComSucesso == null ){
-			pagamentoRealizadoComSucesso = new Random().nextBoolean() || this.valorPago < 1000;
+			pagamentoRealizadoComSucesso = new Random().nextBoolean() || this.valorPago < 100;
 		}
 		
 		return pagamentoRealizadoComSucesso;

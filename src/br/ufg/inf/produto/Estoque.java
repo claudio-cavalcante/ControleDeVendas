@@ -2,6 +2,8 @@ package br.ufg.inf.produto;
 
 import java.util.*;
 
+import br.ufg.inf.exception.EstoqueInsuficienteException;
+import br.ufg.inf.exception.ProdutoNaoCadastradoException;
 import br.ufg.inf.menu.MensagensSistema;
 
 public class Estoque {
@@ -24,16 +26,16 @@ public class Estoque {
 		return false;
 	}
 
-	public void remover(Produto produto, float quantidade) {
+	public void remover(Produto produto, float quantidade) throws EstoqueInsuficienteException, ProdutoNaoCadastradoException {
 		if (produtosEmEstoque.containsKey(produto)) {
 			float quantidadeAtual = produtosEmEstoque.get(produto);
 			if (quantidadeAtual >= quantidade) {
 				produtosEmEstoque.put(produto, quantidadeAtual - quantidade);
 				LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.REMOVER, produto, -quantidade);
 			} else
-				System.out.println("Não existe produto em quantidade suficiente em estoque!");
+				throw new EstoqueInsuficienteException();
 		} else {
-			System.out.println("Não existe produto no estoque");
+			throw new ProdutoNaoCadastradoException();
 		}
 	}
 

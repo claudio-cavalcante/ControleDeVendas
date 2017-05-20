@@ -11,6 +11,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import br.ufg.inf.Sessao;
 import br.ufg.inf.db.Repositorio;
+import br.ufg.inf.exception.EstoqueInsuficienteException;
+import br.ufg.inf.exception.ProdutoNaoCadastradoException;
 import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
 import br.ufg.inf.pagamento.FormaDePagamentoEmDinheiro;
@@ -179,18 +181,26 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			}
 
 			Venda venda = new Venda(itens, formaDePagamento);
-			IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
-			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
-			if (pagamentoRealizadoComSucesso) {
-				if (processamento.valorDoTroco() != null) {
-					System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.TROCO, processamento.valorDoTroco().doubleValue());
-				}
+			
+			try {
+				IProcessamentoDoPagamento processamento =  venda.realizarPagamento(Double.parseDouble(valorPago));
+				pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
+				if (pagamentoRealizadoComSucesso) {
+					if (processamento.valorDoTroco() != null) {
+						System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.TROCO, processamento.valorDoTroco().doubleValue());
+					}
 
-				Sessao.getCaixaSelecionado().registrarVenda(venda);
-			} else {
-				System.out.println(processamento.mensagem());
+					Sessao.getCaixaSelecionado().registrarVenda(venda);
+				} else {
+					System.out.println(processamento.mensagem());
+				}
+				
+			} catch (NumberFormatException | EstoqueInsuficienteException | ProdutoNaoCadastradoException e) {
+				System.out.println(e.getMessage());
 			}
+			
 		} while (!pagamentoRealizadoComSucesso);
+		
 		System.out.printf("%s\n\n", MensagensSistema.VENDA_FINALIZADA);
 	}
 
