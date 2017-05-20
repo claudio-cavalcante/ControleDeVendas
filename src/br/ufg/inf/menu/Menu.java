@@ -22,10 +22,8 @@ public class Menu {
 		System.out.println(MensagensSistema.SELECIONE_UMA_FUNCAO);
 		for (int i = 0; i < opcoesMenu.size(); i++) {
 			if (menuAutorizado(opcoesMenu.get(i))) {
-
 				System.out.printf("%d - %s\n", i, opcoesMenu.get(i).getNome());
 			}
-
 		}
 
 		Scanner sc = new Scanner(System.in);

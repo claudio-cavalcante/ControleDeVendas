@@ -7,6 +7,8 @@ import java.util.Map;
 
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
+import br.ufg.inf.produto.Estoque;
+import br.ufg.inf.produto.Produto;
 import br.ufg.inf.venda.Caixa;
 
 public class Repositorio {

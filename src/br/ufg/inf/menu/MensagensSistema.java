@@ -32,7 +32,7 @@ public interface MensagensSistema {
 	public static final String PRECO_INVALIDO = "Preço inválido, favor colocar no formato 0.00";
 	public static final String PRODUTO_ADICIONADO_ESTOQUE = "Produto adicionado ao estoque com sucesso.";
 	public static final String PRODUTO_JA_ADICIONADO = "Produto já adicionado, informe outro produto.";
-	public static final String PRODUTO_NAO_ENCONTRADO = "Produto não encontrado, favor informar um código de produto válido.";
+	public static final String PRODUTO_NAO_ENCONTRADO = "Produto não encontrado!";
 	public static final String QUANTIDADE = "Quantidade";
 	public static final String QUANTIDADE_INDISPONIVEL = "Quantidade desejada indisponível. Disponível no estoque:";
 	public static final String QUANTIDADE_INVALIDA = "Quantidade inválida, informe no formato inteiro ou decimal.";
