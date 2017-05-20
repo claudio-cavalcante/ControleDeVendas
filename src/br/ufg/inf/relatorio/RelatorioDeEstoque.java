@@ -12,7 +12,7 @@ public class RelatorioDeEstoque implements Relatorio {
 
 	public List<Produto> estoqueAtual() {
 		List<Produto> listaproduto = new ArrayList<>();
-		Set<Map.Entry<Produto, Float>> set = Estoque.Instancia().estoqueProdutos().entrySet();
+		Set<Map.Entry<Produto, Float>> set = Estoque.instancia().estoqueProdutos().entrySet();
 		for (Map.Entry<Produto, Float> produto : set) {
 			listaproduto.add(produto.getKey());
 		}
@@ -25,7 +25,7 @@ public class RelatorioDeEstoque implements Relatorio {
 		String relatorio = MensagensSistema.SEPARADOR + "\n";
 		relatorio += MensagensSistema.RELATORIO_ESTOQUE + "\n";
 		
-		Map<Produto, Float> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
+		Map<Produto, Float> produtosEmEstoque = Estoque.instancia().estoqueProdutos();
 		
 		for (Map.Entry<Produto, Float> entrySetProduto : produtosEmEstoque.entrySet()) {
 			Produto produto = entrySetProduto.getKey();
@@ -44,7 +44,7 @@ public class RelatorioDeEstoque implements Relatorio {
 		Map<Produto, Float> estoqueDoInicioDoDia = new HashMap<Produto, Float>();
 
 		LocalDate agora = LocalDate.now();
-		Set<Map.Entry<Produto, Float>> estoqueAtual = Estoque.Instancia().estoqueProdutos().entrySet();
+		Set<Map.Entry<Produto, Float>> estoqueAtual = Estoque.instancia().estoqueProdutos().entrySet();
 
 		for (Map.Entry<Produto, Float> estoque : estoqueAtual) {
 			float quantidadeAtual = estoque.getValue().intValue();
@@ -68,6 +68,6 @@ public class RelatorioDeEstoque implements Relatorio {
 	}
 
 	public Map<Produto, Float> estoqueFinalDoDia() {
-		return Estoque.Instancia().estoqueProdutos();
+		return Estoque.instancia().estoqueProdutos();
 	}
 }

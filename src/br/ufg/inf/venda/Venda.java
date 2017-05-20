@@ -41,7 +41,7 @@ public class Venda {
 		
 		if(processamentoDoPagamento.pagamentoRealizadoComSucesso()){
 			for (ItemVenda itemVenda : itensVenda) {
-				Estoque.Instancia().remover(itemVenda.getProduto(), (int) itemVenda.getQuantidade());
+				Estoque.instancia().remover(itemVenda.getProduto(), (int) itemVenda.getQuantidade());
 			}
 		}
 		

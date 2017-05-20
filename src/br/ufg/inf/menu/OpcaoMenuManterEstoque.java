@@ -55,7 +55,7 @@ public class OpcaoMenuManterEstoque implements IOpcaoMenu {
 		String preco = "0";
 		Produto produto;
 		if (!novoProduto) {
-			produto = Estoque.Instancia().getProduto(Integer.parseInt(codigo));
+			produto = Estoque.instancia().getProduto(Integer.parseInt(codigo));
 			if (produto == null) {
 				System.out.println(MensagensSistema.PRODUTO_NAO_ENCONTRADO);
 				return;
@@ -87,14 +87,14 @@ public class OpcaoMenuManterEstoque implements IOpcaoMenu {
 
 		if (novoProduto) {
 			produto = new Produto(Integer.parseInt(codigo), descricao, Float.parseFloat(preco));
-			boolean produtoAdicionado = Estoque.Instancia().adicionar(produto, Integer.parseInt(qtd));
+			boolean produtoAdicionado = Estoque.instancia().adicionar(produto, Integer.parseInt(qtd));
 			if (produtoAdicionado) {
 				System.out.printf("\n%s\n", MensagensSistema.PRODUTO_ADICIONADO_ESTOQUE);
 			} else {
 				System.out.printf("%s\n\n", MensagensSistema.PRODUTO_JA_ADICIONADO);
 			}
 		} else {
-			Estoque.Instancia().repor(Integer.parseInt(codigo), Integer.parseInt(qtd));
+			Estoque.instancia().repor(Integer.parseInt(codigo), Integer.parseInt(qtd));
 			System.out.printf("\n%s\n", MensagensSistema.PRODUTO_REPOSTO);
 		}
 	}
