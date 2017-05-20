@@ -47,11 +47,13 @@ public class Menu {
 	}
 
 	private boolean menuAutorizado(IOpcaoMenu opcaoMenu) {
-		if (Sessao.getFuncionarioLogado() == null) {
+		EnumPapel[] papeisAutorizados =  opcaoMenu.papeisAutorizados();
+		
+		if (papeisAutorizados == null) {
 			return true;
 		}
-
-		for (EnumPapel papel : opcaoMenu.papeisAutorizados()) {
+		
+		for (EnumPapel papel : papeisAutorizados) {
 			switch (papel) {
 			case FUNCIONARIO:
 				return true;

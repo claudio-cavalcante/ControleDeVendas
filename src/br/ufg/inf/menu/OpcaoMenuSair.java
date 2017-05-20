@@ -21,6 +21,6 @@ public class OpcaoMenuSair implements IOpcaoMenu {
 	
 	@Override
 	public EnumPapel[] papeisAutorizados() {
-		return new EnumPapel[]{ EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
+		return null;
 	}
 }
