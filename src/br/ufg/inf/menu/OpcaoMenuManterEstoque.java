@@ -47,7 +47,7 @@ public class OpcaoMenuManterEstoque implements IOpcaoMenu {
 			codigo = sc.next();
 			codigoValido = StringUtils.isNumeric(codigo);
 			if (!codigoValido) {
-				System.out.printf("%s: ", MensagensSistema.CODIGO_INVALIDO);
+				System.out.printf("%s\n\n", MensagensSistema.CODIGO_INVALIDO);
 			}
 		} while (!codigoValido);
 

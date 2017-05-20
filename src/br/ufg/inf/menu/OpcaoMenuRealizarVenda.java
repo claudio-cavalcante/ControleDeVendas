@@ -107,7 +107,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					codigo = sc.next();
 					codigoValido = StringUtils.isNumeric(codigo);
 					if (!codigoValido) {
-						System.out.printf("%s: ", MensagensSistema.CODIGO_INVALIDO);
+						System.out.printf("%s\n\n", MensagensSistema.CODIGO_INVALIDO);
 					} else {
 						produto = Estoque.Instancia().getProduto(Integer.parseInt(codigo));
 						if (produto == null) {

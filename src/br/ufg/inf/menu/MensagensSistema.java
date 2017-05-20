@@ -6,7 +6,7 @@ public interface MensagensSistema {
 	public static final String BEM_VINDO = "Bem-vindo ao CDV!";
 	public static final String CARTAO = "Cartão";
 	public static final String CODIGO = "Código";
-	public static final String CODIGO_INVALIDO = "Código inválido, favor informar apenas números";
+	public static final String CODIGO_INVALIDO = "Código inválido, favor informar apenas números!";
 	public static final String CONSULTAR_PRECO = "Consultar preço";
 	public static final String DADOS_LOGIN_INVALIDOS = "Login ou senha inválidos, favor informe seus dados novamente.";
 	public static final String DESCRICAO = "Descrição";
