@@ -74,8 +74,9 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		float valorTotal = 0;
 		do {
 			if (itens.size() > 0) {
-				System.out.printf("\n%s\n", MensagensSistema.PEDIDO_VENDA);
-				System.out.println("----------------------------------");
+				System.out.println(MensagensSistema.MARCARDOR_RELATORIO);
+				System.out.printf("%s\n", MensagensSistema.PEDIDO_VENDA);
+				System.out.println(MensagensSistema.MARCARDOR_RELATORIO);
 				valorTotal = 0;
 				for (ItemVenda item : itens) {
 					System.out.printf(
@@ -84,8 +85,10 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 							item.getProduto().getPreco(), item.getQuantidade(), item.getValorTotal());
 					valorTotal += item.getValorTotal();
 				}
-
-				System.out.println("----------------------------------");
+				
+				System.out.println(MensagensSistema.MARCARDOR_RELATORIO);
+				System.out.printf("%s: R$%.2f.\n", MensagensSistema.VALOR_TOTAL_VENDA, valorTotal);
+				System.out.println(MensagensSistema.MARCARDOR_RELATORIO + "\n");
 			}
 
 			System.out.printf("0 - %s\n", MensagensSistema.FINALIZAR_VENDA);
@@ -150,8 +153,6 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			System.out.printf("%s\n\n", MensagensSistema.NENHUM_PRODUTO);
 			return;
 		}
-		
-		System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.VALOR_TOTAL_VENDA, valorTotal);
 
 		boolean pagamentoRealizadoComSucesso = false;
 		do {
@@ -170,6 +171,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				do {
 					System.out.printf("%s: ", MensagensSistema.INFORME_VALOR_PAGO);
 					valorPago = sc.next();
+					sc.nextLine();
 				} while (!NumberUtils.isParsable(valorPago));
 			} else if (opcaoPagamento.equals("1")) {
 				formaDePagamento = new FormaDePagamentoEmCartao();
@@ -177,7 +179,6 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			}
 
 			Venda venda = new Venda(itens, formaDePagamento);
-
 			IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
 			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
 			if (pagamentoRealizadoComSucesso) {
