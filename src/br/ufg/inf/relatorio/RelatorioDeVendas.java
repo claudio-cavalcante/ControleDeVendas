@@ -14,10 +14,6 @@ public class RelatorioDeVendas implements Relatorio {
 
 	@Override
 	public String emitir() {
-		if (Sessao.getCaixaSelecionado() == null) {
-			return MensagensSistema.NENHUM_CAIXA_UTILIZADO;
-		}
-
 		String relatorio = MensagensSistema.SEPARADOR + "\n";
 		relatorio += MensagensSistema.RELATORIO_VENDAS + "\n";
 		for (Entry<Integer, Caixa> entrySetCaixa : Repositorio.getInstancia().caixas().entrySet()) {
