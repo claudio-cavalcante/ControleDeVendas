@@ -44,7 +44,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		return new EnumPapel[] { EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
 
-	private void selecionarCaixa() {		
+	private void selecionarCaixa() {
 
 		Scanner sc = new Scanner(System.in);
 		String caixaSelecionado1;
@@ -87,16 +87,12 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 
 				System.out.println("----------------------------------");
 			}
-			
+
 			System.out.printf("0 - %s\n", MensagensSistema.FINALIZAR_VENDA);
 			System.out.printf("1 - %s\n", MensagensSistema.ADICIONAR_PRODUTO);
 			String opcao = sc.nextLine();
 			if (opcao.equals("0")) {
-				if (itens.size() == 0) {
-					System.out.println(MensagensSistema.NENHUM_PRODUTO);
-				} else {
-					continuarVenda = false;
-				}
+				continuarVenda = false;
 			} else if (opcao.equals("1")) {
 				boolean codigoValido;
 				String codigo;
@@ -126,31 +122,35 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				boolean quantidadeValida;
 				boolean quantidadeEstaDisponivel;
 				String quantidade;
+				System.out.printf("%s: ", MensagensSistema.QUANTIDADE);
 				do {
-					System.out.printf("%s: ", MensagensSistema.QUANTIDADE);
-					do {
-						quantidade = sc.next();	
-						quantidadeValida = NumberUtils.isParsable(quantidade);
-						if (!quantidadeValida) {
-							System.out.printf("%s: ", MensagensSistema.QUANTIDADE_INVALIDA);
-						}
-					} while (!quantidadeValida);
-
-					float quantidadeDisponivel = Estoque.Instancia().getQuantidadeEmEstoque(Integer.parseInt(codigo));
-					quantidadeEstaDisponivel = quantidadeDisponivel >= Float.parseFloat(quantidade);
-					if (!quantidadeEstaDisponivel) {
-						System.out.printf("%s: %.2f.\n", MensagensSistema.QUANTIDADE_INDISPONIVEL,
-								quantidadeDisponivel);
+					quantidade = sc.next();
+					quantidadeValida = NumberUtils.isParsable(quantidade);
+					if (!quantidadeValida || Float.parseFloat(quantidade) <= 0) {
+						System.out.printf("%s", MensagensSistema.QUANTIDADE_INVALIDA);
 					}
-				} while (!quantidadeEstaDisponivel);				
-				sc.nextLine();
-				
-				if (produto != null) {
-					ItemVenda itemDeVenda = new ItemVenda(produto, Float.parseFloat(quantidade));
-					itens.add(itemDeVenda);
+				} while (!quantidadeValida);
+
+				float quantidadeDisponivel = Estoque.Instancia().getQuantidadeEmEstoque(Integer.parseInt(codigo));
+				quantidadeEstaDisponivel = quantidadeDisponivel >= Float.parseFloat(quantidade);
+				if (!quantidadeEstaDisponivel) {
+					System.out.printf("%s: %.2f.\n", MensagensSistema.QUANTIDADE_INDISPONIVEL, quantidadeDisponivel);
+				} else {
+					if (produto != null) {
+						ItemVenda itemDeVenda = new ItemVenda(produto, Float.parseFloat(quantidade));
+						itens.add(itemDeVenda);
+					}
 				}
+
+				sc.nextLine();
 			}
 		} while (continuarVenda);
+		
+		if (itens.size() == 0) {
+			System.out.printf("%s\n\n", MensagensSistema.NENHUM_PRODUTO);
+			return;
+		}
+		
 		System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.VALOR_TOTAL_VENDA, valorTotal);
 
 		boolean pagamentoRealizadoComSucesso = false;

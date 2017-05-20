@@ -25,7 +25,7 @@ public interface MensagensSistema {
 	public static final String LOGOFF = "Logoff";
 	public static final String MARCARDOR_RELATORIO = "***************************************";
 	public static final String NENHUM_CAIXA_UTILIZADO = "Nenhum caixa foi utilizado!";
-	public static final String NENHUM_PRODUTO = "Nenhum produto foi adicionado, favor incluir algum produto no pedido.";
+	public static final String NENHUM_PRODUTO = "Nenhum produto foi adicionado, venda cancelada.";
 	public static final String OBRIGADO_POR_UTILIZAR = "Obrigado por utilizar o Sistema de Vendas!";
 	public static final String PEDIDO_VENDA = "Pedido de venda";
 	public static final String PRECO = "Preço";
@@ -34,8 +34,8 @@ public interface MensagensSistema {
 	public static final String PRODUTO_JA_ADICIONADO = "Produto já adicionado, informe outro produto.";
 	public static final String PRODUTO_NAO_ENCONTRADO = "Produto não encontrado!";
 	public static final String QUANTIDADE = "Quantidade";
-	public static final String QUANTIDADE_INDISPONIVEL = "Quantidade desejada indisponível. Disponível no estoque:";
-	public static final String QUANTIDADE_INVALIDA = "Quantidade inválida, informe no formato inteiro ou decimal.";
+	public static final String QUANTIDADE_INDISPONIVEL = "Quantidade desejada indisponível. Disponível no estoque";
+	public static final String QUANTIDADE_INVALIDA = "Quantidade inválida!";
 	public static final String REALIZAR_VENDA = "Realizar venda";
 	public static final String RELATORIO_VENDAS = "Relatório de vendas";
 	public static final String RELATORIO_ESTOQUE = "Relatório de estoque";
