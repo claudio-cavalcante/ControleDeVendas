@@ -1,4 +1,4 @@
-package br.ufg.inf.db;
+package br.ufg.inf;
 
 import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.venda.Caixa;

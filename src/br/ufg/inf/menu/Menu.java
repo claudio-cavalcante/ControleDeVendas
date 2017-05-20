@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.ufg.inf.db.Sessao;
+import br.ufg.inf.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.pessoa.Gerente;
 

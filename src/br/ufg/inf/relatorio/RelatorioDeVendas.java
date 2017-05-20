@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
+import br.ufg.inf.Sessao;
 import br.ufg.inf.db.Repositorio;
-import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.venda.Caixa;
 import br.ufg.inf.venda.Venda;

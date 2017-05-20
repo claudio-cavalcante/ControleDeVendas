@@ -9,8 +9,8 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import br.ufg.inf.Sessao;
 import br.ufg.inf.db.Repositorio;
-import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
 import br.ufg.inf.pagamento.FormaDePagamentoEmDinheiro;
