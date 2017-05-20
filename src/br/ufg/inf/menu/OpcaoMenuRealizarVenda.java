@@ -1,4 +1,4 @@
-package br.ufg.inf.menuV2;
+package br.ufg.inf.menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import br.ufg.inf.db.DbContext;
+import br.ufg.inf.db.Repositorio;
 import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
@@ -52,10 +52,10 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 
 		do {
 			System.out.println(MensagensSistemaDeVendas.SELECIONE_CAIXA);
-			DbContext.getInstancia().caixas().entrySet()
+			Repositorio.getInstancia().caixas().entrySet()
 					.forEach(x -> System.out.printf("Caixa: %s\n", x.getValue().getIdentificador()));
 			caixaSelecionado1 = sc.nextLine();
-			for (Entry<Integer, Caixa> caixa : DbContext.getInstancia().caixas().entrySet()) {
+			for (Entry<Integer, Caixa> caixa : Repositorio.getInstancia().caixas().entrySet()) {
 				if (caixa.getValue().getIdentificador().equals(caixaSelecionado1)) {
 					caixaValido = true;
 					Caixa caixaSelecionado = caixa.getValue();

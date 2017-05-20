@@ -24,7 +24,9 @@ public class RelatorioDeEstoque implements Relatorio {
 	public String emitir() {
 		String relatorio = MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
 		relatorio += MensagensSistemaDeVendas.RELATORIO_ESTOQUE + "\n";
+		
 		Map<Produto, Float> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
+		
 		for (Map.Entry<Produto, Float> entrySetProduto : produtosEmEstoque.entrySet()) {
 			Produto produto = entrySetProduto.getKey();
 			float quantidade = entrySetProduto.getValue();

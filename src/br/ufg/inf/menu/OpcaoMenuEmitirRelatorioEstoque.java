@@ -1,20 +1,20 @@
-package br.ufg.inf.menuV2;
+package br.ufg.inf.menu;
 import java.util.function.Supplier;
 
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 import br.ufg.inf.relatorio.Relatorio;
-import br.ufg.inf.relatorio.RelatorioDeVendas;
+import br.ufg.inf.relatorio.RelatorioDeEstoque;
 
-public class OpcaoMenuEmitirRelatorioVenda implements IOpcaoMenu {
+public class OpcaoMenuEmitirRelatorioEstoque implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.EMITIR_RELATORIO_VENDA;
+		return MensagensSistemaDeVendas.EMITIR_RELATORIO_ESTOQUE;
 	}
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		Relatorio relatorio = new RelatorioDeVendas();
+		Relatorio relatorio = new RelatorioDeEstoque();
 		System.out.println(relatorio.emitir());
 		return () -> true;
 	}

@@ -1,26 +1,23 @@
-package br.ufg.inf.menuV2;
+package br.ufg.inf.menu;
 import java.util.function.Supplier;
 
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 
-public class OpcaoMenuSair implements IOpcaoMenu {
+public class OpcaoMenuLogoff implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.SAIR;
+		return MensagensSistemaDeVendas.LOGOFF;
 	}
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		return () -> {
-			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
-			System.exit(0);
-			return true;
-		};
+		return () -> false;
 	}
 	
 	@Override
 	public EnumPapel[] papeisAutorizados() {
 		return new EnumPapel[]{ EnumPapel.GERENTE, EnumPapel.FUNCIONARIO };
 	}
+
 }

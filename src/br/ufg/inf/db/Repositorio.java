@@ -9,14 +9,14 @@ import br.ufg.inf.pessoa.Funcionario;
 import br.ufg.inf.pessoa.Gerente;
 import br.ufg.inf.venda.Caixa;
 
-public class DbContext {
+public class Repositorio {
 
-	private static DbContext dbContext = new DbContext();
+	private static Repositorio dbContext = new Repositorio();
 
 	private Map<Integer, Funcionario> funcionarios;
 	private Map<Integer, Caixa> caixas;
 
-	private DbContext() {
+	private Repositorio() {
 		funcionarios = new HashMap<Integer, Funcionario>();
 		funcionarios.put(1, new Gerente(1, "Gerente"));
 		funcionarios.put(2, new Funcionario(2, "Cláudio"));
@@ -31,7 +31,7 @@ public class DbContext {
 		caixas.put(3, new Caixa("3"));
 	}
 
-	public static DbContext getInstancia() {
+	public static Repositorio getInstancia() {
 		return dbContext;
 	}
 

@@ -1,4 +1,4 @@
-package br.ufg.inf.menuV2;
+package br.ufg.inf.menu;
 
 public enum EnumPapel {
 	FUNCIONARIO,

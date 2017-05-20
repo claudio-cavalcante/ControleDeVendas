@@ -1,11 +1,11 @@
-package br.ufg.inf.menuV2;
+package br.ufg.inf.menu;
 
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.ufg.inf.db.DbContext;
+import br.ufg.inf.db.Repositorio;
 import br.ufg.inf.db.Sessao;
 import br.ufg.inf.menu.MensagensSistemaDeVendas;
 
@@ -64,14 +64,14 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 			return;
 		}
 		
-		Sessao.setFuncionarioLogado(DbContext.getInstancia().funcionarios().get(Integer.parseInt(usuarioInformado)));	
+		Sessao.setFuncionarioLogado(Repositorio.getInstancia().funcionarios().get(Integer.parseInt(usuarioInformado)));	
 	}	
 
 	private boolean loginValido(String usuario, String senha) {
 		if (!ehValorNumerico(usuario)) {
 			return false; 
 		} else {
-			return DbContext.getInstancia().senhaValida(Integer.parseInt(usuario), senha);			
+			return Repositorio.getInstancia().senhaValida(Integer.parseInt(usuario), senha);			
 		}
 	}
 
