@@ -22,7 +22,7 @@ public class RelatorioDeEstoque implements Relatorio {
 
 	@Override
 	public String emitir() {
-		String relatorio = MensagensSistema.MARCARDOR_RELATORIO + "\n";
+		String relatorio = MensagensSistema.SEPARADOR + "\n";
 		relatorio += MensagensSistema.RELATORIO_ESTOQUE + "\n";
 		
 		Map<Produto, Float> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
@@ -36,7 +36,7 @@ public class RelatorioDeEstoque implements Relatorio {
 					produto.getCodigo(), produto.getDescricao(), produto.getPreco(), quantidade);
 		}
 
-		relatorio += MensagensSistema.MARCARDOR_RELATORIO + "\n";
+		relatorio += MensagensSistema.SEPARADOR + "\n";
 		return relatorio;
 	}
 

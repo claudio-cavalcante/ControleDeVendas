@@ -2,6 +2,8 @@ package br.ufg.inf.produto;
 
 import java.util.*;
 
+import br.ufg.inf.menu.MensagensSistema;
+
 public class Estoque {
 
 	private static Map<Produto, Float> produtosEmEstoque = new HashMap<Produto, Float>();
@@ -12,15 +14,14 @@ public class Estoque {
 		return estoque;
 	}
 
-	public void adicionar(Produto produto, float quantidade) {
-		if (produtosEmEstoque.containsKey(produto)) {
-			float qtdAnterior = produtosEmEstoque.get(produto);
-			produtosEmEstoque.put(produto, qtdAnterior + quantidade);
-		} else {
+	public boolean adicionar(Produto produto, float quantidade) {
+		if (getProduto(produto.getCodigo()) == null) {
 			produtosEmEstoque.put(produto, quantidade);
+			LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.ADICIONAR, produto, quantidade);
+			return true;
 		}
-
-		LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.ADICIONAR, produto, quantidade);
+		
+		return false;
 	}
 
 	public void remover(Produto produto, float quantidade) {
@@ -36,12 +37,21 @@ public class Estoque {
 		}
 	}
 
+	public void repor(int codigo, float quantidade) {
+		Produto produto = getProduto(codigo);
+		if (produto != null) {
+			float quantidadeAnterior = produtosEmEstoque.get(produto);
+			produtosEmEstoque.put(produto, quantidadeAnterior + quantidade);
+			LogEstoque.getInstancia().adicionar(EnumTipoDeOperacao.REPOR, produto, quantidade);
+		}
+	}
+
 	public Map<Produto, Float> estoqueProdutos() {
 		return produtosEmEstoque;
 	}
 
 	public float getQuantidadeEmEstoque(int codigo) {
-		Produto produto = obtenhaProduto(codigo);
+		Produto produto = getProduto(codigo);
 		if (produto == null) {
 			return 0;
 		} else {
@@ -49,7 +59,7 @@ public class Estoque {
 		}
 	}
 
-	public Produto obtenhaProduto(int codigo) {
+	public Produto getProduto(int codigo) {
 		for (Map.Entry<Produto, Float> produto : produtosEmEstoque.entrySet()) {
 			if (produto.getKey().getCodigo() == codigo) {
 				return produto.getKey();

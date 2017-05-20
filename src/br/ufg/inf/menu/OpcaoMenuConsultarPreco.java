@@ -38,7 +38,7 @@ public class OpcaoMenuConsultarPreco implements IOpcaoMenu {
 		if (codigoProduto.trim().equals("") || !ehValorNumerico(codigoProduto)) {
 			System.out.println(MensagensSistema.CODIGO_INVALIDO);
 		} else {
-			produtoBuscado = Estoque.Instancia().obtenhaProduto(Integer.parseInt(codigoProduto));
+			produtoBuscado = Estoque.Instancia().getProduto(Integer.parseInt(codigoProduto));
 			if (produtoBuscado == null) {
 				System.out.printf("%s\n\n", MensagensSistema.PRODUTO_NAO_ENCONTRADO);
 				return;

@@ -74,9 +74,9 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		float valorTotal = 0;
 		do {
 			if (itens.size() > 0) {
-				System.out.println(MensagensSistema.MARCARDOR_RELATORIO);
+				System.out.println(MensagensSistema.SEPARADOR);
 				System.out.printf("%s\n", MensagensSistema.PEDIDO_VENDA);
-				System.out.println(MensagensSistema.MARCARDOR_RELATORIO);
+				System.out.println(MensagensSistema.SEPARADOR);
 				valorTotal = 0;
 				for (ItemVenda item : itens) {
 					System.out.printf(
@@ -86,9 +86,9 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					valorTotal += item.getValorTotal();
 				}
 				
-				System.out.println(MensagensSistema.MARCARDOR_RELATORIO);
+				System.out.println(MensagensSistema.SEPARADOR);
 				System.out.printf("%s: R$%.2f.\n", MensagensSistema.VALOR_TOTAL_VENDA, valorTotal);
-				System.out.println(MensagensSistema.MARCARDOR_RELATORIO + "\n");
+				System.out.println(MensagensSistema.SEPARADOR + "\n");
 			}
 
 			System.out.printf("0 - %s\n", MensagensSistema.FINALIZAR_VENDA);
@@ -107,7 +107,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					if (!codigoValido) {
 						System.out.printf("%s: ", MensagensSistema.CODIGO_INVALIDO);
 					} else {
-						produto = Estoque.Instancia().obtenhaProduto(Integer.parseInt(codigo));
+						produto = Estoque.Instancia().getProduto(Integer.parseInt(codigo));
 						if (produto == null) {
 							System.out.println(MensagensSistema.PRODUTO_NAO_ENCONTRADO);
 							codigoValido = false;

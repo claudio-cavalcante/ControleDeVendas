@@ -18,7 +18,7 @@ public class RelatorioDeVendas implements Relatorio {
 			return MensagensSistema.NENHUM_CAIXA_UTILIZADO;
 		}
 
-		String relatorio = MensagensSistema.MARCARDOR_RELATORIO + "\n";
+		String relatorio = MensagensSistema.SEPARADOR + "\n";
 		relatorio += MensagensSistema.RELATORIO_VENDAS + "\n";
 		for (Entry<Integer, Caixa> entrySetCaixa : Repositorio.getInstancia().caixas().entrySet()) {
 			Caixa caixa = entrySetCaixa.getValue();
@@ -34,7 +34,7 @@ public class RelatorioDeVendas implements Relatorio {
 			}
 		}
 		
-		relatorio += MensagensSistema.MARCARDOR_RELATORIO + "\n";
+		relatorio += MensagensSistema.SEPARADOR + "\n";
 		return relatorio;
 	}
 }
