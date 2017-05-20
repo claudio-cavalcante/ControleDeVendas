@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
 
@@ -13,7 +13,7 @@ public class OpcaoMenuAdicionarProdutoEstoque  implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.ADICIONAR_PRODUTO_ESTOQUE;
+		return MensagensSistema.ADICIONAR_PRODUTO_ESTOQUE;
 	}
 
 	@Override
@@ -29,45 +29,45 @@ public class OpcaoMenuAdicionarProdutoEstoque  implements IOpcaoMenu {
 
 	private void adicionarProdutoNoEstoque() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println(MensagensSistemaDeVendas.FAVOR_INFORMAR_DADOS_PRODUTO);
-		System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO);
+		System.out.println(MensagensSistema.FAVOR_INFORMAR_DADOS_PRODUTO);
+		System.out.printf("%s: ", MensagensSistema.CODIGO);
 		boolean codigoValido = false;
 		String codigo;
 		do {
 			codigo = sc.next();
 			codigoValido = StringUtils.isNumeric(codigo);
 			if (!codigoValido) {
-				System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO_INVALIDO);
+				System.out.printf("%s: ", MensagensSistema.CODIGO_INVALIDO);
 			}
 		} while (!codigoValido);
 
-		System.out.printf("%s: ", MensagensSistemaDeVendas.DESCRICAO);
+		System.out.printf("%s: ", MensagensSistema.DESCRICAO);
 		String descricao = sc.next();
 
-		System.out.printf("%s: ", MensagensSistemaDeVendas.PRECO);
+		System.out.printf("%s: ", MensagensSistema.PRECO);
 		boolean precoValido;
 		String preco;
 		do {
 			preco = sc.next();
 			precoValido = NumberUtils.isParsable(preco);
 			if (!precoValido) {
-				System.out.printf("%s: ", MensagensSistemaDeVendas.PRECO_INVALIDO);
+				System.out.printf("%s: ", MensagensSistema.PRECO_INVALIDO);
 			}
 		} while (!precoValido);
 
-		System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
+		System.out.printf("%s: ", MensagensSistema.QUANTIDADE);
 		boolean qtdValida;
 		String qtd; 
 		do {
 			qtd = sc.next();
 			qtdValida = NumberUtils.isParsable(qtd);
 			if (!qtdValida) {
-				System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
+				System.out.printf("%s: ", MensagensSistema.QUANTIDADE_INVALIDA);
 			}
 		} while (!qtdValida);
 
 		Produto produto = new Produto(Integer.parseInt(codigo), descricao, Float.parseFloat(preco));
 		Estoque.Instancia().adicionar(produto, Integer.parseInt(qtd));		
-		System.out.println("\n" + MensagensSistemaDeVendas.PRODUTO_ADICIONADO_ESTOQUE + "\n");
+		System.out.println("\n" + MensagensSistema.PRODUTO_ADICIONADO_ESTOQUE + "\n");
 	}
 }

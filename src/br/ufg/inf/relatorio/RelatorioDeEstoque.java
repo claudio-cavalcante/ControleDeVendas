@@ -1,6 +1,6 @@
 package br.ufg.inf.relatorio;
 
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.LogEstoque;
 import br.ufg.inf.produto.Operacao;
@@ -22,8 +22,8 @@ public class RelatorioDeEstoque implements Relatorio {
 
 	@Override
 	public String emitir() {
-		String relatorio = MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
-		relatorio += MensagensSistemaDeVendas.RELATORIO_ESTOQUE + "\n";
+		String relatorio = MensagensSistema.MARCARDOR_RELATORIO + "\n";
+		relatorio += MensagensSistema.RELATORIO_ESTOQUE + "\n";
 		
 		Map<Produto, Float> produtosEmEstoque = Estoque.Instancia().estoqueProdutos();
 		
@@ -36,7 +36,7 @@ public class RelatorioDeEstoque implements Relatorio {
 					produto.getCodigo(), produto.getDescricao(), produto.getPreco(), quantidade);
 		}
 
-		relatorio += MensagensSistemaDeVendas.MARCARDOR_RELATORIO + "\n";
+		relatorio += MensagensSistema.MARCARDOR_RELATORIO + "\n";
 		return relatorio;
 	}
 

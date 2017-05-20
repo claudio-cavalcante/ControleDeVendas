@@ -7,7 +7,7 @@ import java.util.Scanner;
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufg.inf.Sessao;
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.pessoa.Gerente;
 
 public class Menu {
@@ -19,7 +19,7 @@ public class Menu {
 	}
 
 	public void exibaOpcoes() {
-		System.out.println(MensagensSistemaDeVendas.SELECIONE_UMA_FUNCAO);
+		System.out.println(MensagensSistema.SELECIONE_UMA_FUNCAO);
 		for (int i = 0; i < opcoesMenu.size(); i++) {
 			if (menuAutorizado(opcoesMenu.get(i))) {
 

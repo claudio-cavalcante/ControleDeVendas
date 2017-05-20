@@ -1,7 +1,7 @@
 package br.ufg.inf.menu;
 import java.util.function.Supplier;
 
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.relatorio.Relatorio;
 import br.ufg.inf.relatorio.RelatorioDeVendas;
 
@@ -9,7 +9,7 @@ public class OpcaoMenuEmitirRelatorioVenda implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.EMITIR_RELATORIO_VENDA;
+		return MensagensSistema.EMITIR_RELATORIO_VENDA;
 	}
 
 	@Override

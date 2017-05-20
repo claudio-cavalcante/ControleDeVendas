@@ -1,19 +1,19 @@
 package br.ufg.inf.menu;
 import java.util.function.Supplier;
 
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 
 public class OpcaoMenuSair implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.SAIR;
+		return MensagensSistema.SAIR;
 	}
 
 	@Override
 	public Supplier<Boolean> getAcao() {
 		return () -> {
-			System.out.println(MensagensSistemaDeVendas.OBRIGADO_POR_UTILIZAR);
+			System.out.println(MensagensSistema.OBRIGADO_POR_UTILIZAR);
 			System.exit(0);
 			return true;
 		};

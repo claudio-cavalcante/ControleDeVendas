@@ -1,13 +1,13 @@
 package br.ufg.inf.menu;
 import java.util.function.Supplier;
 
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 
 public class OpcaoMenuLogoff implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.LOGOFF;
+		return MensagensSistema.LOGOFF;
 	}
 
 	@Override

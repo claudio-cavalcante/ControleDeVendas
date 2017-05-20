@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.ufg.inf.Sessao;
 import br.ufg.inf.db.Repositorio;
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 
 public class OpcaoMenuLogin implements IOpcaoMenu {
 
@@ -50,16 +50,16 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 		boolean loginValido = false;
 		
 		String usuarioInformado;
-		System.out.printf(MensagensSistemaDeVendas.USUARIO + ": ");		
+		System.out.printf(MensagensSistema.USUARIO + ": ");		
 		usuarioInformado = sc.next();
 		
-		System.out.printf(MensagensSistemaDeVendas.SENHA + ": ");		
+		System.out.printf(MensagensSistema.SENHA + ": ");		
 		String senha = sc.next();
 		
 		loginValido = loginValido(usuarioInformado, senha);
 		
 		if (!loginValido) {
-			System.out.println(MensagensSistemaDeVendas.DADOS_LOGIN_INVALIDOS);
+			System.out.println(MensagensSistema.DADOS_LOGIN_INVALIDOS);
 			System.out.println();
 			return;
 		}

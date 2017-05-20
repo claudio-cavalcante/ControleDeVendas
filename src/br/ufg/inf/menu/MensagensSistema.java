@@ -1,9 +1,9 @@
 package br.ufg.inf.menu;
 
-public interface MensagensSistemaDeVendas {
+public interface MensagensSistema {
 	public static final String ADICIONAR_PRODUTO = "Adicionar produto";
 	public static final String ADICIONAR_PRODUTO_ESTOQUE = "Adicionar produto ao estoque";
-	public static final String BEM_VINDO = "Bem-vindo ao Sistema de Vendas!";
+	public static final String BEM_VINDO = "Bem-vindo ao CDV!";
 	public static final String CARTAO = "Cartão";
 	public static final String CODIGO = "Código";
 	public static final String CODIGO_INVALIDO = "Código inválido, favor informar apenas números";

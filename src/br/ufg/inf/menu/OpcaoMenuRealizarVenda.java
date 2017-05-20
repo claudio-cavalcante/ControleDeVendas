@@ -11,7 +11,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import br.ufg.inf.Sessao;
 import br.ufg.inf.db.Repositorio;
-import br.ufg.inf.menu.MensagensSistemaDeVendas;
+import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.pagamento.FormaDePagamentoEmCartao;
 import br.ufg.inf.pagamento.FormaDePagamentoEmDinheiro;
 import br.ufg.inf.pagamento.IFormaDePagamento;
@@ -29,7 +29,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistemaDeVendas.REALIZAR_VENDA;
+		return MensagensSistema.REALIZAR_VENDA;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 		boolean caixaValido = false;
 
 		do {
-			System.out.println(MensagensSistemaDeVendas.SELECIONE_CAIXA);
+			System.out.println(MensagensSistema.SELECIONE_CAIXA);
 			Repositorio.getInstancia().caixas().entrySet()
 					.forEach(x -> System.out.printf("Caixa: %s\n", x.getValue().getIdentificador()));
 			caixaSelecionado1 = sc.nextLine();
@@ -69,12 +69,12 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 	private void realizarVenda() {
 		Scanner sc = new Scanner(System.in);
 		List<ItemVenda> itens = new ArrayList<ItemVenda>();
-		System.out.println(MensagensSistemaDeVendas.INICIANDO_VENDA);
+		System.out.println(MensagensSistema.INICIANDO_VENDA);
 		boolean continuarVenda = true;
 		float valorTotal = 0;
 		do {
 			if (itens.size() > 0) {
-				System.out.printf("\n%s\n", MensagensSistemaDeVendas.PEDIDO_VENDA);
+				System.out.printf("\n%s\n", MensagensSistema.PEDIDO_VENDA);
 				System.out.println("----------------------------------");
 				valorTotal = 0;
 				for (ItemVenda item : itens) {
@@ -88,12 +88,12 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				System.out.println("----------------------------------");
 			}
 			
-			System.out.printf("0 - %s\n", MensagensSistemaDeVendas.FINALIZAR_VENDA);
-			System.out.printf("1 - %s\n", MensagensSistemaDeVendas.ADICIONAR_PRODUTO);
+			System.out.printf("0 - %s\n", MensagensSistema.FINALIZAR_VENDA);
+			System.out.printf("1 - %s\n", MensagensSistema.ADICIONAR_PRODUTO);
 			String opcao = sc.nextLine();
 			if (opcao.equals("0")) {
 				if (itens.size() == 0) {
-					System.out.println(MensagensSistemaDeVendas.NENHUM_PRODUTO);
+					System.out.println(MensagensSistema.NENHUM_PRODUTO);
 				} else {
 					continuarVenda = false;
 				}
@@ -102,20 +102,20 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				String codigo;
 				Produto produto = null;
 				do {
-					System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO);
+					System.out.printf("%s: ", MensagensSistema.CODIGO);
 					codigo = sc.next();
 					codigoValido = StringUtils.isNumeric(codigo);
 					if (!codigoValido) {
-						System.out.printf("%s: ", MensagensSistemaDeVendas.CODIGO_INVALIDO);
+						System.out.printf("%s: ", MensagensSistema.CODIGO_INVALIDO);
 					} else {
 						produto = Estoque.Instancia().obtenhaProduto(Integer.parseInt(codigo));
 						if (produto == null) {
-							System.out.println(MensagensSistemaDeVendas.PRODUTO_NAO_ENCONTRADO);
+							System.out.println(MensagensSistema.PRODUTO_NAO_ENCONTRADO);
 							codigoValido = false;
 						} else {
 							for (ItemVenda item : itens) {
 								if (item.getProduto().getCodigo() == Integer.parseInt(codigo)) {
-									System.out.println(MensagensSistemaDeVendas.PRODUTO_JA_ADICIONADO);
+									System.out.println(MensagensSistema.PRODUTO_JA_ADICIONADO);
 									codigoValido = false;
 								}
 							}
@@ -127,19 +127,19 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				boolean quantidadeEstaDisponivel;
 				String quantidade;
 				do {
-					System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE);
+					System.out.printf("%s: ", MensagensSistema.QUANTIDADE);
 					do {
 						quantidade = sc.next();	
 						quantidadeValida = NumberUtils.isParsable(quantidade);
 						if (!quantidadeValida) {
-							System.out.printf("%s: ", MensagensSistemaDeVendas.QUANTIDADE_INVALIDA);
+							System.out.printf("%s: ", MensagensSistema.QUANTIDADE_INVALIDA);
 						}
 					} while (!quantidadeValida);
 
 					float quantidadeDisponivel = Estoque.Instancia().getQuantidadeEmEstoque(Integer.parseInt(codigo));
 					quantidadeEstaDisponivel = quantidadeDisponivel >= Float.parseFloat(quantidade);
 					if (!quantidadeEstaDisponivel) {
-						System.out.printf("%s: %.2f.\n", MensagensSistemaDeVendas.QUANTIDADE_INDISPONIVEL,
+						System.out.printf("%s: %.2f.\n", MensagensSistema.QUANTIDADE_INDISPONIVEL,
 								quantidadeDisponivel);
 					}
 				} while (!quantidadeEstaDisponivel);				
@@ -151,15 +151,15 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				}
 			}
 		} while (continuarVenda);
-		System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.VALOR_TOTAL_VENDA, valorTotal);
+		System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.VALOR_TOTAL_VENDA, valorTotal);
 
 		boolean pagamentoRealizadoComSucesso = false;
 		do {
 			String opcaoPagamento = "";
 			do {
-				System.out.println(MensagensSistemaDeVendas.FORMA_PAGAMENTO);
-				System.out.printf("0 - %s\n", MensagensSistemaDeVendas.DINHEIRO);
-				System.out.printf("1 - %s\n", MensagensSistemaDeVendas.CARTAO);
+				System.out.println(MensagensSistema.FORMA_PAGAMENTO);
+				System.out.printf("0 - %s\n", MensagensSistema.DINHEIRO);
+				System.out.printf("1 - %s\n", MensagensSistema.CARTAO);
 				opcaoPagamento = sc.nextLine();
 			} while (!opcaoPagamento.equals("0") && !opcaoPagamento.equals("1"));
 
@@ -168,7 +168,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			if (opcaoPagamento.equals("0")) {
 				formaDePagamento = new FormaDePagamentoEmDinheiro();
 				do {
-					System.out.printf("%s: ", MensagensSistemaDeVendas.INFORME_VALOR_PAGO);
+					System.out.printf("%s: ", MensagensSistema.INFORME_VALOR_PAGO);
 					valorPago = sc.next();
 				} while (!NumberUtils.isParsable(valorPago));
 			} else if (opcaoPagamento.equals("1")) {
@@ -182,7 +182,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
 			if (pagamentoRealizadoComSucesso) {
 				if (processamento.houveTroco()) {
-					System.out.printf("%s: R$%.2f.\n\n", MensagensSistemaDeVendas.TROCO, processamento.valorDoTroco());
+					System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.TROCO, processamento.valorDoTroco());
 				}
 
 				Sessao.getCaixaSelecionado().registrarVenda(venda);
@@ -190,7 +190,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 				System.out.println(processamento.mensagem());
 			}
 		} while (!pagamentoRealizadoComSucesso);
-		System.out.printf("%s\n\n", MensagensSistemaDeVendas.VENDA_FINALIZADA);
+		System.out.printf("%s\n\n", MensagensSistema.VENDA_FINALIZADA);
 	}
 
 }

@@ -20,14 +20,14 @@ public enum EnumFuncoesDoSistema {
 
 	public static Map<EnumFuncoesDoSistema, String> obtenhaFuncoes(Funcionario funcionario) {
 		Map<EnumFuncoesDoSistema, String> funcoes = new LinkedHashMap<EnumFuncoesDoSistema, String>();		
-		funcoes.put(SAIR, MensagensSistemaDeVendas.SAIR);
-		funcoes.put(LOGOFF, MensagensSistemaDeVendas.LOGOFF);
-		funcoes.put(REALIZAR_VENDA, MensagensSistemaDeVendas.REALIZAR_VENDA);
-		funcoes.put(CONSULTAR_PRECO, MensagensSistemaDeVendas.CONSULTAR_PRECO);
+		funcoes.put(SAIR, MensagensSistema.SAIR);
+		funcoes.put(LOGOFF, MensagensSistema.LOGOFF);
+		funcoes.put(REALIZAR_VENDA, MensagensSistema.REALIZAR_VENDA);
+		funcoes.put(CONSULTAR_PRECO, MensagensSistema.CONSULTAR_PRECO);
 		if (funcionario instanceof Gerente) {
-			funcoes.put(ADICIONAR_PRODUTO_ESTOQUE, MensagensSistemaDeVendas.ADICIONAR_PRODUTO_ESTOQUE);
-			funcoes.put(EMITIR_RELATORIO_VENDA, MensagensSistemaDeVendas.EMITIR_RELATORIO_VENDA);
-			funcoes.put(EMITIR_RELATORIO_ESTOQUE, MensagensSistemaDeVendas.EMITIR_RELATORIO_ESTOQUE);
+			funcoes.put(ADICIONAR_PRODUTO_ESTOQUE, MensagensSistema.ADICIONAR_PRODUTO_ESTOQUE);
+			funcoes.put(EMITIR_RELATORIO_VENDA, MensagensSistema.EMITIR_RELATORIO_VENDA);
+			funcoes.put(EMITIR_RELATORIO_ESTOQUE, MensagensSistema.EMITIR_RELATORIO_ESTOQUE);
 		}
 
 		return funcoes;
