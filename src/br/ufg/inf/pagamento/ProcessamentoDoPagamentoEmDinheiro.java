@@ -13,15 +13,10 @@ public class ProcessamentoDoPagamentoEmDinheiro implements IProcessamentoDoPagam
 	@Override
 	public boolean pagamentoRealizadoComSucesso() {		
 		return !houveTroco() && valorDoTroco() < 0 ? false : true;
-	}
+	}	
 
 	@Override
-	public boolean houveTroco() {
-		return valorPago > valorDeVenda;
-	}
-
-	@Override
-	public double valorDoTroco() {
+	public Double valorDoTroco() {
 		return valorPago - valorDeVenda;
 	}
 
@@ -29,5 +24,8 @@ public class ProcessamentoDoPagamentoEmDinheiro implements IProcessamentoDoPagam
 	public String mensagem() {		
 		return pagamentoRealizadoComSucesso() ? "" : "Valor insuficiente!";
 	}
-
+	
+	private boolean houveTroco() {
+		return valorPago > valorDeVenda;
+	}
 }

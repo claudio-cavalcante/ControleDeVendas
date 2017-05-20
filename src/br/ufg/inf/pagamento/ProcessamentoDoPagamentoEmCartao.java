@@ -21,13 +21,8 @@ public class ProcessamentoDoPagamentoEmCartao implements IProcessamentoDoPagamen
 	}
 
 	@Override
-	public boolean houveTroco() {
-		return false;
-	}
-
-	@Override
-	public double valorDoTroco() {
-		return 0;
+	public Double valorDoTroco() {
+		return null;
 	}
 
 	@Override

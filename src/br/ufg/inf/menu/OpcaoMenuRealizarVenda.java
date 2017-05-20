@@ -181,8 +181,8 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 			IProcessamentoDoPagamento processamento = venda.realizarPagamento(Double.parseDouble(valorPago));
 			pagamentoRealizadoComSucesso = processamento.pagamentoRealizadoComSucesso();
 			if (pagamentoRealizadoComSucesso) {
-				if (processamento.houveTroco()) {
-					System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.TROCO, processamento.valorDoTroco());
+				if (processamento.valorDoTroco() != null) {
+					System.out.printf("%s: R$%.2f.\n\n", MensagensSistema.TROCO, processamento.valorDoTroco().doubleValue());
 				}
 
 				Sessao.getCaixaSelecionado().registrarVenda(venda);
