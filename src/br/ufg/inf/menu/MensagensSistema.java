@@ -26,7 +26,7 @@ public interface MensagensSistema {
 	public static final String MARCARDOR_RELATORIO = "***************************************";
 	public static final String NENHUM_CAIXA_UTILIZADO = "Nenhum caixa foi utilizado!";
 	public static final String NENHUM_PRODUTO = "Nenhum produto foi adicionado, venda cancelada.";
-	public static final String OBRIGADO_POR_UTILIZAR = "Obrigado por utilizar o Sistema de Vendas!";
+	public static final String OBRIGADO_POR_UTILIZAR = "Obrigado por utilizar o nosso sistema!";
 	public static final String PEDIDO_VENDA = "Pedido de venda";
 	public static final String PRECO = "Preço";
 	public static final String PRECO_INVALIDO = "Preço inválido, favor colocar no formato 0.00";
