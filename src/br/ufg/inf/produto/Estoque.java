@@ -12,7 +12,7 @@ public class Estoque {
 
 	private static Estoque estoque = new Estoque();
 
-	public static Estoque instancia() {
+	public static Estoque getInstancia() {
 		return estoque;
 	}
 

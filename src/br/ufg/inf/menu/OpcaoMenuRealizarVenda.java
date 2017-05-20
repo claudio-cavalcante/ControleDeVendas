@@ -109,7 +109,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					if (!codigoValido) {
 						System.out.printf("%s\n\n", MensagensSistema.CODIGO_INVALIDO);
 					} else {
-						produto = Estoque.instancia().getProduto(Integer.parseInt(codigo));
+						produto = Estoque.getInstancia().getProduto(Integer.parseInt(codigo));
 						if (produto == null) {
 							System.out.println(MensagensSistema.PRODUTO_NAO_ENCONTRADO);
 							codigoValido = false;
@@ -136,7 +136,7 @@ public class OpcaoMenuRealizarVenda implements IOpcaoMenu {
 					}
 				} while (!quantidadeValida);
 
-				float quantidadeDisponivel = Estoque.instancia().getQuantidadeEmEstoque(Integer.parseInt(codigo));
+				float quantidadeDisponivel = Estoque.getInstancia().getQuantidadeEmEstoque(Integer.parseInt(codigo));
 				quantidadeEstaDisponivel = quantidadeDisponivel >= Float.parseFloat(quantidade);
 				if (!quantidadeEstaDisponivel) {
 					System.out.printf("%s: %.2f.\n", MensagensSistema.QUANTIDADE_INDISPONIVEL, quantidadeDisponivel);

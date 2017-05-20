@@ -18,8 +18,8 @@ public class TelaInicio {
 	}
 
 	private static void populeEstoque() {
-		Estoque.instancia().adicionar(new Produto(1, "Leite", 5), 10);
-		Estoque.instancia().adicionar(new Produto(2, "Ovos", 12), 10);
-		Estoque.instancia().adicionar(new Produto(3, "Farinha", 2), 100);
+		Estoque.getInstancia().adicionar(new Produto(1, "Leite", 5), 10);
+		Estoque.getInstancia().adicionar(new Produto(2, "Ovos", 12), 10);
+		Estoque.getInstancia().adicionar(new Produto(3, "Farinha", 2), 100);
 	}
 }
