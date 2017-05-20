@@ -2,7 +2,7 @@ package br.ufg.inf.menu;
 
 public interface MensagensSistema {
 	public static final String ADICIONAR_PRODUTO = "Adicionar produto";
-	public static final String ADICIONAR_PRODUTO_ESTOQUE = "Adicionar produto ao estoque";
+	public static final String ADICIONAR_MANTER_PRODUTO_ESTOQUE = "Adicionar/Manter produto no estoque";
 	public static final String BEM_VINDO = "Bem-vindo ao CDV!";
 	public static final String CARTAO = "Cartão";
 	public static final String CODIGO = "Código";

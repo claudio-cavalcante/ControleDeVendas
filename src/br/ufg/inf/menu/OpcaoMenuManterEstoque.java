@@ -10,11 +10,11 @@ import br.ufg.inf.menu.MensagensSistema;
 import br.ufg.inf.produto.Estoque;
 import br.ufg.inf.produto.Produto;
 
-public class OpcaoMenuAdicionarProdutoEstoque implements IOpcaoMenu {
+public class OpcaoMenuManterEstoque implements IOpcaoMenu {
 
 	@Override
 	public String getNome() {
-		return MensagensSistema.ADICIONAR_PRODUTO_ESTOQUE;
+		return MensagensSistema.ADICIONAR_MANTER_PRODUTO_ESTOQUE;
 	}
 
 	@Override

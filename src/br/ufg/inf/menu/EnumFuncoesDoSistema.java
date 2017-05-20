@@ -25,7 +25,7 @@ public enum EnumFuncoesDoSistema {
 		funcoes.put(REALIZAR_VENDA, MensagensSistema.REALIZAR_VENDA);
 		funcoes.put(CONSULTAR_PRECO, MensagensSistema.CONSULTAR_PRECO);
 		if (funcionario instanceof Gerente) {
-			funcoes.put(ADICIONAR_PRODUTO_ESTOQUE, MensagensSistema.ADICIONAR_PRODUTO_ESTOQUE);
+			funcoes.put(ADICIONAR_PRODUTO_ESTOQUE, MensagensSistema.ADICIONAR_MANTER_PRODUTO_ESTOQUE);
 			funcoes.put(EMITIR_RELATORIO_VENDA, MensagensSistema.EMITIR_RELATORIO_VENDA);
 			funcoes.put(EMITIR_RELATORIO_ESTOQUE, MensagensSistema.EMITIR_RELATORIO_ESTOQUE);
 		}

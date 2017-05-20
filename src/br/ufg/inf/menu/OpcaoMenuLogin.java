@@ -27,7 +27,7 @@ public class OpcaoMenuLogin implements IOpcaoMenu {
 
 			Menu menuPrincipal = new Menu(
 					new OpcaoMenuSair(),
-					new OpcaoMenuAdicionarProdutoEstoque(),
+					new OpcaoMenuManterEstoque(),
 					new OpcaoMenuRealizarVenda(),
 					new OpcaoMenuConsultarPreco(),
 					new OpcaoMenuEmitirRelatorioVenda(),
