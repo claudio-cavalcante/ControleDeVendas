@@ -63,7 +63,7 @@ public class Repositorio {
 		}
 
 		String senhaArmazenada = senhas.get(Integer.parseInt(login));
-		if(senhaArmazenada == null || senhaArmazenada.equals(senha)){
+		if(senhaArmazenada == null || !senhaArmazenada.equals(senha)){
 			throw new LoginException();
 		};
 	}	
