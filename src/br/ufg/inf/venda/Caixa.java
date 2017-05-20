@@ -23,8 +23,6 @@ public class Caixa {
 
 	public void registrarVenda(Venda venda) {
 		venda.setFuncionario(this.funcionario);
-		removerDoEstoque(venda.getItensVenda());
-
 		vendas.add(venda);
 	}
 
@@ -51,11 +49,5 @@ public class Caixa {
 		}
 
 		return valorTotal;
-	}
-
-	private void removerDoEstoque(List<ItemVenda> itensVenda) {
-		for (ItemVenda itemVenda : itensVenda) {
-			Estoque.Instancia().remover(itemVenda.getProduto(), (int) itemVenda.getQuantidade());
-		}
 	}
 }

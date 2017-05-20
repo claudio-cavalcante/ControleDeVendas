@@ -5,6 +5,7 @@ import java.util.List;
 import br.ufg.inf.pagamento.IFormaDePagamento;
 import br.ufg.inf.pagamento.IProcessamentoDoPagamento;
 import br.ufg.inf.pessoa.Funcionario;
+import br.ufg.inf.produto.Estoque;
 
 public class Venda {
 	private List<ItemVenda> itensVenda;
@@ -34,7 +35,15 @@ public class Venda {
 	}
 
 	public IProcessamentoDoPagamento realizarPagamento(double valorPago) {
-		return formaDePagamento.realizarPagamento(getValorTotal(), valorPago);
+		IProcessamentoDoPagamento processamentoDoPagamento = formaDePagamento.realizarPagamento(getValorTotal(), valorPago);
+		
+		if(processamentoDoPagamento.pagamentoRealizadoComSucesso()){
+			for (ItemVenda itemVenda : itensVenda) {
+				Estoque.Instancia().remover(itemVenda.getProduto(), (int) itemVenda.getQuantidade());
+			}
+		}
+		
+		return processamentoDoPagamento;	
 	}
 
 	public double getValorTotal() {
