@@ -1,6 +1,7 @@
 package br.ufg.inf.menu;
 import java.util.function.Supplier;
 
+import br.ufg.inf.Sessao;
 import br.ufg.inf.menu.MensagensSistema;
 
 public class OpcaoMenuLogoff implements IOpcaoMenu {
@@ -12,7 +13,10 @@ public class OpcaoMenuLogoff implements IOpcaoMenu {
 
 	@Override
 	public Supplier<Boolean> getAcao() {
-		return () -> false;
+		return () -> {
+			Sessao.setFuncionarioLogado(null);
+			return false;
+		};
 	}
 	
 	@Override
